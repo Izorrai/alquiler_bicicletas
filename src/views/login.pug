@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/login.css')
+    link(rel="stylesheet", href="/css/navegador.css")
+  body
+    .login-container
+      h1= title
+      if error
+        p.error= error
+      form(method='POST' action='/login')
+        label(for='usuario')
+        input#usuario(type='text' name='usuario' placeholder="e-mail" required)
+        label(for='contrasena')
+        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+        button(class="acceso" type='submit') Acceder
+        button(class="registro" type='submit') Registrate
+
+  include navegador
