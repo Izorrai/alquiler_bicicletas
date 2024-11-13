@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/login.css')
+    link(rel="stylesheet", href="/css/navegador.css")
+  body
+    .login-container
+      h1= title
+      if error
+        p.error= error
+      form(method='POST' action='/formregistro')
+        label(for='nombre')
+        input#nombre(type='text' name='nombre' placeholder="nombre" required)
+        label(for='apellido')
+        input#apellido(type='text' name='apellido' placeholder="apellido" required)
+        label(for='telefono')
+        input#telefono(type='text' name='telefono' placeholder="teléfono" required)
+        label(for='direccion')
+        input#direccion(type='text' name='direccion' placeholder="dirección" required)
+        label(for='contrasena')
+        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+        label(for='contrasena')
+        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+             
+        button(class="acceso" type='submit') Aceptar
+        
+        a(href="/login")
+            button( class="registro" type="button") volver
+
+      
+
+  include navegador

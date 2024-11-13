@@ -33,4 +33,12 @@ app.get("/login", (req, res) => {
   });
 
 
+  app.get("/registro", (req, res) => {
+    res.render("formregistro", {
+      title: 'registro'
+    });
+  });
+  
+
+
 app.listen(3000, () => console.log("Estamos conectados a la 3000"));
