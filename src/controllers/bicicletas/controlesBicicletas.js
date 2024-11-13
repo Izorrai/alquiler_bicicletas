@@ -1,20 +1,20 @@
 // import modeloBicicleta from "../../modelos/modeloBicicleta.js"
 
 
-function mostrarTodo (req,res){
+function mostrarTodo(req,res){
     //const bicicletas = modeloBicicleta.mostrarTodo();
    //res.render("bicicletas/lista", {bicicletas}); 
   res.send ("aquí deberíamos ver la lista de bicicletas");
   }
   
-  function buscarPorId (req,res){
+  function buscarPorId(req,res){
       const id = parseInt(req.params.id);
       //console.log (id,modeloBicicleta.buscarPorId(id));
       //res.json (modeloBicicleta.buscarPorId(id));
       res.send("aquí deberíamos ver las bicicletas que hemos buscado por Id")
   }
   
-  function crearFormulario (req,res){
+  function crearFormulario(req,res){
     //res.render ("bicicletas/new", {types:modeloBicicleta.types})
     res.send ("nos debería enseñar el formulario que hemos creado")
   }
@@ -39,7 +39,7 @@ function mostrarTodo (req,res){
     res.send ("aquí deberíamos ver la actualización de la bicicleta");
   }
 
-  function borrar (req,res){
+  function borrar(req,res){
     const id = parseInt(req.param.id);
     //const borrarBicicleta = modeloBicicleta.borrar(id);
     //res.jason(borrarBicicleta);
@@ -55,4 +55,5 @@ export const functions = {
     actualizar,
     borrar
 }  
+
 export default functions;
