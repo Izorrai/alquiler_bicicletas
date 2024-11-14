@@ -2,7 +2,6 @@ import modeloBicicleta from "../../modelos/modeloBicicleta.js";
 
 
 
-
 async function mostrarTodo(){
     const bicicletas = await modeloBicicleta.mostrarTodo();
     return bicicletas;
