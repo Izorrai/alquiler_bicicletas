@@ -1,4 +1,6 @@
-import modeloBicicleta from "../../modelos/modeloBicicleta.js"
+import modeloBicicleta from "../../modelos/modeloBicicleta.js";
+
+
 
 
 async function mostrarTodo(){
@@ -8,47 +10,40 @@ async function mostrarTodo(){
   }
   
   async function buscarPorId(){
-      const id = parseInt(req.params.id);
       const bicicleta = await modeloBicicleta.findByPk(id);
       return bicicleta;
       //res.send ("aquí deberíamos ver las bicicletas que hemos buscado por Id")
   }
   
 
-async function actualizarFormulario(){
-    const id = parseInt(req.params.id);
-    const bicicleta = await modeloBicicleta.findByPk(id);
-    return bicicleta;
-
-
-  }
-async function crear() {
-    const {tipo,marca,estado,fecha_registro} = req.body;
-    const nuevaBicicleta = await modeloBicicleta.crear({
+async function crear(tipo,marca,estado,fecha_registro){
+    const nuevaBicicleta = await modeloBicicleta.create({
       tipo,
       marca,
       estado,
       fecha_registro,
     });
-    await nuevaBicicleta
     return nuevaBicicleta;
 
     //res.send ("aquí deberíamos ver la nueva bicicleta que ehemos creado")
 
   }
 
-function actualizar(){
-    const {tipo, marca, estado, fecha_registro} = req.body;
-    const id = parseInt(req.params.id);
-    const actualizarBicicleta = modeloBicicleta.actualizar(id, {tipo, marca, estado, fecha_registro});
+async function actualizar(tipo, marca, estado, fecha_registro){
+    const actualizarBicicleta = await modeloBicicleta.findByPk(id);
+    bicicleta.tipo=tipo;
+    bicicleta.marca=marca;
+    bicicleta.estado=estado;
+    bicicleta.fecha_registro=fecha_registro;
+    await bicicleta.save();
     return actualizarBicicleta;
  
     //res.send ("aquí deberíamos ver la actualización de la bicicleta");
   }
 
-function borrar(){
-    const id = parseInt(req.param.id);
-    const borrarBicicleta = modeloBicicleta.borrar(id);
+async function borrar(id){
+    const borrarBicicleta = await modeloBicicleta.findByPk(id);
+    await borrarBicicleta.destroy();
     return borrarBicicleta;
     
     //res.send("aquí deberíamos ver que esta vació porque hemos borrado la bicicleta");
@@ -58,8 +53,6 @@ export const functions = {
     mostrarTodo,
     buscarPorId,
     crear,
-    crearFormulario,
-    actualizarFormulario,
     actualizar,
     borrar
 }  
