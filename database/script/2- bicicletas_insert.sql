@@ -1,5 +1,6 @@
 use alquiler_bicicletas;
 
+
 INSERT INTO `alquiler_bicicletas`.`usuarios` (`email`, `contraseña`, `nombre`, `apellido`, `telefono`, `direccion`) 
 VALUES 
 ('usuario1@example.com', 'password123', 'Juan', 'Pérez', '123456789', 'Calle Falsa 123'),

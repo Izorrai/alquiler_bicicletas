@@ -4,22 +4,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const DB_HOST = process.env.DB_HOST;
-const DB_PORT = process.env.DB_PORT;
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_DATABASE = process.env.DB_DATABASE;
 
-
-const sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
-  dialect: "mysql",
-  host: DB_HOST,
-  port: DB_PORT,
+const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
+  dialect: process.env.DB_DIALECT,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   define: {
     freezeTableName: true,  
     timestamps: false,      
   },
-});
+})
 
 
 async function testConexion(){
@@ -34,6 +28,7 @@ async function testConexion(){
 
 } 
 
+testConexion();
 
 export default sequelize;
 
