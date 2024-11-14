@@ -35,7 +35,7 @@ const Usuario = sequelize.define("usuarios",{
     allowNull: true
   },
   fecha_registro: {
-    type: DataTypes.TIMESTAMP,
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: true
   }
