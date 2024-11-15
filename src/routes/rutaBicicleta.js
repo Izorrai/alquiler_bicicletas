@@ -2,7 +2,10 @@ import { Router } from "express";
 import controladorMostrarBicicletas from "../controllers/bicicletas/controladorMostrarBicicletas.js"
 const router = Router();
 
-router.get("/lista",controladorMostrarBicicletas.getAll);
+router.get("/",controladorMostrarBicicletas.getAll);
+router.get("/nueva",controladorMostrarBicicletas.crearFormulario);
+router.post("/nueva",controladorMostrarBicicletas.crear)
+
 
 /* router.get("/nuevo",bicicletaViewController.createForm);
 
