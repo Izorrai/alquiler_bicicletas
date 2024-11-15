@@ -1,11 +1,11 @@
 extends ../layout
 
-block content 
-    include card
-    h3 Bicicletas
-    ul
-        
-            li
-                p= bicicletas.nombre
-    
-       
+block content
+  h3 Lista de Bicicletas
+  ul
+    each bicicleta in bicicletas
+      li
+        p Marca: #{bicicleta.marca}
+        p Tipo: #{bicicleta.tipo}
+        p Estado: #{bicicleta.estado}
+        p Fecha de registro: #{bicicleta.fecha_registro}

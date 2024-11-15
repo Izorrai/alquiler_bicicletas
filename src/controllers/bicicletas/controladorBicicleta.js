@@ -1,10 +1,10 @@
-import bicicletas from "../../models/bicicletas.js"
-import bicicletaModel from "../../models/bicicletas.js";
+import Bicicleta from "../../models/bicicletas.js"
+
 
 async function getAll(){
  
-    const bicicletas = await bicicletaModel.findAll()
-    return bicicletas;
+    const bicicleta = await Bicicleta.findAll()
+    return bicicleta;
 }
 
 export const functions = {
@@ -13,4 +13,6 @@ export const functions = {
    
 }
 
-export default functions
+export default functions;
+
+
