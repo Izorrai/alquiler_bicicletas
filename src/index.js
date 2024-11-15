@@ -1,5 +1,5 @@
 import express from "express";
-
+import router from "./routes/router.js";
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.use(express.json());// configurar body parser para recibir datos en formato 
 
 
 app.get("/",(req, res) => {res.render("index", {tittle: 'Inicio', message: "Pagina Alquiler Bicicletas"})});
+
+app.use("/", router)
 
 app.get("/login", (req, res) => {
     res.render("login", {
