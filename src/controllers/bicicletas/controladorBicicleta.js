@@ -7,9 +7,20 @@ async function getAll(){
     return bicicleta;
 }
 
+async function crear(marca,tipo,estado){
+    const nuevaBicicleta = await Bicicleta.create({
+      marca,
+      tipo,
+      estado
+    });
+    
+   return nuevaBicicleta;
+}
+
 export const functions = {
 
-    getAll
+    getAll,
+    crear
    
 }
 

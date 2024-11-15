@@ -9,9 +9,22 @@ async function getAll(req, res) {
    
 }
 
+async function crearFormulario(req, res) {
+   res.render("bicicletas/nuevaBicicleta")
+}
+
+
+async function crear(req, res) {
+    const { marca,tipo,estado } = req.body;
+    await controladorBicicleta.crear(marca,tipo,estado)
+    res.redirect("/bicicletas");
+}
+
 
 export const functions = {
-    getAll
+    getAll,
+    crearFormulario,
+    crear
 }
 
 export default functions
