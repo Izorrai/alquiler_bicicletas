@@ -23,7 +23,7 @@ const Bicicleta = sequelize.define("bicicletas",{
     allowNull: true
   },
   fecha_registro: {
-    type: DataTypes.TIMESTAMP,
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: true
   }

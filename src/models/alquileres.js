@@ -34,7 +34,6 @@ const Alquiler = sequelize.define("alquileres",{
   entrega_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Ubicacion,
       key: 'ubicacion_id'
     },
     allowNull: true

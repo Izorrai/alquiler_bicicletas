@@ -13,14 +13,14 @@ const DisponibilidadBicicleta = sequelize.define("disponibilidad_bicicleta",{
   bicicleta_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Bicicleta,
+      
       key: 'bicicleta_id'
     }
   },
   ubicacion_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Ubicacion,
+      
       key: 'ubicacion_id'
     }
   }
