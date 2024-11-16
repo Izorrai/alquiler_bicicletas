@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .bicicletas-container
+    h1.bicicletas-title Lista de Bicicletas
+    ul.bicicletas-grid
+      each bicicleta in bicicletas
+        li.bicicleta-card
+          .bicicleta-info
+            p.bicicleta-detail
+              span.detail-label Marca:
+              span.detail-value #{bicicleta.marca}
+            p.bicicleta-detail
+              span.detail-label Tipo:
+              span.detail-value #{bicicleta.tipo}
+            p.bicicleta-detail
+              span.detail-label Estado:
+              span.detail-value(class=`estado-${bicicleta.estado.replace(/\s+/g, '-')}`) #{bicicleta.estado}
+          form.delete-form(action=`/bicicletas/${bicicleta.bicicleta_id}/eliminar`, method="POST")
+            button.delete-button(type="submit") Eliminar
