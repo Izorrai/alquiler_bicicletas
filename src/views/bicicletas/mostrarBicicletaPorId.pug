@@ -1,8 +1,17 @@
 extends ../layout
 
 block content
+  
+  a.boton.boton-nuevo(href="/bicicletas/nuevo") 
+    i.fas.fa-plus
+    | Nueva Bicicleta
+
+  a.boton.boton-nuevo(href="/bicicletas/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
   .bicicletas-container
-    h1.bicicletas-title Bicicleta
+    h1.bicicletas-title Lista de Bicicletas
     ul.bicicletas-grid
       
         li.bicicleta-card
@@ -18,3 +27,7 @@ block content
               span.detail-value(class=`estado-${bicicleta.estado.replace(/\s+/g, '-')}`) #{bicicleta.estado}
           form.delete-form(action=`/bicicletas/${bicicleta.bicicleta_id}/eliminar`, method="POST")
             button.delete-button(type="submit") Eliminar
+          
+          
+          form.actualizar-form(action=`/bicicletas/${bicicleta.bicicleta_id}/actualizar`, method="POST") 
+            button.actualizar-button(type="submit") Actualizar

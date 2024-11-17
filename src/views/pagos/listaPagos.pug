@@ -1,0 +1,37 @@
+extends ../layout
+
+block content 
+  .contenedor
+    .encabezado
+      h1.titulo Lista de Pagos
+      a.boton.boton-nuevo(href="/pagos/nuevo") 
+        i.fas.fa-plus
+        | Nuevo Pago
+
+    .contenedor-tabla
+      table.tabla
+        thead
+          tr
+            th ID Pago
+            th ID Alquiler
+            th Fecha de Pago
+            th Factura
+            th Método de Pago
+            th Acciones
+        tbody
+          each pago in pagos
+            tr
+              td= pago.pago_id
+              td= pago.alquiler_id
+              td= pago.fecha_pago
+              td= pago.factura
+              td= pago.metodo_pago
+              td.acciones
+                a.boton.boton-editar(href=`/pagos/${pago.pago_id}/actualizar`)
+                  i.fas.fa-edit
+                  | Editar
+                form.formulario-eliminar(action=`/pagos/${pago.pago_id}/eliminar` method="POST")
+                  input(type="hidden" name="_method" value="DELETE")
+                  button.boton.boton-eliminar(type="submit" onclick="return confirm('¿Estás seguro de eliminar este pago?')")
+                    i.fas.fa-trash
+                    | Eliminar

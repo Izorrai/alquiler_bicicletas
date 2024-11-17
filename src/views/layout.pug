@@ -3,14 +3,27 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Bicicletas 
+        title Bicicletas
         link(rel="stylesheet", href="/css/navegador.css")
         link(rel="stylesheet", href="/css/listabicicletas.css")
         link(rel="stylesheet", href="/css/bicicleta.css")
-
-    body 
+        link(rel="stylesheet", href="/css/pagos.css")
+    
+    body
+        nav.navbar
+            ul
+                li
+                    a(href='#') 
+                        span.icon-menu
+                li
+                    a(href='/bicicletas/lista') 
+                        span.icon-bicicleta
+                li
+                    a(href='#') 
+                        span.icon-ubicacion
+                li
+                    a(href='/login') 
+                        span.icon-login
         
+       
         block content
-
-        
-        include navegador

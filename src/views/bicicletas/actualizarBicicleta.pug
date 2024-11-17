@@ -3,7 +3,7 @@ extends ../layout
 block content
   .edit-container
     h1.edit-title Editar Bicicleta
-    form.edit-form(action=`/bicicletas/${bicicleta.bicicleta_id}`, method="POST")
+    form.edit-form(action=`/bicicletas/${bicicleta.bicicleta_id}/actualizar`, method="POST")
       .form-group
         label.form-label(for="tipo") Tipo:
         input.form-input(type="text", id="tipo", name="tipo", value=bicicleta.tipo, required)
