@@ -1,0 +1,34 @@
+extends ../layout 
+
+block content 
+    .usuarios-container 
+        h1.usuarios-title Lista de Usuarios: 
+        ul.usuarios.grid 
+            each usuario in usuarios 
+                li.usuario-card 
+                    .usuario-info 
+                        p.usuario-detail 
+                            span.detail-label Email: 
+                            span.detail-value #{usuario.email} 
+                        p.usuario-detail 
+                            span.detail-label Contraseña:
+                            span.detail-value #{usuario.contraseña}
+                        p.usuario-detail 
+                            span.detail-label Nombre: 
+                            span.detail-value #{usuario.nombre}
+                        p.usuario-detail 
+                            span.detail-label Apellido: 
+                            span.detail-value #{usuario.apellido} 
+                        p.usuario-detail
+                            span.detail-label Telefono: 
+                            span.detail-value #{usuario.telefono} 
+                        p.usuario-detail 
+                            span.detail-label Direccion: 
+                            span.detail-value #{usuario.direccion} 
+                        p.usuario-detail 
+                            span.detail-label Fecha de registro: 
+                            span.detail-value #{usuario.fecha_registro}
+                    form.delete-form(action=`/usuarios/${usuario.usuario_id}/eliminar`, method="POST")
+                        button.delete-button(type="submit") Eliminar
+
+                 
