@@ -3,7 +3,6 @@ import controladorBicicleta from "../../controllers/bicicletas/controladorBicicl
 async function getAll(req, res) {
     try {
         const bicicletas = await controladorBicicleta.getAll();
-        console.log(bicicletas);
         res.render("bicicletas/listaBicicletas", { bicicletas });
     } catch (error) {
         console.error("Error al obtener las bicicletas:", error);

@@ -2,7 +2,8 @@ import controladorUsuario from "../../controllers/usuarios/controladorUsuario.js
 
 async function getAllUsers(req, res) {
     try {
-
+        const usuarios = await controladorUsuario.getAllUsers();
+        res.render("usuarios/listaUsuarios", { usuarios });
     } catch (error) {
         console.error('Error al obtener los usuarios: ', error);
         res.status(500).send('Hubo un error al obtener los usuarios');
@@ -44,11 +45,11 @@ async function crearUsuario(req, res) {
         direccion, } = req.body;
 
     try {
-        if (email || contraseña || nombre || apellido || telefono || direccion) {
+        if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
             return res.status(400).send('Todos los campos son obligatorios.');
         }
 
-        await controladorUsuario.crear(email, contraseña, nombre, apellido, telefono, direccion);
+        await controladorUsuario.crearUsuario(email, contraseña, nombre, apellido, telefono, direccion);
         res.redirect(`/usuarios/lista`);
     } catch (error) {
         console.error('Error al crear la bicicleta', error);
@@ -65,7 +66,7 @@ async function actualizarUsuario(req, res) {
         if (!usuario) {
             return res.status(404).send('Usuario no encontrado.');
         }
-        res.render('Usuarios/actualizarUsuario', { usuario });
+        res.render('usuarios/actualizarUsuario', { usuario });
 
     } catch (error) {
         console.error('Error al cargar el usuario para editar: ', error);
@@ -78,11 +79,11 @@ async function elimimnarUsuario(req, res) {
     const { id } = req.params;
 
     try {
-        await controladorUsuario.elimimnarUsuario(id);
+        await controladorUsuario.eliminarUsuario(id);
         res.redirect('usuarios/lista');
 
     } catch (error) {
-        res.status(500).send('Hubo un error al eliminar la bicicleta');
+        res.status(500).send('Hubo un error al eliminar el usuario');
     }
 }
 

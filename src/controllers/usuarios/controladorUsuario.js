@@ -2,8 +2,8 @@ import Usuario from "../../models/usuarios.js";
 
 async function getAllUsers() {
     try {
-        const bicicletas = await Bicicleta.findAll();
-        return bicicletas;
+        const usuarios = await Usuario.findAll();
+        return usuarios;
     }
     catch (error) {
         console.error('Error al obtener usuarios', error);
@@ -20,10 +20,10 @@ async function buscarUserPorId(id) {
     }
 }
 
-async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion, fecha_registro) {
+async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
     try {
-        if (email || contraseña || nombre || apellido || telefono || direccion || fecha_registro) {
-            throw new Error('faltam datos obligatorios');
+        if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
+            throw new Error('faltan datos obligatorios');
         }
 
         const nuevoUsuario = await Usuario.create({
@@ -32,9 +32,8 @@ async function crearUsuario(email, contraseña, nombre, apellido, telefono, dire
             nombre,
             apellido,
             telefono,
-            direccion,
-            fecha_registro
-        })
+            direccion
+        });
 
         return nuevoUsuario;
     } catch (error) {

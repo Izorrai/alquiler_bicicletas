@@ -1,0 +1,33 @@
+extends ../layout 
+
+block content 
+    h3 Crear nuevo usuario 
+
+    form(action="/usuarios/nueva", method="POST")
+        .form-group 
+            label(for="email") Email:
+            input(type="text" name="email" id="email" required)
+        
+        .form-group 
+            label(for="contraseña") Contraseña:
+            input(type="text" name="contraseña" id="contraseña" required)
+        
+        .form-group 
+            label(for="nombre") Nombre:
+            input(type="nombre" name="nombre" id="nombre" required)
+
+        .form-group 
+            label(for="apellido") Apellido:
+            input(type="text" name="apellido" id="apellido" required)
+        
+        .form-group 
+            label(for="telefono") Telefono:
+            input(type="tel" name="telefono" id="telefono" required)
+        
+        .form-group 
+            label(for="direccion") Direccion:
+            input(type="text" name="direccion" id="direccion" required)
+
+        .form-group 
+            button(type="button") Cancelar 
+            button(type="Submit") Crear Usuario.            
