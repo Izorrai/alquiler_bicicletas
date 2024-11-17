@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  
+  a.boton.boton-nuevo(href="/ubicacion/nueva") 
+    i.fas.fa-plus
+    | Nueva Ubicación
+
+  .ubicaciones-container
+    h1.ubicaciones-title Ubicaciones
+
+    if ubicaciones && ubicaciones.length > 0
+      ul.ubicaciones-grid
+        each ubicacion in ubicaciones
+          li.ubicacion-card
+            .ubicacion-info
+              p.ubicacion-detail
+                span.detail-label Estación:
+                span.detail-value #{ubicacion.nombre_estacion}
+              p.ubicacion-detail
+                span.detail-label Dirección:
+                span.detail-value #{ubicacion.direccion}
+            form.delete-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/eliminar`, method="POST")
+              button.delete-button(type="submit") Eliminar
+            form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="POST")
+              button.actualizar-button(type="submit") Actualizar
+    else
+      p No hay ubicaciones disponibles.
+

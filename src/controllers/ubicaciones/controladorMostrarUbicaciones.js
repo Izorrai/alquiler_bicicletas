@@ -2,8 +2,8 @@ import controladorUbicacion from "../../controllers/ubicaciones/controladorUbica
 
 async function getAll(req, res) {
     try {
-        const ubicacion = await controladorUbicacion.getAll();
-        console.log(ubicacion);
+        const ubicaciones = await controladorUbicacion.getAll();
+        console.log(ubicaciones);
         res.render("ubicaciones/listaUbicaciones", { ubicaciones });
     } catch (error) {
         console.error("Error al obtener las ubicaciones:", error);
@@ -53,6 +53,30 @@ async function crear(req, res) {
 
 
 async function actualizarUbicacion(req, res) {
+    const { nombre_estacion, direccion, latitud, longitud} = req.body;
+    const id = parseInt(req.params.id);
+
+    try {
+        
+
+        // Llama a la función del controlador para actualizar la bicicleta
+        const ubicacionActualizada = await controladorUbicacion.actualizarUbicacion(id, nombre_estacion, direccion, latitud, longitud);
+        
+        if (!ubicacionActualizada) {
+            return res.status(404).send("No se pudo actualizar la ubicación. No encontrada.");
+        }
+
+        // Redirige a la página de la ubicación actualizada
+        res.redirect(`/ubicaciones/${id}`);
+    } catch (error) {
+        console.error("Error al actualizar la ubicación:", error);
+        res.status(500).send("Hubo un error al actualizar la ubicación.");
+    }
+}
+
+
+
+/*async function actualizarUbicacion(req, res) {
     const { id } = req.params;
     
     try {
@@ -68,7 +92,7 @@ async function actualizarUbicacion(req, res) {
         console.error("Error al cargar la bicicleta para editar:", error);
         res.status(500).send("Hubo un error al cargar la ubicación para editar.");
     }
-}
+}*/
 
 
 

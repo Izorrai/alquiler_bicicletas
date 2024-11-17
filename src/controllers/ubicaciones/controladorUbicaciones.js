@@ -61,7 +61,7 @@ async function actualizarUbicacion (id,nombre_estacion, direccion, latitud, long
     
     await ubicacion.save();
 
-    return bicicleta;
+    return ubicacion;
   } catch (error) {
     console.error('Error al actualizar ubicacion', error);
     throw new Error('No se pudo actualizar la ubicacion');
