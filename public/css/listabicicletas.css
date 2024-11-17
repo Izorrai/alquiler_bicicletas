@@ -96,6 +96,26 @@
     letter-spacing: 1px;
     transition: background-color 0.3s ease;
   }
+
+  .actualizar-button {
+    width: 100%;
+    padding: 12px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+  }
+
+  .actualizar-button:hover {
+    background-color: green;
+  }
+
   
   .delete-button:hover {
     background-color: #c0392b;
