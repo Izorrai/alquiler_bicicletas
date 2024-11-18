@@ -2,14 +2,18 @@ extends ../layout
 
 block content
   
-  a.boton.boton-nuevo(href="/ubicacion/nueva") 
+  a.boton.boton-nueva(href="/ubicacion/nueva") 
     i.fas.fa-plus
     | Nueva Ubicación
 
+  a.boton.boton-nueva(href="/ubicaciones/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
   .ubicaciones-container
-    h1.ubicaciones-title Ubicaciones disponibles
+    h1.ubicaciones-title Lista de Ubicaciones
     ul.ubicaciones-grid
-      each ubicacion in ubicaciones
+      
         li.ubicacion-card
           .ubicacion-info
             p.ubicacion-detail
@@ -24,9 +28,10 @@ block content
             p.ubicacion-detail
               span.detail-label Longitud:
               span.detail-value #{ubicacion.longitud}
+
           form.delete-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/eliminar`, method="POST")
-              button.delete-button(type="submit") Eliminar
-
-
-          form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="POST")
-              button.actualizar-button(type="submit") Actualizar
+            button.delete-button(type="submit") Eliminar
+          
+          
+          form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="POST") 
+            button.actualizar-button(type="submit") Actualizar
