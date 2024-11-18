@@ -81,7 +81,7 @@ async function actualizarBicicleta(req, res) {
         }
 
         // Redirige a la página de la bicicleta actualizada
-        res.redirect(`/bicicletas/${id}`);
+        res.redirect(`/bicicletas/${id}/actualizar`);
     } catch (error) {
         console.error("Error al actualizar la bicicleta:", error);
         res.status(500).send("Hubo un error al actualizar la bicicleta.");

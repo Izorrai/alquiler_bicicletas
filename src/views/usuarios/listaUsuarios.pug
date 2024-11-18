@@ -3,6 +3,9 @@ extends ../layout
 block content 
     .usuarios-container 
         h1.usuarios-title Lista de Usuarios: 
+        a.boton.boton-nuevo(href="/usuarios/nuevo")
+            i.fas.fa-plus 
+            | Nuevo Usuario
         ul.usuarios.grid 
             each usuario in usuarios 
                 li.usuario-card 
