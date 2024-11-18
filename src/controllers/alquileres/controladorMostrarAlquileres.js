@@ -36,13 +36,33 @@ async function crearFormularioAlquiler(req, res) {
 }
 
 async function crearAlquiler(req, res) {
-  const { duracion, costo } = req.body;
+  const {
+    id,
+    usuario_id,
+    bicicleta_id,
+    recogida_id,
+    entrega_id,
+    fecha_inicio,
+    fecha_fin,
+    duracion,
+    costo,
+  } = req.body;
 
   try {
-    if (!duracion || !costo) {
+    if (!usuario_id || !bicicleta_id || !recogida_id || !entrega_id || !fecha_inicio || !fecha_fin || !duracion || !costo) {
       return res.status(400).send("Todos los campos son obligatorios");
     }
-    await controladorAlquiler.crearAlquiler(duracion, costo);
+    await controladorAlquiler.crearAlquiler(
+      id,
+      usuario_id,
+      bicicleta_id,
+      recogida_id,
+      entrega_id,
+      fecha_inicio,
+      fecha_fin,
+      duracion,
+      costo
+    );
     res.redirect(`/alquileres/lista`);
   } catch (error) {
     console.error("Error al crear el alquiler", error);
@@ -60,7 +80,7 @@ async function actualizarFormularioAlquiler(req, res) {
       return res.status(404).send("Alquiler no encontrado");
     }
 
-    res.render("alquileres/actualizarAlquiler", {alquiler});
+    res.render("alquileres/actualizarAlquiler", { alquiler });
   } catch (error) {
     console.error("Error al cargar el alquiler para editar", error);
     if (!res.headersSent) {
@@ -78,7 +98,7 @@ async function actualizarAlquiler(req, res) {
     fecha_inicio,
     fecha_fin,
     duracion,
-    costo
+    costo,
   } = req.body;
   const id = parseInt(req.params.id);
 
@@ -94,11 +114,13 @@ async function actualizarAlquiler(req, res) {
       duracion,
       costo
     );
-    console.log('Este es el console log' + alquilerActualizado);
+    console.log("Este es el console log" + alquilerActualizado);
     if (alquilerActualizado) {
       res.redirect("/alquileres/" + id);
     } else {
-      res.status(404).send("No se pudo actualizar el alquiler. Alquiler no encontrado.");
+      res
+        .status(404)
+        .send("No se pudo actualizar el alquiler. Alquiler no encontrado.");
     }
   } catch (error) {
     console.error("Error al actualizar el alquiler:", error);
@@ -110,6 +132,7 @@ async function eliminarAlquiler(req, res) {
   const { id } = req.params;
   try {
     await controladorAlquiler.eliminarAlquiler(id);
+    res.redirect("/alquileres/lista");
   } catch (error) {
     res.status(500).send("Hubo un error al eliminar el alquiler");
   }
