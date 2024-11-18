@@ -13,7 +13,7 @@ async function getAll() {
 
 async function buscarPorId(id) {
     try {
-      const bicicleta = await Bicicleta.findByPk(id); // Uso de Sequelize para buscar por primary key
+      const bicicleta = await Bicicleta.findByPk(id); 
       return bicicleta;
     } catch (error) {
       console.error('Error al buscar bicicleta por ID:', error);

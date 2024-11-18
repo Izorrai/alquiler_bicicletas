@@ -53,7 +53,7 @@ async function actualizarFormBicicleta(req, res) {
     const { id } = req.params;
     
     try {
-        const bicicleta = await controladorBicicleta.buscarPorId(id); // Obtener la bicicleta por id
+        const bicicleta = await controladorBicicleta.buscarPorId(id); 
         
         if (!bicicleta) {
             return res.status(404).send("Bicicleta no encontrada.");
@@ -73,14 +73,14 @@ async function actualizarBicicleta(req, res) {
     try {
         
 
-        // Llama a la función del controlador para actualizar la bicicleta
+       
         const bicicletaActualizada = await controladorBicicleta.actualizarBicicleta(id, marca, tipo, estado);
         
         if (!bicicletaActualizada) {
             return res.status(404).send("No se pudo actualizar la bicicleta. No encontrada.");
         }
 
-        // Redirige a la página de la bicicleta actualizada
+        
         res.redirect(`/bicicletas/${id}`);
     } catch (error) {
         console.error("Error al actualizar la bicicleta:", error);
@@ -92,7 +92,7 @@ async function eliminar(req, res) {
     const { id } = req.params;
     try {
         const resultado = await controladorBicicleta.eliminar(id);
-        res.redirect("/bicicletas/lista"); // Redirigir a la lista después de eliminar
+        res.redirect("/bicicletas/lista"); 
     } catch (error) {
         console.error("Error al eliminar la bicicleta:", error);
         res.status(500).send("Hubo un error al eliminar la bicicleta.");
