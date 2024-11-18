@@ -5,8 +5,28 @@ block content
 
     form(action='/alquileres/nuevo' method= 'POST')
         div 
+            label(for='usuario_id') ID Usuario
+            input(type='number' name='usuario_id', required= true)
+        div 
+            label(for='bicicleta_id') ID Bicicleta
+            input(type='number' name='bicicleta_id', required= true)
+        div
+            label(for='recogida_id') ID Recogida 
+            input(type='number' name='recogida_id', required= true)
+        div
+            label(for='entrega_id') ID Entrega
+            input(type='number' name='entrega_id', required= true)
+        div
             label(for='fecha_inicio') Fecha de inicio
             input(type='date' name='fecha_inicio', required= true)
-
+        div
             label(for='fecha_fin') Fecha de finalización
-            input(type='' name='', required= true)
+            input(type='date' name='fecha_fin', required= true)
+        div
+            label(for='duracion') Duracion 
+            input(type='number' name='duracion', required= true)
+        div
+            label(for='costo') Costo 
+            input(type='number' name='costo', required= true)
+
+        button(type='submit') Crear Alquiler

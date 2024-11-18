@@ -18,20 +18,32 @@ async function buscarAlquilerPorId(id) {
   }
 }
 
-async function crearAlquiler(duracion, costo) {
+async function crearAlquiler( 
+  id, 
+  usuario_id,
+  bicicleta_id,
+  recogida_id,
+  entrega_id,
+  fecha_inicio,
+  fecha_fin,
+  duracion,
+  costo) {
   try {
-    if (!duracion || !costo) {
-      throw new Error("Faltan datos obligatorios");
-    }
-
     const nuevoAlquiler = await Alquiler.create({
+      id,
+      usuario_id,
+      bicicleta_id,
+      recogida_id,
+      entrega_id,
+      fecha_inicio,
+      fecha_fin,
       duracion,
       costo,
     });
 
     return nuevoAlquiler;
   } catch (error) {
-    console.error("Error al crear oagi: ", error);
+    console.error("Error al crear alquiler: ", error);
   }
 }
 

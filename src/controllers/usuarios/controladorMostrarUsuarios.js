@@ -75,15 +75,12 @@ async function actualizarUsuario(req, res) {
 }
 
 async function elimimnarUsuario(req, res) {
-
     const { id } = req.params;
-
     try {
         await controladorUsuario.eliminarUsuario(id);
-        res.redirect('usuarios/lista');
-
+        res.redirect('/usuarios/lista');
     } catch (error) {
-        res.status(500).send('Hubo un error al eliminar el usuario');
+        res.status(500).send('Hubo un error al eliminar el usuario.');
     }
 }
 
