@@ -80,8 +80,8 @@ async function actualizarBicicleta(req, res) {
             return res.status(404).send("No se pudo actualizar la bicicleta. No encontrada.");
         }
 
-        
-        res.redirect(`/bicicletas/${id}`);
+        // Redirige a la página de la bicicleta actualizada
+        res.redirect(`/bicicletas/lista`);
     } catch (error) {
         console.error("Error al actualizar la bicicleta:", error);
         res.status(500).send("Hubo un error al actualizar la bicicleta.");
