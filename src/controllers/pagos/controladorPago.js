@@ -46,7 +46,6 @@ async function actualizarPago(id, factura, metodo_pago) {
   try {
     
     const pago = await Pago.findByPk(id);
-
     if (!pago) {
       throw new Error('pago no encontrado');
     }
