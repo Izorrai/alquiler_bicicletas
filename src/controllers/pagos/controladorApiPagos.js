@@ -1,4 +1,4 @@
-import controladorPago from "./controllers/pagos/controladorPago.js";
+import controladorPago from "./controladorPago.js";
 
 async function getAllPagos(req, res) {
   const pagos = await controladorPago.getAll();

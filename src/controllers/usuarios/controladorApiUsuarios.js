@@ -1,4 +1,4 @@
-import controladorUsuario from "./controllers/usuarios/controladorUsuario.js";
+import controladorUsuario from "./controladorUsuario.js";
 
 async function getAllUsuarios(req, res) {
   const usuarios = await controladorUsuario.getAllUsers();

@@ -1,4 +1,4 @@
-import controladorAlquiler from "./controladores/alquileres/controladorAlquiler.js";
+import controladorAlquiler from "./controladorAlquiler.js";
 
 async function getAllAlquileres(req, res) {
   const alquileres = await controladorAlquiler.getAllAlquileres();

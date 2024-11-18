@@ -1,4 +1,4 @@
-import controladorBicicleta from "./controllers/bicicletas/controladorBicicleta.js";
+import controladorBicicleta from "./controladorBicicleta.js";
 
 async function getAllBicicletas(req, res) {
   const bicicletas = await controladorBicicleta.getAll();

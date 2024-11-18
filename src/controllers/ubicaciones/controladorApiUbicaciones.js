@@ -1,4 +1,4 @@
-import controladorUbicaciones from "./controllers/ubicaciones/controladorUbicaciones.js";
+import controladorUbicaciones from "./controladorUbicaciones.js";
 
 async function getAllUbicaciones(req, res) {
   const ubicaciones = await controladorUbicaciones.getAll();
