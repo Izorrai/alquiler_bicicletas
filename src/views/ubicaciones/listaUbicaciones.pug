@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   
-  a.boton.boton-nuevo(href="/ubicacion/nueva") 
+  a.boton.boton-nuevo(href="/ubicaciones/nueva") 
     i.fas.fa-plus
     | Nueva Ubicación
 
@@ -28,5 +28,5 @@ block content
               button.delete-button(type="submit") Eliminar
 
 
-          form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="POST")
-              button.actualizar-button(type="submit") Actualizar
+          form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="GET")
+            button.actualizar-button(type="submit") Actualizar

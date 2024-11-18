@@ -2,15 +2,14 @@ extends ../layout
 
 block content
     h3 Crear Nueva Ubicación
-
-    form(action="/ubicacion/nueva", method="POST")
+    form(action="/ubicaciones/nueva", method="POST")
         .form-group
             label(for="estacion") Nombre Estación
-            input(type="text" name="nombreEstación" id="nombreEstacion" required)
+            input(type="text" name="nombre_estacion" id="nombreEstacion" required)
 
         .form-group
             label(for="direccion") Dirección
-            input(type="text" name="nombreDireccion" id="nombreDireccion" required)
+            input(type="text" name="direccion" id="nombreDireccion" required)
         
         .form-group
             label(for="latitud") Latitud

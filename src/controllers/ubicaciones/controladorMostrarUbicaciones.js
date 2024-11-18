@@ -18,7 +18,7 @@ async function mostrarPorId(req, res) {
       if (!ubicacion) {
         return res.status(404).send("Ubicación no encontrada");
       }
-      res.render("ubicaciones/mostrarUbicacionPorId", { ubicacion });
+      res.render("ubicaciones/mostrarUbicacionesPorId", { ubicacion });
     } catch (error) {
       console.error("Error al obtener la ubicación:", error);
       res.status(500).send("Hubo un error al obtener la ubicacion.");
@@ -36,7 +36,7 @@ async function crearFormulario(req, res) {
 
 async function crear(req, res) {
     const {nombre_estacion, direccion, latitud, longitud } = req.body;
-    
+    console.log ("crear ubicación",req.body)
     try {
         
         if (!nombre_estacion || !direccion|| !latitud || !longitud) {
@@ -52,47 +52,43 @@ async function crear(req, res) {
 }
 
 
+async function actualizarFormUbicacion(req, res) {
+    const { id } = req.params;
+    
+    try {
+        const ubicacion = await controladorUbicacion.buscarPorId(id); // Obtener la ubicacion por id
+        
+        if (!ubicacion) {
+            return res.status(404).send("Ubicación no encontrada.");
+        }
+
+        res.render("ubicaciones/actualizarUbicacion", { ubicacion });
+    } catch (error) {
+        console.error("Error al cargar la ubicacion para editar:", error);
+        res.status(500).send("Hubo un error al cargar la ubicacion para editar.");
+    }
+}
+
 async function actualizarUbicacion(req, res) {
-    const { nombre_estacion, direccion, latitud, longitud} = req.body;
+    const { nombre_estacion, direccion, latitud, longitud } = req.body;
     const id = parseInt(req.params.id);
 
     try {
         
-
-        // Llama a la función del controlador para actualizar la bicicleta
+        // Llama a la función del controlador para actualizar la ubicacion
         const ubicacionActualizada = await controladorUbicacion.actualizarUbicacion(id, nombre_estacion, direccion, latitud, longitud);
         
         if (!ubicacionActualizada) {
-            return res.status(404).send("No se pudo actualizar la ubicación. No encontrada.");
+            return res.status(404).send("No se pudo actualizar la ubicacion. No encontrada.");
         }
 
-        // Redirige a la página de la ubicación actualizada
-        res.redirect(`/ubicaciones/${id}`);
+        // Redirige a la página de la ubicacion actualizada
+        res.redirect(`/ubicaciones/lista`);
     } catch (error) {
-        console.error("Error al actualizar la ubicación:", error);
-        res.status(500).send("Hubo un error al actualizar la ubicación.");
+        console.error("Error al actualizar la ubicacion:", error);
+        res.status(500).send("Hubo un error al actualizar la ubicacion.");
     }
 }
-
-
-
-/*async function actualizarUbicacion(req, res) {
-    const { id } = req.params;
-    
-    try {
-        const ubicacion= await controladorUbicacion.buscarPorId(id); // Obtener la ubicación por id
-        
-        // Verificar si la ubicación existe
-        if (!ubicacion) {
-            return res.status(404).send("ubicación no encontrada.");
-        }
-
-        res.render("ubicaciones/actualizarUbicación ", { ubicacion });
-    } catch (error) {
-        console.error("Error al cargar la bicicleta para editar:", error);
-        res.status(500).send("Hubo un error al cargar la ubicación para editar.");
-    }
-}*/
 
 
 
@@ -113,6 +109,7 @@ export const functions = {
     crearFormulario,
     mostrarPorId,
     crear,
+    actualizarFormUbicacion,
     actualizarUbicacion,
     eliminar
 }
