@@ -7,7 +7,7 @@ async function getAll(req, res) {
         res.render("pagos/listaPagos", { pagos });
     } catch (error) {
         console.error("Error al obtener las pagos:", error);
-        res.status(500).send("Hubo un error al obtener las pagos.");
+        res.status(500).send("Hubo un error al obtener los pagos.");
     }
 }
 
@@ -21,7 +21,7 @@ async function mostrarPorId(req, res) {
       res.render("pagos/mostrarPago", { pago });
     } catch (error) {
       console.error("Error al obtener la pago:", error);
-      res.status(500).send("Hubo un error al obtener la pago.");
+      res.status(500).send("Hubo un error al obtener el pago.");
     }
   }
 
@@ -29,7 +29,7 @@ async function crearFormulario(req, res) {
     try {
         res.render("pagos/nuevoPago");
     } catch (error) {
-        console.error("Error al renderizar el formulario de nueva pago:", error);
+        console.error("Error al renderizar el formulario de nuevo pago:", error);
         res.status(500).send("Hubo un error al cargar el formulario.");
     }
 }

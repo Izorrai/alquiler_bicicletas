@@ -38,6 +38,11 @@ const Usuario = sequelize.define("usuarios",{
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: true
+  },
+  estado: {
+    type: DataTypes.ENUM('CLIENTE', 'ADMIN'),
+    defaultValue: 'CLIENTE',
+    allowNull: true
   }
 }, {
   sequelize,
@@ -46,3 +51,5 @@ const Usuario = sequelize.define("usuarios",{
 });
 
 export default Usuario
+
+

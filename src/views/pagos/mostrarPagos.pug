@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Alquileres de Bicicletas
+  body
+    h1 Alquileres de Bicicletas
+
+    each usuario in usuarios
+      .usuario
+        h2= usuario.nombre + ' ' + usuario.apellido
+        p Email: #{usuario.email}
+        
+        each alquiler in usuario.alquileres
+          .alquiler
+            h3 Alquiler ID: #{alquiler.alquiler_id}
+            p Fecha de inicio: #{alquiler.fecha_inicio}
+            p Fecha de fin: #{alquiler.fecha_fin}
+            p Costo: $#{alquiler.costo}
+            
+            if alquiler.facturas.length > 0
+              h4 Facturas:
+              ul
+                each factura in alquiler.facturas
+                  li Factura #{factura}
+            else
+              p No hay facturas asociadas
