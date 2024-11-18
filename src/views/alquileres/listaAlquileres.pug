@@ -1,0 +1,46 @@
+extends ../layout 
+
+block content 
+    .contenedor 
+        .encabezado 
+            h1.titulo Lista de Alquileres 
+            a.boton.boton-nuevo(href="/alquileres/nuevo")
+                u.fas.fa-plus 
+                | Nuevo Pago 
+        
+        .contenedor.tabla 
+            table.tabla 
+                thead 
+                    tr 
+                        th ID Alquiler 
+                        th ID Usuario 
+                        th ID Bicicleta 
+                        th ID Recogida 
+                        th ID Entrega
+                        th Fecha Inicio 
+                        th Fecha Fin 
+                        th Duracion 
+                        th Costo 
+                tbody 
+                    each alquiler in alquileres 
+                        tr 
+                            td= alquiler.alquiler_id 
+                            td= alquiler.usuario_id 
+                            td= alquiler.bicicleta_id 
+                            td= alquiler.recogida_id 
+                            td= alquiler.entrega_id 
+                            td= alquiler.fecha_inicio 
+                            td= alquiler.fecha_fin 
+                            td= alquiler.duracion 
+                            td= alquiler.costo 
+                            td.acciones 
+                                a.boton.boton-editar(href=`/alquileres/${alquiler.alquiler_id}/actualizar`)
+                                    i.fas.fa-edit 
+                                    | Editar 
+                                form.formulario-eliminar(action=`/alquileres/${alquiler.alquiler_id}/eliminar` method="POST")
+                                    input(type="hidden" name="_method" value="DELETE")
+                                    button.boton.boton-eliminar(type="submit" onclick="return confirm('¿Estás seguro de eliminar este Alquiler?')") 
+                                        i.fas.fa-trash 
+                                        | Eliminar 
+                                
+                        
