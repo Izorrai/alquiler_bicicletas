@@ -1,0 +1,12 @@
+extends ../layout 
+
+block content 
+    h1 Crear nuevo alquiler 
+
+    form(action='/alquileres/nuevo' method= 'POST')
+        div 
+            label(for='fecha_inicio') Fecha de inicio
+            input(type='date' name='fecha_inicio', required= true)
+
+            label(for='fecha_fin') Fecha de finalización
+            input(type='' name='', required= true)
