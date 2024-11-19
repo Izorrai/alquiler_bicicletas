@@ -1,89 +1,60 @@
 import Bicicleta from "../../models/bicicletas.js";
-
+import errors from "../../helpers/errorBicicletas.js";
 
 async function getAll() {
-  try {
-    const bicicletas = await Bicicleta.findAll();
-    return bicicletas;
-  } catch (error) {
-    console.error('Error al obtener bicicletas:', error);
-    throw new Error('No se pudieron obtener las bicicletas');
-  }
+  const bicicletas = await Bicicleta.findAll();
+
+  if (!bicicletas) throw new errors.BICICLETA_LIST_ERROR();
+
+  return bicicletas;
 }
 
 async function buscarPorId(id) {
-    try {
-      const bicicleta = await Bicicleta.findByPk(id); // Uso de Sequelize para buscar por primary key
-      return bicicleta;
-    } catch (error) {
-      console.error('Error al buscar bicicleta por ID:', error);
-      throw new Error('No se pudo encontrar la bicicleta');
-    }
-  }
-
+  const bicicleta = await Bicicleta.findByPk(id);
+  if (!bicicleta) throw new errors.BICICLETA_NOT_FOUND();
+  return bicicleta;
+}
 
 async function crear(marca, tipo, estado) {
-  try {
-    if (!marca || !tipo || !estado) {
-      throw new Error('Faltan datos obligatorios (marca, tipo, estado)');
-    }
+  if (!marca || !tipo || !estado) throw new errors.FALTAN_DATOS_BICICLETA();
 
-    const nuevaBicicleta = await Bicicleta.create({
-      marca,
-      tipo,
-      estado
-    });
+  const nuevaBicicleta = await Bicicleta.create({
+    marca,
+    tipo,
+    estado,
+  });
 
-    return nuevaBicicleta;
-  } catch (error) {
-    console.error('Error al crear bicicleta:', error);
-    throw new Error('No se pudo crear la bicicleta');
-  }
+  if (!nuevaBicicleta) throw new errors.BICICLETA_NO_CREADA();
+
+  return nuevaBicicleta;
 }
-
 
 async function actualizarBicicleta(id, marca, tipo, estado) {
-  try {
-    
-    const bicicleta = await Bicicleta.findByPk(id);
+  const bicicleta = await Bicicleta.findByPk(id);
 
-    if (!bicicleta) {
-      throw new Error('Bicicleta no encontrada');
-    }
+  if (!bicicleta) throw new errors.BICICLETA_NO_ENCONTRADA();
 
-    
-    bicicleta.marca = marca || bicicleta.marca;
-    bicicleta.tipo = tipo || bicicleta.tipo;
-    bicicleta.estado = estado || bicicleta.estado;
+  bicicleta.marca = marca || bicicleta.marca;
+  bicicleta.tipo = tipo || bicicleta.tipo;
+  bicicleta.estado = estado || bicicleta.estado;
 
-    
-    await bicicleta.save();
+  const nuevaBicicleta = await bicicleta.save();
 
-    return bicicleta;
-  } catch (error) {
-    console.error('Error al actualizar bicicleta:', error);
-    throw new Error('No se pudo actualizar la bicicleta');
-  }
+  if (!nuevaBicicleta) throw new errors.BICICLETA_NO_ACTUALIZADA();
+
+  return nuevaBicicleta;
 }
 
-
 async function eliminar(id) {
-  try {
-    
-    const bicicleta = await Bicicleta.findByPk(id);
+  const bicicleta = await Bicicleta.findByPk(id);
 
-    if (!bicicleta) {
-      throw new Error('Bicicleta no encontrada');
-    }
+  if (!bicicleta) throw new errors.BICICLETA_NOT_FOUND();
 
-    
-    await bicicleta.destroy();
+  const biciAEliminar = await bicicleta.destroy();
 
-    return { message: 'Bicicleta eliminada correctamente' };
-  } catch (error) {
-    console.error('Error al eliminar bicicleta:', error);
-    throw new Error('No se pudo eliminar la bicicleta');
-  }
+  if (!biciAEliminar) throw new errors.BICICLETA_NO_ELIMINADA();
+
+  return { message: "Bicicleta eliminada correctamente" };
 }
 
 export const functions = {
@@ -91,10 +62,7 @@ export const functions = {
   buscarPorId,
   crear,
   actualizarBicicleta,
-  eliminar
+  eliminar,
 };
 
 export default functions;
-
-
-

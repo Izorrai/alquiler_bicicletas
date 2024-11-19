@@ -6,32 +6,31 @@ async function getAllAlquileres(req, res) {
 
     res.render("alquileres/listaAlquileres", { alquileres });
   } catch (error) {
-    console.error("Error al obtener los alquileres", error);
-    res.status(500).send("Hubo un error al obtener los alquileres");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
 async function mostrarAlquilerPorId(req, res) {
-  const id = parseInt(req.params.id);
-
+  
   try {
+    const id = parseInt(req.params.id);
     const alquiler = await controladorAlquiler.buscarAlquilerPorId(id);
-    if (!alquiler) {
-      return res.status(404).send("Alquiler no encontrado");
-    }
+
     res.render("alquileres/mostrarAlquiler", { alquiler });
   } catch (error) {
-    console.error("Error al obtener el alquiler; ", error);
-    res.status(500).send("Hubo un error al obtener el alquiler");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
 async function crearFormularioAlquiler(req, res) {
   try {
     res.render("alquileres/nuevoAlquiler");
+
   } catch (error) {
-    console.error("Error al renderizar el formulario de nuevo alquiler", error);
-    res.status(500).send("Hubo un error al cargar el formulario de alquileres");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
@@ -49,9 +48,6 @@ async function crearAlquiler(req, res) {
   } = req.body;
 
   try {
-    if (!usuario_id || !bicicleta_id || !recogida_id || !entrega_id || !fecha_inicio || !fecha_fin || !duracion || !costo) {
-      return res.status(400).send("Todos los campos son obligatorios");
-    }
     await controladorAlquiler.crearAlquiler(
       id,
       usuario_id,
@@ -63,10 +59,11 @@ async function crearAlquiler(req, res) {
       duracion,
       costo
     );
+
     res.redirect(`/alquileres/lista`);
   } catch (error) {
-    console.error("Error al crear el alquiler", error);
-    res.status(500).send("Hubo un error al crear el alquiler");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
@@ -76,16 +73,10 @@ async function actualizarFormularioAlquiler(req, res) {
   try {
     const alquiler = await controladorAlquiler.buscarAlquilerPorId(id);
 
-    if (!alquiler) {
-      return res.status(404).send("Alquiler no encontrado");
-    }
-
     res.render("alquileres/actualizarAlquiler", { alquiler });
   } catch (error) {
-    console.error("Error al cargar el alquiler para editar", error);
-    if (!res.headersSent) {
-      res.status(500).send("Hubo un error al cargar el alquiler para editar");
-    }
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
@@ -103,7 +94,7 @@ async function actualizarAlquiler(req, res) {
   const id = parseInt(req.params.id);
 
   try {
-    const alquilerActualizado = await controladorAlquiler.actualizarAlquiler(
+    await controladorAlquiler.actualizarAlquiler(
       id,
       usuario_id,
       bicicleta_id,
@@ -114,17 +105,10 @@ async function actualizarAlquiler(req, res) {
       duracion,
       costo
     );
-    console.log("Este es el console log" + alquilerActualizado);
-    if (alquilerActualizado) {
-      res.redirect("/alquileres/" + id);
-    } else {
-      res
-        .status(404)
-        .send("No se pudo actualizar el alquiler. Alquiler no encontrado.");
-    }
+    res.redirect('alquileres/lista');
   } catch (error) {
-    console.error("Error al actualizar el alquiler:", error);
-    res.status(500).send("Hubo un error al actualizar el alquiler");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
@@ -134,7 +118,8 @@ async function eliminarAlquiler(req, res) {
     await controladorAlquiler.eliminarAlquiler(id);
     res.redirect("/alquileres/lista");
   } catch (error) {
-    res.status(500).send("Hubo un error al eliminar el alquiler");
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
 
