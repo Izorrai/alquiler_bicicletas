@@ -38,11 +38,16 @@ const Usuario = sequelize.define("usuarios",{
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: true
+  },
+  roles: {
+    type: DataTypes.ENUM("CLIENTE", "ADMIN"),
+    allowNull: true
   }
+
 }, {
   sequelize,
   tableName: 'usuarios',
   timestamps: false
 });
 
-export default Usuario
+export default Usuario;

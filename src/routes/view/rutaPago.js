@@ -2,7 +2,7 @@ import { Router } from "express";
 import controladorMostrarPagos from "../../controllers/pagos/controladorMostrarPago.js";
 const router = Router();
 
-router.get("/lista",controladorMostrarPagos.getAll);
+router.get("/lista",controladorMostrarPagos.getAll); 
 router.get("/nuevo",controladorMostrarPagos.crearFormulario);
 router.post("/nuevo",controladorMostrarPagos.crear)
 router.get("/:id",controladorMostrarPagos.mostrarPorId);

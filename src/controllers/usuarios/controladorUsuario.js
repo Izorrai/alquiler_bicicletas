@@ -1,4 +1,6 @@
+import { hashContraseña } from "../../config/bcryct.js";
 import Usuario from "../../models/usuarios.js";
+// importar ruta errores
 
 async function getAllUsers() {
     try {
@@ -20,26 +22,38 @@ async function buscarUserPorId(id) {
     }
 }
 
-async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
-    try {
-        if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
-            throw new Error('faltan datos obligatorios');
+
+async function buscarPorEmail(email){
+    const usuario = await Usuario.findOne({
+        where: {
+            email: email
         }
-
-        const nuevoUsuario = await Usuario.create({
-            email,
-            contraseña,
-            nombre,
-            apellido,
-            telefono,
-            direccion
-        });
-
-        return nuevoUsuario;
-    } catch (error) {
-        console.error('Error al crear el usuario', error);
-    }
+    })
+    return usuario;
 }
+
+
+async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion, role = "CLIENT") {
+    if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
+        throw new Error('Faltan datos obligatorios'); // meter nuestro error
+    }
+    const oldUser = await getByEmail(email);
+    if(oldUser){
+        throw new Error ("ya existe usuario con ese email") // meter nuestro error
+    }
+    const hash = await hashContraseña(contraseña);
+    const nuevoUsuario = await Usuario.create({
+      nombre,
+      apellido,
+      email,
+      telefono,
+      direccion,
+      contraseña:hash,
+      role
+    });
+   return nuevoUsuario;
+}
+
 
 async function actualizarUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
 
@@ -85,6 +99,7 @@ async function eliminarUsuario(id) {
 export const functions = {
     getAllUsers,
     buscarUserPorId,
+    buscarPorEmail,
     crearUsuario,
     actualizarUsuario,
     eliminarUsuario
