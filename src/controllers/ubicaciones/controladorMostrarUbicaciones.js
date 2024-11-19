@@ -1,120 +1,105 @@
-import controladorUbicacion from "../../controllers/ubicaciones/controladorUbicaciones.js"
+import controladorUbicacion from "../../controllers/ubicaciones/controladorUbicaciones.js";
 
 async function getAll(req, res) {
-    try {
-        const ubicaciones = await controladorUbicacion.getAll();
-        console.log(ubicaciones);
-        res.render("ubicaciones/listaUbicaciones", { ubicaciones });
-    } catch (error) {
-        console.error("Error al obtener las ubicaciones:", error);
-        res.status(500).send("Hubo un error al obtener las ubicaciones.");
-    }
+  try {
+    const ubicaciones = await controladorUbicacion.getAll();
+    console.log(ubicaciones);
+    res.render("ubicaciones/listaUbicaciones", { ubicaciones });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function mostrarPorId(req, res) {
+  try {
     const id = parseInt(req.params.id);
-    try {
-      const ubicacion = await controladorUbicacion.buscarPorId(id); 
-      if (!ubicacion) {
-        return res.status(404).send("Ubicación no encontrada");
-      }
-      res.render("ubicaciones/mostrarUbicacionesPorId", { ubicacion });
-    } catch (error) {
-      console.error("Error al obtener la ubicación:", error);
-      res.status(500).send("Hubo un error al obtener la ubicacion.");
-    }
+    const ubicacion = await controladorUbicacion.buscarPorId(id);
+
+    res.render("ubicaciones/mostrarUbicacionesPorId", { ubicacion });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
+}
 
 async function crearFormulario(req, res) {
-    try {
-        res.render("ubicaciones/nuevaUbicacion");
-    } catch (error) {
-        console.error("Error al renderizar el formulario de nueva ubicación:", error);
-        res.status(500).send("Hubo un error al cargar el formulario.");
-    }
+  try {
+    res.render("ubicaciones/nuevaUbicacion");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crear(req, res) {
-    const {nombre_estacion, direccion, latitud, longitud } = req.body;
-    console.log ("crear ubicación",req.body)
-    try {
-        
-        if (!nombre_estacion || !direccion|| !latitud || !longitud) {
-            return res.status(400).send("Todos los campos son obligatorios.");
-        }
-        
-        await controladorUbicacion.crear(nombre_estacion, direccion, latitud, longitud);
-        res.redirect(`/ubicaciones/lista`);  
-    } catch (error) {
-        console.error("Error al crear la ubicación:", error);
-        res.status(500).send("Hubo un error al crear la ubicación.");
-    }
+  try {
+    const { nombre_estacion, direccion, latitud, longitud } = req.body;
+
+    await controladorUbicacion.crear(
+      nombre_estacion,
+      direccion,
+      latitud,
+      longitud
+    );
+    res.redirect(`/ubicaciones/lista`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
-
 async function actualizarFormUbicacion(req, res) {
+  try {
     const { id } = req.params;
-    
-    try {
-        const ubicacion = await controladorUbicacion.buscarPorId(id); // Obtener la ubicacion por id
-        
-        if (!ubicacion) {
-            return res.status(404).send("Ubicación no encontrada.");
-        }
+    const ubicacion = await controladorUbicacion.buscarPorId(id); // Obtener la ubicacion por id
 
-        res.render("ubicaciones/actualizarUbicacion", { ubicacion });
-    } catch (error) {
-        console.error("Error al cargar la ubicacion para editar:", error);
-        res.status(500).send("Hubo un error al cargar la ubicacion para editar.");
-    }
+    res.render("ubicaciones/actualizarUbicacion", { ubicacion });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function actualizarUbicacion(req, res) {
+  try {
     const { nombre_estacion, direccion, latitud, longitud } = req.body;
     const id = parseInt(req.params.id);
 
-    try {
-        
-        // Llama a la función del controlador para actualizar la ubicacion
-        const ubicacionActualizada = await controladorUbicacion.actualizarUbicacion(id, nombre_estacion, direccion, latitud, longitud);
-        
-        if (!ubicacionActualizada) {
-            return res.status(404).send("No se pudo actualizar la ubicacion. No encontrada.");
-        }
+    await controladorUbicacion.actualizarUbicacion(
+      id,
+      nombre_estacion,
+      direccion,
+      latitud,
+      longitud
+    );
 
-        // Redirige a la página de la ubicacion actualizada
-        res.redirect(`/ubicaciones/lista`);
-    } catch (error) {
-        console.error("Error al actualizar la ubicacion:", error);
-        res.status(500).send("Hubo un error al actualizar la ubicacion.");
-    }
+    res.redirect(`/ubicaciones/lista`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
-
-
 
 async function eliminar(req, res) {
+  try {
     const { id } = req.params;
-    try {
-        await controladorUbicacion.eliminar(id);
-        res.redirect("/ubicaciones/lista");  
-    } catch (error) {
-        res.status(500).send("Hubo un error al eliminar la ubicación.");
-    }
+    await controladorUbicacion.eliminar(id);
+    res.redirect("/ubicaciones/lista");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
-
-
 
 export const functions = {
-    getAll,
-    crearFormulario,
-    mostrarPorId,
-    crear,
-    actualizarFormUbicacion,
-    actualizarUbicacion,
-    eliminar
-}
+  getAll,
+  crearFormulario,
+  mostrarPorId,
+  crear,
+  actualizarFormUbicacion,
+  actualizarUbicacion,
+  eliminar,
+};
 
 export default functions;
-
-
-

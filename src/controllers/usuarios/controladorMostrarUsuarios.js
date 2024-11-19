@@ -1,96 +1,86 @@
-import controladorUsuario from "../../controllers/usuarios/controladorUsuario.js"
+import controladorUsuario from "../../controllers/usuarios/controladorUsuario.js";
 
 async function getAllUsers(req, res) {
-    try {
-        const usuarios = await controladorUsuario.getAllUsers();
-        res.render("usuarios/listaUsuarios", { usuarios });
-    } catch (error) {
-        console.error('Error al obtener los usuarios: ', error);
-        res.status(500).send('Hubo un error al obtener los usuarios');
-    }
+  try {
+    const usuarios = await controladorUsuario.getAllUsers();
+    res.render("usuarios/listaUsuarios", { usuarios });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function mostrarUsuarioPorId(req, res) {
+  try {
     const id = parseInt(req.params.id);
-    try {
-        const usuario = await controladorUsuario.buscarUserPorId(id);
-        if (!usuario) {
-            return res.status(404).send('Usuario no encontrado');
-        }
-        res.render('usuarios/mostrarUsuarioPorId', { usuario });
+    const usuario = await controladorUsuario.buscarUserPorId(id);
 
-    } catch (error) {
-        console.error('Error al obtener el usuario')
-        res.status(500).send('Hubo un error al obtener el usuario');
-    }
+    res.render("usuarios/mostrarUsuarioPorId", { usuario });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crearFormularioUsuario(req, res) {
-
-    try {
-        res.render('usuarios/nuevoUsuario');
-
-    } catch (error) {
-        console.error('Error al renderizar el fomulario de nuevos usuario:', error);
-        res.status(500).send('Hubo un error al cargar el formulario.');
-    }
+  try {
+    res.render("usuarios/nuevoUsuario");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crearUsuario(req, res) {
-    const { email,
-        contraseña,
-        nombre,
-        apellido,
-        telefono,
-        direccion, } = req.body;
+  try {
+    const { email, contraseña, nombre, apellido, telefono, direccion } =
+      req.body;
 
-    try {
-        if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
-            return res.status(400).send('Todos los campos son obligatorios.');
-        }
-
-        await controladorUsuario.crearUsuario(email, contraseña, nombre, apellido, telefono, direccion);
-        res.redirect(`/usuarios/lista`);
-    } catch (error) {
-        console.error('Error al crear la bicicleta', error);
-        res.status(500).send('Hubo un error al crear la bicicleta.');
-    }
+    await controladorUsuario.crearUsuario(
+      email,
+      contraseña,
+      nombre,
+      apellido,
+      telefono,
+      direccion
+    );
+    res.redirect(`/usuarios/lista`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function actualizarUsuario(req, res) {
+  try {
     const { id } = req.params;
+    const usuario = await controladorUsuario.buscarUserPorId(id);
 
-    try {
-        const usuario = await controladorUsuario.buscarUserPorId(id);
-
-        if (!usuario) {
-            return res.status(404).send('Usuario no encontrado.');
-        }
-        res.render('usuarios/actualizarUsuario', { usuario });
-
-    } catch (error) {
-        console.error('Error al cargar el usuario para editar: ', error);
-        res.status(500).send('Hubo un error al cargar la bicicleta para editar.');
-    }
+    res.render("usuarios/actualizarUsuario", { usuario });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function elimimnarUsuario(req, res) {
+  try {
     const { id } = req.params;
-    try {
-        await controladorUsuario.eliminarUsuario(id);
-        res.redirect('/usuarios/lista');
-    } catch (error) {
-        res.status(500).send('Hubo un error al eliminar el usuario.');
-    }
+    await controladorUsuario.eliminarUsuario(id);
+    res.redirect("/usuarios/lista");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 export const functions = {
-    getAllUsers,
-    mostrarUsuarioPorId,
-    crearFormularioUsuario,
-    crearUsuario,
-    actualizarUsuario,
-    elimimnarUsuario
+  getAllUsers,
+  mostrarUsuarioPorId,
+  crearFormularioUsuario,
+  crearUsuario,
+  actualizarUsuario,
+  elimimnarUsuario,
 };
 
 export default functions;

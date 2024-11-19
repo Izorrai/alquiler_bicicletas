@@ -1,25 +1,24 @@
 import Alquiler from "../../models/alquileres.js";
+import errors from "../../helpers/errorAlquileres.js";
 
 async function getAllAlquileres() {
-  try {
-    const alquileres = await Alquiler.findAll();
-    return alquileres;
-  } catch (error) {
-    console.error("Error al obtener alquileres", error);
-  }
+  const alquileres = await Alquiler.findAll();
+
+  if (!alquileres) throw new errors.ALQUILER_LIST_ERROR;
+
+  return alquileres;
 }
 
 async function buscarAlquilerPorId(id) {
-  try {
-    const alquiler = await Alquiler.findByPk(id);
-    return alquiler;
-  } catch (error) {
-    console.error("Error al buscar el alquiler por ID", error);
-  }
+  const alquiler = await Alquiler.findByPk(id);
+
+  if (!alquiler) throw new errors.ALQUILER_NOT_FOUND;
+
+  return alquiler;
 }
 
-async function crearAlquiler( 
-  id, 
+async function crearAlquiler(
+  id,
   usuario_id,
   bicicleta_id,
   recogida_id,
@@ -27,24 +26,22 @@ async function crearAlquiler(
   fecha_inicio,
   fecha_fin,
   duracion,
-  costo) {
-  try {
-    const nuevoAlquiler = await Alquiler.create({
-      id,
-      usuario_id,
-      bicicleta_id,
-      recogida_id,
-      entrega_id,
-      fecha_inicio,
-      fecha_fin,
-      duracion,
-      costo,
-    });
+  costo
+) {
+  const nuevoAlquiler = await Alquiler.create({
+    id,
+    usuario_id,
+    bicicleta_id,
+    recogida_id,
+    entrega_id,
+    fecha_inicio,
+    fecha_fin,
+    duracion,
+    costo,
+  });
+  if (!nuevoAlquiler) throw new errors.ALQUILER_YA_EXISTE;
 
-    return nuevoAlquiler;
-  } catch (error) {
-    console.error("Error al crear alquiler: ", error);
-  }
+  return nuevoAlquiler;
 }
 
 async function actualizarAlquiler(
@@ -58,41 +55,30 @@ async function actualizarAlquiler(
   duracion,
   costo
 ) {
-  try {
-    const alquiler = await Alquiler.findByPk(id);
-    if (!alquiler) {
-      throw new Error("Alquiler no encontrado");
-    }
-    alquiler.usuario_id = usuario_id || alquiler.usuario_id;
-    alquiler.bicicleta_id = bicicleta_id || alquiler.bicicleta_id;
-    alquiler.recogida_id = recogida_id || alquiler.recogida_id;
-    alquiler.entrega_id = entrega_id || alquiler.entrega_id;
-    alquiler.fecha_inicio = fecha_inicio || alquiler.fecha_inicio;
-    alquiler.fecha_fin = fecha_fin || alquiler.fecha_fin;
-    alquiler.duracion = duracion || alquiler.duracion;
-    alquiler.costo = costo || alquiler.costo;
+  const alquiler = await Alquiler.findByPk(id);
 
-    await alquiler.save();
-    return alquiler;
-  } catch (error) {
-    console.error("Error al actualizar alquiler:", error);
-    throw new Error("No se pudo actualizar el alquiler");
-  }
+  if (!alquiler) throw new errors.ALQUILER_NOT_FOUND;
+
+  alquiler.usuario_id = usuario_id || alquiler.usuario_id;
+  alquiler.bicicleta_id = bicicleta_id || alquiler.bicicleta_id;
+  alquiler.recogida_id = recogida_id || alquiler.recogida_id;
+  alquiler.entrega_id = entrega_id || alquiler.entrega_id;
+  alquiler.fecha_inicio = fecha_inicio || alquiler.fecha_inicio;
+  alquiler.fecha_fin = fecha_fin || alquiler.fecha_fin;
+  alquiler.duracion = duracion || alquiler.duracion;
+  alquiler.costo = costo || alquiler.costo;
+
+  await alquiler.save();
+  return alquiler;
 }
 
 async function eliminarAlquiler(id) {
-  try {
-    const alquiler = await Alquiler.findByPk(id);
+  const alquiler = await Alquiler.findByPk(id);
 
-    if (!alquiler) {
-      throw new Error("Alquiler para eliminar no encontrado");
-    }
+  if (!alquiler) throw new errors.ALQUILER_NOT_FOUND;
 
-    await alquiler.destroy();
-    return { message: "Alquiler eliminado correctamente" };
-  } catch (error) {
-    console.error("Error al eliminar el alquiler: ", error);
-  }
+  await alquiler.destroy();
+  return { message: "Alquiler eliminado correctamente" };
 }
 
 export const functions = {

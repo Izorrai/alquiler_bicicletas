@@ -1,113 +1,91 @@
-import controladorPago from "../../controllers/pagos/controladorPago.js"
+import controladorPago from "../../controllers/pagos/controladorPago.js";
 
 async function getAll(req, res) {
-    try {
-        const pagos = await controladorPago.getAll();
-        console.log(pagos);
-        res.render("pagos/listaPagos", { pagos });
-    } catch (error) {
-        console.error("Error al obtener las pagos:", error);
-        res.status(500).send("Hubo un error al obtener las pagos.");
-    }
+  try {
+    const pagos = await controladorPago.getAll();
+    res.render("pagos/listaPagos", { pagos });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function mostrarPorId(req, res) {
-    const id = parseInt(req.params.id);
-    try {
-      const pago = await controladorPago.buscarPorId(id); 
-      if (!pago) {
-        return res.status(404).send("pago no encontrada");
-      }
-      res.render("pagos/mostrarPago", { pago });
-    } catch (error) {
-      console.error("Error al obtener la pago:", error);
-      res.status(500).send("Hubo un error al obtener la pago.");
-    }
+  const id = parseInt(req.params.id);
+  try {
+    const pago = await controladorPago.buscarPorId(id);
+    res.render("pagos/mostrarPago", { pago });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
+}
 
 async function crearFormulario(req, res) {
-    try {
-        res.render("pagos/nuevoPago");
-    } catch (error) {
-        console.error("Error al renderizar el formulario de nueva pago:", error);
-        res.status(500).send("Hubo un error al cargar el formulario.");
-    }
+  try {
+    res.render("pagos/nuevoPago");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crear(req, res) {
-    const { factura, metodo_pago } = req.body;
-    
-    try {
-        
-        if (!factura || !metodo_pago) {
-            return res.status(400).send("Todos los campos son obligatorios.");
-        }
-        
-        await controladorPago.crear(factura, metodo_pago);
-        res.redirect(`/pagos/lista`);  
-    } catch (error) {
-        console.error("Error al crear la pago:", error);
-        res.status(500).send("Hubo un error al crear la pago.");
-    }
+  const { factura, metodo_pago } = req.body;
+
+  try {
+    await controladorPago.crear(factura, metodo_pago);
+    res.redirect(`/pagos/lista`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
-
 async function actualizarFormPago(req, res) {
-    const { id } = req.params;
-    
-    try {
-        const pago = await controladorPago.buscarPorId(id); 
-        
-        
-        if (!pago) {
-            
-            return res.status(404).send("Pago no encontrada.");
-        }
+  const { id } = req.params;
 
-        res.render("pagos/actualizarPago", { pago });
-        
-    } catch (error) {
-        // En caso de error, enviar una respuesta de error solo una vez
-        console.error("Error al cargar la pago para editar:", error);
-        if (!res.headersSent) { // Verificar si ya se ha enviado una respuesta
-            res.status(500).send("Hubo un error al cargar la pago para editar.");
-        }
-    }
+  try {
+    const pago = await controladorPago.buscarPorId(id);
+
+    res.render("pagos/actualizarPago", { pago });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function actualizarPago(req, res) {
-    const { alquiler_id, factura, metodo_pago } = req.body;
-    const id = parseInt(req.params.id);
+  const { alquiler_id, factura, metodo_pago } = req.body;
+  const id = parseInt(req.params.id);
+  try {
     await controladorPago.actualizarPago(alquiler_id, factura, metodo_pago);
     res.redirect("/pagos/" + id);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
-
-
-
 
 async function eliminar(req, res) {
-    const { id } = req.params;
-    try {
-        await controladorPago.eliminar(id);
-        res.redirect("/pagos/lista");  
-    } catch (error) {
-        res.status(500).send("Hubo un error al eliminar la pago.");
-    }
+  const { id } = req.params;
+  try {
+    await controladorPago.eliminar(id);
+    res.redirect("/pagos/lista");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
-
-
 
 export const functions = {
-    getAll,
-    crearFormulario,
-    mostrarPorId,
-    crear,
-    actualizarFormPago,
-    actualizarPago,
-    eliminar
-}
+  getAll,
+  crearFormulario,
+  mostrarPorId,
+  crear,
+  actualizarFormPago,
+  actualizarPago,
+  eliminar,
+};
 
 export default functions;
-
-
-

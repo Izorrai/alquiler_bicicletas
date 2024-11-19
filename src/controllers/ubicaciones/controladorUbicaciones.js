@@ -1,91 +1,67 @@
 import Ubicacion from "../../models/ubicaciones.js";
-
+import errors from "../../helpers/errorUbicaciones.js";
 
 async function getAll() {
-  try {
-    const ubicaciones = await Ubicacion.findAll();
-    return ubicaciones;
-  } catch (error) {
-    console.error('Error al obtener ubicaciones:', error);
-    throw new Error('No se pudieron obtener las ubicaciones');
-  }
+  const ubicaciones = await Ubicacion.findAll();
+
+  if (!ubicaciones) throw new errors.UBICACION_LIST_ERROR();
+
+  return ubicaciones;
 }
 
 async function buscarPorId(id) {
-    try {
-      const ubicacion = await Ubicacion.findByPk(id); // Uso de Sequelize para buscar por primary key
-      return ubicacion;
-    } catch (error) {
-      console.error('Error al buscar ubicacion por ID:', error);
-      throw new Error('No se pudo encontrar la ubicacion');
-    }
-  }
+  const ubicacion = await Ubicacion.findByPk(id);
 
+  if (!ubicacion) throw new errors.UBICACION_NOT_FOUND();
+
+  return ubicacion;
+}
 
 async function crear(nombre_estacion, direccion, latitud, longitud) {
-  try {
-    if (!nombre_estacion || !direccion || !latitud || !longitud) {
-      throw new Error('Faltan datos obligatorios (nombre_estacion, direccion, latitud, longitud)');
-    }
-
-    const nuevaUbicacion = await Ubicacion.create({
-      nombre_estacion,
-      direccion,
-      latitud,
-      longitud
-    });
-
-    return nuevaUbicacion;
-  } catch (error) {
-    console.error('Error al crear ubicacion:', error);
-    throw new Error('No se pudo crear la ubicacion');
+  if (!nombre_estacion || !direccion || !latitud || !longitud) {
+    throw new errors.FALTAN_DATOS_UBICACION();
   }
+
+  const nuevaUbicacion = await Ubicacion.create({
+    nombre_estacion,
+    direccion,
+    latitud,
+    longitud,
+  });
+
+  return nuevaUbicacion;
 }
 
+async function actualizarUbicacion(
+  id,
+  nombre_estacion,
+  direccion,
+  latitud,
+  longitud
+) {
+  const ubicacion = await Ubicacion.findByPk(id);
 
-async function actualizarUbicacion (id,nombre_estacion, direccion, latitud, longitud) {
-  try {
-    
-    const ubicacion = await Ubicacion.findByPk(id);
+  if (!ubicacion) throw new errors.UBICACION_NOT_FOUND();
 
-    if (!ubicacion) {
-      throw new Error('Ubicacion no encontrada');
-    }
+  ubicacion.nombre_estacion = nombre_estacion || ubicacion.nombre_estacion;
+  ubicacion.direccion = direccion || ubicacion.direccion;
+  ubicacion.latitud = latitud || ubicacion.latitud;
+  ubicacion.longitud = longitud || ubicacion.longitud;
 
-    
-    ubicacion.nombre_estacion = nombre_estacion || ubicacion.nombre_estacion;
-    ubicacion.direccion = direccion || ubicacion.direccion;
-    ubicacion.latitud = latitud || ubicacion.latitud;
-    ubicacion.longitud = longitud || ubicacion.longitud;
+  const ubicacionActualizada = await ubicacion.save();
+  if (!ubicacionActualizada) throw new errors.UBICACION_NO_ACTUALIZADA();
 
-    
-    await ubicacion.save();
-
-    return ubicacion;
-  } catch (error) {
-    console.error('Error al actualizar ubicacion', error);
-    throw new Error('No se pudo actualizar la ubicacion');
-  }
+  return ubicacionActualizada;
 }
-
 
 async function eliminar(id) {
-  try {
-    
-    const ubicacion = await Ubicacion.findByPk(id);
+  const ubicacion = await Ubicacion.findByPk(id);
 
-    if (!ubicacion) {
-      throw new Error('ubicacion no encontrada');
-    }
+  if (!ubicacion) throw new errors.UBICACION_NOT_FOUND();
 
-    
-    await ubicacion.destroy();
+  await ubicacion.destroy();
 
-    return { message: 'ubicacion eliminada correctamente' };
-  } catch (error) {
-    console.error('Error al eliminar ubicacion:', error);
-    throw new Error('No se pudo eliminar la ubicacion');
-  }
+  return { message: "ubicacion eliminada correctamente" };
 }
 
 export const functions = {
@@ -93,10 +69,7 @@ export const functions = {
   buscarPorId,
   crear,
   actualizarUbicacion,
-  eliminar
+  eliminar,
 };
 
 export default functions;
-
-
-
