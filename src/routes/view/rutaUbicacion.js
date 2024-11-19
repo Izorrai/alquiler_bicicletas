@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controladorMostrarUbicaciones from "../controllers/ubicaciones/controladorMostrarUbicaciones.js"
+import controladorMostrarUbicaciones from "../../controllers/ubicaciones/controladorMostrarUbicaciones.js";
 const router = Router();
 
 router.get("/lista",controladorMostrarUbicaciones.getAll);
