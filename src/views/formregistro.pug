@@ -9,7 +9,7 @@ html
       h1= title
       if error
         p.error= error
-      form(method='POST' action='/formregistro')
+      form(method='POST' action='/registro')
         label(for='nombre')
         input#nombre(type='text' name='nombre' placeholder="nombre" required)
         label(for='apellido')
@@ -19,9 +19,9 @@ html
         label(for='direccion')
         input#direccion(type='text' name='direccion' placeholder="dirección" required)
         label(for='contrasena')
-        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+        input#contraseña(type='password' name='contraseña' placeholder="contraseña" required)
         label(for='contrasena')
-        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+        input#contraseñaConfirmada(type='password' name='contraseña' placeholder="contraseña" required)
              
         button(class="acceso" type='submit') Aceptar
         

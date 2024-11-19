@@ -1,9 +1,8 @@
-import { verificarContraseña } from "../../config/bcryct.js";
 import controladorUsuario from "../usuarios/controladorUsuario.js";
 import { verificarContraseña } from "../../config/bcrypt.js";
 // import error from "../../helpers/errors.js"; (hay que importarlos)
 
-async function registro (nombre,apellido,email,contraseña,telefono,direccion,confirmacionContraseña){
+async function registro (nombre,apellido,email,telefono,direccion,contraseña,confirmacionContraseña){
     if(contraseña!= confirmacionContraseña){
         throw new Error ("crontaseña erronea") // meterer nuestro error
    

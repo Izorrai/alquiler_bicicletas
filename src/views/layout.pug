@@ -1,4 +1,4 @@
-doctype html
+
 html(lang="en")
     head
         meta(charset="UTF-8")
@@ -8,6 +8,7 @@ html(lang="en")
         link(rel="stylesheet", href="/css/listabicicletas.css")
         link(rel="stylesheet", href="/css/bicicleta.css")
         link(rel="stylesheet", href="/css/pagos.css")
+        block styles 
     
     body
         nav.navbar
@@ -24,6 +25,7 @@ html(lang="en")
                 li
                     a(href='/login') 
                         span.icon-login
-        
-       
+        block message
+            if(message && messageType)
+                p(class=`message ${messageType}`)= message
         block content
