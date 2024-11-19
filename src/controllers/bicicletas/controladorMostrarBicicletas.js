@@ -1,112 +1,99 @@
 import controladorBicicleta from "../../controllers/bicicletas/controladorBicicleta.js";
 
 async function getAll(req, res) {
-    try {
-        const bicicletas = await controladorBicicleta.getAll();
-        res.render("bicicletas/listaBicicletas", { bicicletas });
-    } catch (error) {
-        console.error("Error al obtener las bicicletas:", error);
-        res.status(500).send("Hubo un error al obtener las bicicletas.");
-    }
+  try {
+    const bicicletas = await controladorBicicleta.getAll();
+    res.render("bicicletas/listaBicicletas", { bicicletas });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function mostrarPorId(req, res) {
-    const id = parseInt(req.params.id);
-    try {
-        const bicicleta = await controladorBicicleta.buscarPorId(id); 
-        if (!bicicleta) {
-            return res.status(404).send("Bicicleta no encontrada");
-        }
-        res.render("bicicletas/mostrarBicicletaPorId", { bicicleta });
-    } catch (error) {
-        console.error("Error al obtener la bicicleta:", error);
-        res.status(500).send("Hubo un error al obtener la bicicleta.");
+  const id = parseInt(req.params.id);
+  try {
+    const bicicleta = await controladorBicicleta.buscarPorId(id);
+    if (!bicicleta) {
+      return res.status(404).send("Bicicleta no encontrada");
     }
+    res.render("bicicletas/mostrarBicicletaPorId", { bicicleta });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crearFormulario(req, res) {
-    try {
-        res.render("bicicletas/nuevaBicicleta");
-    } catch (error) {
-        console.error("Error al renderizar el formulario de nueva bicicleta:", error);
-        res.status(500).send("Hubo un error al cargar el formulario.");
-    }
+  try {
+    res.render("bicicletas/nuevaBicicleta");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function crear(req, res) {
+  try {
     const { marca, tipo, estado } = req.body;
-    
-    try {
-        if (!marca || !tipo || !estado) {
-            return res.status(400).send("Todos los campos son obligatorios.");
-        }
-        
-        await controladorBicicleta.crear(marca, tipo, estado);
-        res.redirect("/bicicletas/lista");  
-    } catch (error) {
-        console.error("Error al crear la bicicleta:", error);
-        res.status(500).send("Hubo un error al crear la bicicleta.");
-    }
+
+    await controladorBicicleta.crear(marca, tipo, estado);
+    res.redirect("/bicicletas/lista");
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function actualizarFormBicicleta(req, res) {
+  try {
     const { id } = req.params;
-    
-    try {
-        const bicicleta = await controladorBicicleta.buscarPorId(id); // Obtener la bicicleta por id
-        
-        if (!bicicleta) {
-            return res.status(404).send("Bicicleta no encontrada.");
-        }
+    const bicicleta = await controladorBicicleta.buscarPorId(id); // Obtener la bicicleta por id
 
-        res.render("bicicletas/actualizarBicicleta", { bicicleta });
-    } catch (error) {
-        console.error("Error al cargar la bicicleta para editar:", error);
-        res.status(500).send("Hubo un error al cargar la bicicleta para editar.");
-    }
+    res.render("bicicletas/actualizarBicicleta", { bicicleta });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function actualizarBicicleta(req, res) {
+  try {
     const { marca, tipo, estado } = req.body;
     const id = parseInt(req.params.id);
 
-    try {
-        
-
-        // Llama a la función del controlador para actualizar la bicicleta
-        const bicicletaActualizada = await controladorBicicleta.actualizarBicicleta(id, marca, tipo, estado);
-        
-        if (!bicicletaActualizada) {
-            return res.status(404).send("No se pudo actualizar la bicicleta. No encontrada.");
-        }
-
-        // Redirige a la página de la bicicleta actualizada
-        res.redirect(`/bicicletas/${id}/actualizar`);
-    } catch (error) {
-        console.error("Error al actualizar la bicicleta:", error);
-        res.status(500).send("Hubo un error al actualizar la bicicleta.");
-    }
+    const bicicletaActualizada = await controladorBicicleta.actualizarBicicleta(
+      id,
+      marca,
+      tipo,
+      estado
+    );
+    res.redirect(`/bicicletas/${id}/actualizar`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 async function eliminar(req, res) {
+  try {
     const { id } = req.params;
-    try {
-        const resultado = await controladorBicicleta.eliminar(id);
-        res.redirect("/bicicletas/lista"); // Redirigir a la lista después de eliminar
-    } catch (error) {
-        console.error("Error al eliminar la bicicleta:", error);
-        res.status(500).send("Hubo un error al eliminar la bicicleta.");
-    }
+    await controladorBicicleta.eliminar(id);
+    res.redirect("/bicicletas/lista"); // Redirigir a la lista después de eliminar
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
 }
 
 export const functions = {
-    getAll,
-    crearFormulario,
-    mostrarPorId,
-    crear,
-    actualizarFormBicicleta,
-    actualizarBicicleta,
-    eliminar
+  getAll,
+  crearFormulario,
+  mostrarPorId,
+  crear,
+  actualizarFormBicicleta,
+  actualizarBicicleta,
+  eliminar,
 };
 
 export default functions;
