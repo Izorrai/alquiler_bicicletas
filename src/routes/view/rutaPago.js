@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controladorMostrarPagos from "../controllers/pagos/controladorMostrarPago.js"
+import controladorMostrarPagos from "../../controllers/pagos/controladorMostrarPago.js";
 const router = Router();
 
 router.get("/lista",controladorMostrarPagos.getAll);

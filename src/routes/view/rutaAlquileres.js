@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controladorMostrarAlquileres from "../controllers/alquileres/controladorMostrarAlquileres.js"
+import controladorMostrarAlquileres from "../../controllers/alquileres/controladorMostrarAlquileres.js";
 
 const router = Router();
 
