@@ -1,93 +1,81 @@
 import Usuario from "../../models/usuarios.js";
+import errors from "../../helpers/errorUsuarios.js";
 
 async function getAllUsers() {
-    try {
-        const usuarios = await Usuario.findAll();
-        return usuarios;
-    }
-    catch (error) {
-        console.error('Error al obtener usuarios', error);
-    }
+  const usuarios = await Usuario.findAll();
+  if (!usuarios) throw new errors.USER_LIST_ERROR();
+  return usuarios;
 }
 
 async function buscarUserPorId(id) {
-    try {
-        const usuario = await Usuario.findByPk(id);
-        return usuario;
-    }
-    catch (error) {
-        console.error('Error al buscar usuario por ID: ', error);
-    }
+  const usuario = await Usuario.findByPk(id);
+  if (!usuario) throw new errors.USER_NOT_FOUND();
+  return usuario;
 }
 
-async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
-    try {
-        if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
-            throw new Error('faltan datos obligatorios');
-        }
+async function crearUsuario(
+  email,
+  contraseña,
+  nombre,
+  apellido,
+  telefono,
+  direccion
+) {
+  if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion)
+    throw new errors.FALTAN_DATOS_USUARIO();
 
-        const nuevoUsuario = await Usuario.create({
-            email,
-            contraseña,
-            nombre,
-            apellido,
-            telefono,
-            direccion
-        });
-
-        return nuevoUsuario;
-    } catch (error) {
-        console.error('Error al crear el usuario', error);
-    }
+  const newUsuario = await Usuario.create({
+    email,
+    contraseña,
+    nombre,
+    apellido,
+    telefono,
+    direccion,
+  });
+  if (!newUsuario) throw new errors.USUARIO_NO_CREADO();
+  return newUsuario;
 }
 
-async function actualizarUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
+async function actualizarUsuario(
+  email,
+  contraseña,
+  nombre,
+  apellido,
+  telefono,
+  direccion
+) {
+  const usuario = await Usuario.findByPk(id);
 
-    try {
-        const usuario = await Usuario.findByPk(id);
+  if (!usuario) throw new errors.USER_NOT_FOUND();
 
-        if (!usuario) {
-            throw new Error('Usuario no encontrado');
-        }
+  usuario.email = email || usuario.email;
+  usuario.contraseña = contraseña || usuario.contraseña;
+  usuario.nombre = nombre || usuario.nombre;
+  usuario.apellidio = apellido || usuario.apellido;
+  usuario.telefono = telefono || usuario.telefono;
+  usuario.direccion = direccion || usuario.direccion;
 
-        usuario.email = email || usuario.email;
-        usuario.contraseña = contraseña || usuario.contraseña;
-        usuario.nombre = nombre || usuario.nombre;
-        usuario.apellidio = apellido || usuario.apellido;
-        usuario.telefono = telefono || usuario.telefono;
-        usuario.direccion = direccion || usuario.direccion;
+  await usuario.save();
 
-        await usuario.save();
-
-        return usuario;
-
-    } catch (error) {
-        console.error('Error al actualizar el usuario: ', error);
-    }
+  return usuario;
 }
 
 async function eliminarUsuario(id) {
-    try {
-        const usuario = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(id);
 
-        if (!usuario) {
-            throw new Error('Usuario para eliminar no encontrado')
-        }
+    if (!usuario) this.throw(new errors.USER_NOT_FOUND());
 
-        await usuario.destroy();
-        return { message: 'Usuario eliminado correctamente' };
-
-    } catch (error) {
-        console.error('Error al eliminar usuario:', error)
-    }
+    await usuario.destroy();
+    return { message: "Usuario eliminado correctamente" };
+  
 }
 
 export const functions = {
-    getAllUsers,
-    buscarUserPorId,
-    crearUsuario,
-    actualizarUsuario,
-    eliminarUsuario
-}
+  getAllUsers,
+  buscarUserPorId,
+  crearUsuario,
+  actualizarUsuario,
+  eliminarUsuario,
+};
 
 export default functions;

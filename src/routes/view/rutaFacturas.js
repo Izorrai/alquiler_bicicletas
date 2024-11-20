@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controladorMostrarFacturas from "../controllers/facturacion/controladorMostrarFacturacion.js"
+import controladorMostrarFacturas from "../../controllers/facturacion/controladorMostrarFacturacion.js"
 const router = Router();
 
 router.get("/:id", controladorMostrarFacturas.mostrarFacturas);

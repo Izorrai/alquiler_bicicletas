@@ -1,9 +1,10 @@
-import controladorBicicleta from "../../controllers/bicicletas/controladorBicicleta.js";
+import controladorUbicacion from "../../controllers/ubicaciones/controladorUbicaciones.js";
 
 async function getAll(req, res) {
   try {
-    const bicicletas = await controladorBicicleta.getAll();
-    res.render("bicicletas/listaBicicletas", { bicicletas });
+    const ubicaciones = await controladorUbicacion.getAll();
+    console.log(ubicaciones);
+    res.render("ubicaciones/listaUbicaciones", { ubicaciones });
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
@@ -11,13 +12,11 @@ async function getAll(req, res) {
 }
 
 async function mostrarPorId(req, res) {
-  const id = parseInt(req.params.id);
   try {
-    const bicicleta = await controladorBicicleta.buscarPorId(id);
-    if (!bicicleta) {
-      return res.status(404).send("Bicicleta no encontrada");
-    }
-    res.render("bicicletas/mostrarBicicletaPorId", { bicicleta });
+    const id = parseInt(req.params.id);
+    const ubicacion = await controladorUbicacion.buscarPorId(id);
+
+    res.render("ubicaciones/mostrarUbicacionesPorId", { ubicacion });
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
@@ -26,7 +25,7 @@ async function mostrarPorId(req, res) {
 
 async function crearFormulario(req, res) {
   try {
-    res.render("bicicletas/nuevaBicicleta");
+    res.render("ubicaciones/nuevaUbicacion");
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
@@ -35,40 +34,47 @@ async function crearFormulario(req, res) {
 
 async function crear(req, res) {
   try {
-    const { marca, tipo, estado } = req.body;
+    const { nombre_estacion, direccion, latitud, longitud } = req.body;
 
-    await controladorBicicleta.crear(marca, tipo, estado);
-    res.redirect("/bicicletas/lista");
+    await controladorUbicacion.crear(
+      nombre_estacion,
+      direccion,
+      latitud,
+      longitud
+    );
+    res.redirect(`/ubicaciones/lista`);
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
   }
 }
 
-async function actualizarFormBicicleta(req, res) {
+async function actualizarFormUbicacion(req, res) {
   try {
     const { id } = req.params;
-    const bicicleta = await controladorBicicleta.buscarPorId(id); // Obtener la bicicleta por id
+    const ubicacion = await controladorUbicacion.buscarPorId(id); // Obtener la ubicacion por id
 
-    res.render("bicicletas/actualizarBicicleta", { bicicleta });
+    res.render("ubicaciones/actualizarUbicacion", { ubicacion });
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
   }
 }
 
-async function actualizarBicicleta(req, res) {
+async function actualizarUbicacion(req, res) {
   try {
-    const { marca, tipo, estado } = req.body;
+    const { nombre_estacion, direccion, latitud, longitud } = req.body;
     const id = parseInt(req.params.id);
 
-    const bicicletaActualizada = await controladorBicicleta.actualizarBicicleta(
+    await controladorUbicacion.actualizarUbicacion(
       id,
-      marca,
-      tipo,
-      estado
+      nombre_estacion,
+      direccion,
+      latitud,
+      longitud
     );
-    res.redirect('/bicicletas/' + id + '/actualizar');
+
+    res.redirect(`/ubicaciones/lista`);
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
@@ -78,8 +84,8 @@ async function actualizarBicicleta(req, res) {
 async function eliminar(req, res) {
   try {
     const { id } = req.params;
-    await controladorBicicleta.eliminar(id);
-    res.redirect("/bicicletas/lista"); // Redirigir a la lista después de eliminar
+    await controladorUbicacion.eliminar(id);
+    res.redirect("/ubicaciones/lista");
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
@@ -91,8 +97,8 @@ export const functions = {
   crearFormulario,
   mostrarPorId,
   crear,
-  actualizarFormBicicleta,
-  actualizarBicicleta,
+  actualizarFormUbicacion,
+  actualizarUbicacion,
   eliminar,
 };
 

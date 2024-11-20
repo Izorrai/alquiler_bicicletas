@@ -1,88 +1,56 @@
 import Pago from "../../models/pagos.js";
-
+import errors from "../../helpers/errorPagos.js";
 
 async function getAll() {
-  try {
-    const pagos = await Pago.findAll();
-    return pagos;
-  } catch (error) {
-    console.error('Error al obtener pagos:', error);
-    throw new Error('No se pudieron obtener los pagos');
-  }
+  const pagos = await Pago.findAll();
+
+  if (!pagos) throw new errors.PAGO_LIST_ERROR();
+
+  return pagos;
 }
 
 async function buscarPorId(id) {
-    try {
-      const pago = await Pago.findByPk(id); 
-      return pago;
-    } catch (error) {
-      console.error('Error al buscar pago por ID:', error);
-      throw new Error('No se pudo encontrar el pago');
-    }
-  }
+  const pago = await Pago.findByPk(id);
 
+  if (!pago) throw new errors.PAGO_NOT_FOUND();
+
+  return pago;
+}
 
 async function crear(factura, metodo_pago) {
-  try {
-    if (!factura|| !metodo_pago) {
-      throw new Error('Faltan datos obligatorios');
-    }
+  if (!factura || !metodo_pago) throw new errors.FALTAN_DATOS_PAGO();
 
-    const nuevoPago = await Pago.create({
-        factura,
-        metodo_pago
-      
-    });
+  const nuevoPago = await Pago.create({
+    factura,
+    metodo_pago,
+  });
 
-    return nuevoPago;
-  } catch (error) {
-    console.error('Error al crear pago:', error);
-    throw new Error('No se pudo crear la pago');
-  }
+  if (!nuevoPago) throw new errors.ERROR_AL_CREAR_PAGO();
+
+  return nuevoPago;
 }
-
 
 async function actualizarPago(id, factura, metodo_pago) {
-  try {
-    
-    const pago = await Pago.findByPk(id);
-    if (!pago) {
-      throw new Error('pago no encontrado');
-    }
+  const pago = await Pago.findByPk(id);
 
-    
-    pago.factura= factura || pago.factura;
-    pago.metodo_pago = metodo_pago || pago.metodo_pago;
-   
+  if (!pago) throw new errors.PAGO_NOT_FOUND();
 
-    
-    await pago.save();
+  pago.factura = factura || pago.factura;
+  pago.metodo_pago = metodo_pago || pago.metodo_pago;
 
-    return pago;
-  } catch (error) {
-    console.error('Error al actualizar pago:', error);
-    throw new Error('No se pudo actualizar el pago');
-  }
+  await pago.save();
+
+  return pago;
 }
 
-
 async function eliminar(id) {
-  try {
-    
-    const pago = await Pago.findByPk(id);
+  const pago = await Pago.findByPk(id);
 
-    if (!pago) {
-      throw new Error('pago no encontrada');
-    }
+  if (!pago) throw new errors.PAGO_NOT_FOUND();
 
-    
-    await pago.destroy();
+  await pago.destroy();
 
-    return { message: 'pago eliminada correctamente' };
-  } catch (error) {
-    console.error('Error al eliminar pago:', error);
-    throw new Error('No se pudo eliminar la pago');
-  }
+  return { message: "pago eliminada correctamente" };
 }
 
 export const functions = {
@@ -90,10 +58,7 @@ export const functions = {
   buscarPorId,
   crear,
   actualizarPago,
-  eliminar
+  eliminar,
 };
 
 export default functions;
-
-
-

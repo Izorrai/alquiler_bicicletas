@@ -5,6 +5,7 @@ const Ubicacion = sequelize.define("ubicaciones", {
   ubicacion_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    allowNull: true,
     autoIncrement: true
   },
   nombre_estacion: {
@@ -36,3 +37,4 @@ const Ubicacion = sequelize.define("ubicaciones", {
 });
 
 export default Ubicacion;
+
