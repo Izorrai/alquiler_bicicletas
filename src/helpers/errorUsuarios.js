@@ -25,12 +25,35 @@ class USUARIO_NO_CREADO extends Error {
     this.status = 500;
   }
 }
+class USER_ALREADY_EXISTS extends Error {
+  constructor(){
+      super("El usuario ya existe");
+      this.status=409;
+  }
+}
+
+class PASSWORDS_DONT_MATCH extends Error{
+  constructor(){
+      super("Las contraseñas no coinciden");
+      this.status=400;
+  }
+}
+
+class INVALID_CREDENTIALS extends Error{
+  constructor(){
+      super("Credenciales inválidas");
+      this.status=400;
+  }
+}
 
 export const errors = {
   USER_NOT_FOUND,
   USER_LIST_ERROR,
   FALTAN_DATOS_USUARIO,
   USUARIO_NO_CREADO,
+  USER_ALREADY_EXISTS,
+  PASSWORDS_DONT_MATCH,
+  INVALID_CREDENTIALS
 };
 
 export default errors;
