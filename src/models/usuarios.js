@@ -43,6 +43,7 @@ const Usuario = sequelize.define("usuarios", {
     defaultValue: 'CLIENTE',
     allowNull: false 
   }
+
 }, {
   sequelize,
   tableName: 'usuarios',
