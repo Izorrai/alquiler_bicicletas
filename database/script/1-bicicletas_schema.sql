@@ -8,9 +8,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema alquiler_bicicletas
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `alquiler_bicicletas` ;
@@ -99,18 +96,21 @@ CREATE TABLE IF NOT EXISTS `alquiler_bicicletas`.`alquileres` (
   INDEX `fk_alquileres_ubicaciones1_idx` (`entrega_id` ASC) VISIBLE,
   CONSTRAINT `alquileres_ibfk_1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `alquiler_bicicletas`.`usuarios` (`usuario_id`),
+    REFERENCES `alquiler_bicicletas`.`usuarios` (`usuario_id`)
+    ON DELETE CASCADE,  -- Borrado en cascada para el usuario
   CONSTRAINT `alquileres_ibfk_2`
     FOREIGN KEY (`bicicleta_id`)
-    REFERENCES `alquiler_bicicletas`.`bicicletas` (`bicicleta_id`),
+    REFERENCES `alquiler_bicicletas`.`bicicletas` (`bicicleta_id`)
+    ON DELETE CASCADE,  -- Borrado en cascada para la bicicleta
   CONSTRAINT `alquileres_ibfk_3`
     FOREIGN KEY (`recogida_id`)
-    REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`),
+    REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`)
+    ON DELETE CASCADE,  -- Borrado en cascada para la ubicación de recogida
   CONSTRAINT `fk_alquileres_ubicaciones1`
     FOREIGN KEY (`entrega_id`)
     REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE  -- Borrado en cascada para la ubicación de entrega
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -122,17 +122,22 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `alquiler_bicicletas`.`disponibilidad_bicicletas` ;
 
 CREATE TABLE IF NOT EXISTS `alquiler_bicicletas`.`disponibilidad_bicicletas` (
+  `disponibilidad_bicicletas_id` INT NOT NULL AUTO_INCREMENT,
   `estado` ENUM("disponible", "noDisponible") NOT NULL,
   `bicicleta_id` INT NOT NULL,
   `ubicacion_id` INT NOT NULL,
+  PRIMARY KEY (`disponibilidad_bicicletas_id`),
   INDEX `id_bicicleta` (`bicicleta_id` ASC) VISIBLE,
   INDEX `id_ubicacion` (`ubicacion_id` ASC) VISIBLE,
   CONSTRAINT `disponibilidad_bicicletas_ibfk_1`
     FOREIGN KEY (`bicicleta_id`)
-    REFERENCES `alquiler_bicicletas`.`bicicletas` (`bicicleta_id`),
+    REFERENCES `alquiler_bicicletas`.`bicicletas` (`bicicleta_id`)
+    ON DELETE CASCADE,  -- Borrado en cascada para la bicicleta
   CONSTRAINT `disponibilidad_bicicletas_ibfk_2`
     FOREIGN KEY (`ubicacion_id`)
-    REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`))
+    REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`)
+    ON DELETE CASCADE  -- Borrado en cascada para la ubicación
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -149,11 +154,14 @@ CREATE TABLE IF NOT EXISTS `alquiler_bicicletas`.`pagos` (
   `fecha_pago` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `factura` INT NOT NULL,
   `metodo_pago` ENUM('tarjeta', 'efectivo', 'transferencia', 'otro') NULL DEFAULT 'efectivo',
+  `deuda` ENUM('abonado', 'pendiente') NULL DEFAULT 'pendiente',
   PRIMARY KEY (`pago_id`),
   INDEX `id_alquiler` (`alquiler_id` ASC) VISIBLE,
   CONSTRAINT `pagos_ibfk_1`
     FOREIGN KEY (`alquiler_id`)
-    REFERENCES `alquiler_bicicletas`.`alquileres` (`alquiler_id`))
+    REFERENCES `alquiler_bicicletas`.`alquileres` (`alquiler_id`)
+    ON DELETE CASCADE  -- Borrado en cascada para los pagos
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

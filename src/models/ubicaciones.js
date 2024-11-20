@@ -1,9 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize.js';
 
-
-
-const Ubicacion = sequelize.define("ubicacion",{
+const Ubicacion = sequelize.define("ubicaciones", {
   ubicacion_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -29,7 +27,14 @@ const Ubicacion = sequelize.define("ubicacion",{
 }, {
   sequelize,
   tableName: 'ubicaciones',
-  timestamps: false
+  timestamps: false,
+  indexes: [
+    {
+      name: 'lat_long_index',  // Nombre del índice
+      fields: ['latitud', 'longitud']  // Campos en los que se crea el índice
+    }
+  ]
 });
 
 export default Ubicacion;
+

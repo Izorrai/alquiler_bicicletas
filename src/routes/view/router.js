@@ -7,6 +7,9 @@ import rutaAlquileres from "./rutaAlquileres.js";
 import authRouter from "./authRouter.js";
 
 //import {isAuthenticated} from "../../middlewares/view/authMiddleware.js"
+import rutaFacturas from "./rutaFacturas.js";
+import rutaDisponibilidad from "./rutaDisponibilidad.js"
+
 const router = Router();
 router.get('/', (req, res) => {
     const {message,messageType}=req.query;
@@ -20,5 +23,7 @@ router.use("/ubicaciones", rutaUbicacion);
 router.use("/usuarios", rutaUsuario);
 router.use("/alquileres", rutaAlquileres);
 router.use("/", authRouter);
+router.use("/facturas", rutaFacturas);
+router.use("/disponibilidad", rutaDisponibilidad);
 
 export default router;

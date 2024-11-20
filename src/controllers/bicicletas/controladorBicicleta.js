@@ -24,7 +24,7 @@ async function crear(marca, tipo, estado) {
     estado,
   });
 
-  if (!nuevaBicicleta) throw new errors.BICICLETA_NO_CREADA();
+  if (!nuevaBicicleta) throw new errors.ERROR_AL_CREAR_BICICLETA();
 
   return nuevaBicicleta;
 }
@@ -32,7 +32,7 @@ async function crear(marca, tipo, estado) {
 async function actualizarBicicleta(id, marca, tipo, estado) {
   const bicicleta = await Bicicleta.findByPk(id);
 
-  if (!bicicleta) throw new errors.BICICLETA_NO_ENCONTRADA();
+  if (!bicicleta) throw new errors.BICICLETA_NOT_FOUND();
 
   bicicleta.marca = marca || bicicleta.marca;
   bicicleta.tipo = tipo || bicicleta.tipo;
@@ -40,7 +40,7 @@ async function actualizarBicicleta(id, marca, tipo, estado) {
 
   const nuevaBicicleta = await bicicleta.save();
 
-  if (!nuevaBicicleta) throw new errors.BICICLETA_NO_ACTUALIZADA();
+  if (!nuevaBicicleta) throw new errors.BICICLETA_NOT_FOUND();
 
   return nuevaBicicleta;
 }
@@ -52,7 +52,7 @@ async function eliminar(id) {
 
   const biciAEliminar = await bicicleta.destroy();
 
-  if (!biciAEliminar) throw new errors.BICICLETA_NO_ELIMINADA();
+  if (!biciAEliminar) throw new errors.ERROR_AL_ELIMINAR_BICICLETA();
 
   return { message: "Bicicleta eliminada correctamente" };
 }

@@ -63,6 +63,17 @@ async function actualizarUsuario(req, res) {
   }
 }
 
+async function actualizarFormUsuario(req, res) {
+  try {
+    const {id} = req.params;
+    const usuario = await controladorUsuario.buscarUserPorId(id);
+
+    res.render("usuarios/actualizarUsuario", { usuario });
+  } catch (error) {
+    
+  }
+}
+
 async function elimimnarUsuario(req, res) {
   try {
     const { id } = req.params;
@@ -81,6 +92,7 @@ export const functions = {
   crearUsuario,
   actualizarUsuario,
   elimimnarUsuario,
+  actualizarFormUsuario,
 };
 
 export default functions;

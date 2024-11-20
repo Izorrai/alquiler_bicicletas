@@ -25,7 +25,7 @@ async function crear(factura, metodo_pago) {
     metodo_pago,
   });
 
-  if (!nuevoPago) throw new errors.PAGO_YA_EXISTE();
+  if (!nuevoPago) throw new errors.ERROR_AL_CREAR_PAGO();
 
   return nuevoPago;
 }
