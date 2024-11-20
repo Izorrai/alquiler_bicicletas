@@ -26,7 +26,7 @@ async function mostrarAlquilerPorId(req, res) {
 
 async function crearFormularioAlquiler(req, res) {
   try {
-    res.render("alquileres/nuevoAlquiler");
+    res.render("alquileres/crearAlquiler");
 
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);

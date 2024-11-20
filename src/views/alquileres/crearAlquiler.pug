@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+  doctype html
+  html
+    head
+      title Crear alquiler
+    body
+      h1 Crear nuevo alquiler de bicicleta
+
+      form(action="/alquileres/nuevo", method="POST")
+        .form-group
+          label(for="usuario_id") Usuario ID:
+          input(type="number", name="usuario_id", id="usuario_id", required)
+
+        .form-group
+          label(for="bicicleta_id") Bicicleta ID:
+          input(type="number", name="bicicleta_id", id="bicicleta_id", required)
+
+        .form-group
+          label(for="recogida_id") Ubicación de recogida:
+          input(type="number", name="recogida_id", id="recogida_id", required)
+
+        .form-group
+          label(for="entrega_id") Ubicación de entrega (opcional):
+          input(type="number", name="entrega_id", id="entrega_id")
+
+        .form-group
+          label(for="fecha_inicio") Fecha de inicio:
+          input(type="datetime-local", name="fecha_inicio", id="fecha_inicio", required)
+
+        .form-group
+          label(for="fecha_fin") Fecha de fin:
+          input(type="datetime-local", name="fecha_fin", id="fecha_fin", required)
+
+        .form-group
+          label(for="duracion") Duración (en horas):
+          input(type="number", name="duracion", id="duracion", required)
+
+        .form-group
+          label(for="costo") Costo total (€):
+          input(type="number", name="costo", id="costo", step="0.01", required)
+
+        .form-group
+          label(for="metodo_pago") Método de pago:
+          select(name="metodo_pago", id="metodo_pago")
+            option(value="efectivo") Efectivo
+            option(value="tarjeta") Tarjeta
+            option(value="transferencia") Transferencia
+            option(value="otro") Otro
+
+      button(type="submit") Crear alquiler y pagar

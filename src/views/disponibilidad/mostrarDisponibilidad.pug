@@ -37,6 +37,6 @@ block content
                           = bici.estado_disponibilidad
                       td.px-4.py-2
                         if bici.estado_disponibilidad === 'disponible' && bici.estado === 'disponible'
-                          button(
-                            onclick=`crearAlquiler(${bici.id}, ${ubicacion.ubicacion_id}, ${JSON.stringify(bici)})`)
-                            | Alquilar
+                          a(href="/alquileres/nuevo") 
+                            button
+                              | Alquilar

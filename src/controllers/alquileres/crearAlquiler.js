@@ -4,6 +4,7 @@ import calcularCostoAlquiler from '../../utils/calculadores.js';
 import Alquiler from '../../models/alquileres.js';
 import Bicicleta from "../../models/bicicletas.js";
 import Ubicacion from "../../models/ubicaciones.js";
+import Usuario from '../../models/usuarios.js';
 import DisponibilidadBicicleta from "../../models/disponibilidad_bicicletas.js";
 import Pago from "../../models/pagos.js";
 
@@ -16,7 +17,7 @@ const mostrarFormularioCrear = async (req, res) => {
       Ubicacion.findAll()
     ]);
 
-    res.render('alquileres/crear', {
+    res.render('alquileres', {
       usuarios,
       bicicletas,
       ubicaciones
@@ -30,7 +31,7 @@ const mostrarFormularioCrear = async (req, res) => {
 
 
   const crearAlquiler = async (req, res) => {
-  const transaction = await sequelize.transaction();
+  
 
   try {
     const { usuario_id, bicicleta_id, recogida_id, entrega_id } = req.body;
