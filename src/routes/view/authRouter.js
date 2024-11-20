@@ -3,7 +3,7 @@ import authViewController from "../../controllers/auth/authViewController.js";
 
 const router = Router();
 
-router.get("/login",authViewController.formularioRegistro);
+router.get("/login",authViewController.formularioLogin);
 router.get("/registro",authViewController.formularioRegistro);
 router.post("/login",authViewController.login);
 router.post("/registro",authViewController.registro);

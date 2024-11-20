@@ -1,4 +1,4 @@
-doctype html
+
 html
   head
     title= title
@@ -9,7 +9,7 @@ html
       h1= title
       if error
         p.error= error
-      form(method='POST' action='/login')
+      form(class= "login-form" action='/login' method='POST' )
         label(for='usuario')
         input#usuario(type='text' name='usuario' placeholder="e-mail" required)
         label(for='contrasena')

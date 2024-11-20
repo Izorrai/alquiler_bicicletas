@@ -8,6 +8,4 @@ router.use("/", viewRouter);
 
 router.use("/api", apiRouter);
 
-
-
 export default router;

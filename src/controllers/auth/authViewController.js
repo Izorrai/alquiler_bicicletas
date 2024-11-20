@@ -1,4 +1,4 @@
-import authController from "./authController"
+import authController from "./authController.js"
 async function registro(req, res) {
     try {
         const { nombre, apellido, email, telefono, contraseña, contraseñaConfirmada } = req.body;
@@ -13,12 +13,12 @@ async function registro(req, res) {
 
 function formularioLogin(req,res){
     const {message,messageType}=req.query;
-    res.render("/login",{message,messageType})
+    res.render("login",{message,messageType})
 }
 
 function formularioRegistro(req,res){
     const {message,messageType}=req.query;
-    res.render("/formregistro",{message,messageType});
+    res.render("formregistro",{message,messageType});
     
 }
 
@@ -42,7 +42,7 @@ async function login(req, res) {
 
 }
 function logout(req,res){
-    req.session.usuario =null;
+    req.session.user =null;
     res.redirect("/");
 }
 export default {

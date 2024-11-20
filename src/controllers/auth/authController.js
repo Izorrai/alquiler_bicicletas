@@ -1,15 +1,14 @@
 import controladorUsuario from "../usuarios/controladorUsuario.js";
 import { verificarContraseña } from "../../config/bcrypt.js";
-// import error from "../../helpers/errors.js"; (hay que importarlos)
+import errors  from "../../helpers/errorUsuarios.js"; 
 
 async function registro (nombre,apellido,email,telefono,direccion,contraseña,confirmacionContraseña){
     if(contraseña!= confirmacionContraseña){
-        throw new Error ("crontaseña erronea") // meterer nuestro error
-   
+        throw new errors.PASSWORDS_DONT_MATCH();
     }
     const usuarioAntiguo = await controladorUsuario.getByEmail(email);
     if(usuarioAntiguo){
-        throw new Error ("este email ya existe") // meterer nuestro error
+        throw new errors.USER_ALREADY_EXISTS();
     }
     const nuevoUsuario = await controladorUsuario.create(nombre,apellido,email,telefono,direccion,contraseña);
     return nuevoUsuario;
@@ -18,11 +17,11 @@ async function registro (nombre,apellido,email,telefono,direccion,contraseña,co
 async function login(email,contraseña){
     const usuario= await controladorUsuario.getByEmail(email);
     if(!usuario){
-        throw new Error ("Usuario no encontrado") // meter nuestro error 
+        throw new errors.USER_NOT_FOUND(); 
     }
     const verificada = await verificarContraseña(contraseña,usuario.contraseña);
     if(!verificada){
-        throw new Error ("credenciales inválidas") // meterer nuestro error
+        throw new errors.INVALID_CREDENTIALS();
     }
     return usuario;
 }

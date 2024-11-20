@@ -19,8 +19,9 @@ async function registro(req, res) {
 async function login(req, res) {
     try {
         const { email, contraseña } = req.body;
-        const user = await authController.login(email, contraseña);
-        res.json(user);
+        const usuario = await authController.login(email, contraseña);
+        // ¿Hay que poner esto? const token = jwt.sign({usuario_id:usuario.usuario_id,role:usuario.role});
+        res.json(usuario);
     } catch (error) {
         console.error(error);
         if (error.status) {
@@ -33,7 +34,7 @@ async function login(req, res) {
 
 }
 
-export default{
+export default {
     registro,
     login
 }

@@ -7,8 +7,8 @@ const app = express();
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true
+  resave: false, // menor uso de memoria, mejora rendimiento (true guarda sesion)
+  saveUninitialized: false // menor uso de memoria, mejora rendimiento (true guarda sesion)
 }));
 
 app.use(function (req, res, next) {

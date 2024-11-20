@@ -27,11 +27,11 @@ async function buscarPorEmail(email){
 
 async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion, role = "CLIENT") {
     if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
-        throw new Error('Faltan datos obligatorios'); // meter nuestro error
+        throw new errors.FALTAN_DATOS_USUARIO();
     }
     const oldUser = await getByEmail(email);
     if(oldUser){
-        throw new Error ("ya existe usuario con ese email") // meter nuestro error
+        throw new errors.USER_ALREADY_EXISTS();
     }
     const hash = await hashContraseña(contraseña);
     const nuevoUsuario = await Usuario.create({
@@ -46,49 +46,43 @@ async function crearUsuario(email, contraseña, nombre, apellido, telefono, dire
    return nuevoUsuario;
 }
 
+
 async function actualizarUsuario(email, contraseña, nombre, apellido, telefono, direccion) {
-
-    try {
-        const usuario = await Usuario.findByPk(id);
-
-  if (!usuario) throw new errors.USER_NOT_FOUND();
-
+  const usuario = await Usuario.findByPk(id);
+  if (!usuario) {
+    throw new errors.USER_NOT_FOUND();
+  }
   usuario.email = email || usuario.email;
   usuario.contraseña = contraseña || usuario.contraseña;
   usuario.nombre = nombre || usuario.nombre;
   usuario.apellidio = apellido || usuario.apellido;
   usuario.telefono = telefono || usuario.telefono;
   usuario.direccion = direccion || usuario.direccion;
+  if(contraseña){
+    const hash = await hashContraseña(contraseña);
+    usuario.contraseña=hash;
+  }
 
   await usuario.save();
-
   return usuario;
 }
 
+
 async function eliminarUsuario(id) {
-  try {
-      const usuario = await Usuario.findByPk(id);
-
-      if (!usuario) {
-          throw new Error('Usuario para eliminar no encontrado')
-      }
-
-      await usuario.destroy();
-      return { message: 'Usuario eliminado correctamente' };
-
-  } catch (error) {
-      console.error('Error al eliminar usuario:', error)
-  }
+  const borrarUsuario = await Usuario.findByPk(id);
+    if(!usuario){
+        throw new errors.USER_NOT_FOUND();
+    }
+    await borrarUsuario.destroy();
+    return borrarUsuario;
 }
 
 export const functions = {
-  getAllUsers,
-  buscarUserPorId,
-  buscarPorEmail,
-  crearUsuario,
-  actualizarUsuario,
-  eliminarUsuario,
-};
-
-export default functions;
+    getAllUsers,
+    buscarUserPorId,
+    buscarPorEmail,
+    crearUsuario,
+    actualizarUsuario,
+    eliminarUsuario
 }
+export default functions;
