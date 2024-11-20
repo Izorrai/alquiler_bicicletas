@@ -36,3 +36,4 @@ const Bicicleta = sequelize.define("bicicletas",{
 export default Bicicleta;
 
 
+

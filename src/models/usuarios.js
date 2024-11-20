@@ -1,9 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize.js';
+import Alquiler from './alquileres.js';  // Asegúrate de importar el modelo de Alquiler
 
-
-
-const Usuario = sequelize.define("usuarios",{
+const Usuario = sequelize.define("usuarios", {
   usuario_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -39,10 +38,10 @@ const Usuario = sequelize.define("usuarios",{
     defaultValue: DataTypes.NOW,
     allowNull: true
   },
-  estado: {
+  roles: {
     type: DataTypes.ENUM('CLIENTE', 'ADMIN'),
     defaultValue: 'CLIENTE',
-    allowNull: true
+    allowNull: false 
   }
 }, {
   sequelize,
@@ -50,6 +49,11 @@ const Usuario = sequelize.define("usuarios",{
   timestamps: false
 });
 
-export default Usuario
+// Relación: un usuario puede tener muchos alquileres
+Usuario.hasMany(Alquiler, { foreignKey: "usuario_id" });
 
+// Es importante también definir la relación inversa en el modelo de Alquiler
+// Esto ya lo tienes en el modelo de Alquiler con:
+// Alquiler.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
+export default Usuario;

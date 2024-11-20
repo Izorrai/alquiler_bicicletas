@@ -1,0 +1,79 @@
+extends ../layout
+
+block content
+  .max-w-2xl.mx-auto
+    h1.text-3xl.font-bold.mb-6 Crear Nuevo Alquiler
+    
+    form#formAlquiler.space-y-6(action="/alquileres/crear" method="POST")
+      .bg-white.shadow.rounded.p-6
+        .mb-4
+          label.block.text-gray-700.font-bold.mb-2(for="usuario_id") Usuario
+          select#usuario_id.w-full.px-3.py-2.border.rounded(
+            name="usuario_id" 
+            required
+          )
+            option(value="") Seleccione un usuario
+            each usuario in usuarios
+              option(value=usuario.id)= usuario.nombre
+        
+        .mb-4
+          label.block.text-gray-700.font-bold.mb-2(for="bicicleta_id") Bicicleta
+          select#bicicleta_id.w-full.px-3.py-2.border.rounded(
+            name="bicicleta_id"
+            required
+          )
+            option(value="") Seleccione una bicicleta
+            each bicicleta in bicicletas
+              option(value=bicicleta.id data-tipo=bicicleta.tipo)= `${bicicleta.marca} - ${bicicleta.tipo}`
+        
+        .grid.grid-cols-2.gap-4
+          .mb-4
+            label.block.text-gray-700.font-bold.mb-2(for="recogida_id") Ubicación de Recogida
+            select#recogida_id.w-full.px-3.py-2.border.rounded(
+              name="recogida_id"
+              required
+            )
+              option(value="") Seleccione ubicación
+              each ubicacion in ubicaciones
+                option(value=ubicacion.id)= ubicacion.nombre_estacion
+          
+          .mb-4
+            label.block.text-gray-700.font-bold.mb-2(for="entrega_id") Ubicación de Entrega
+            select#entrega_id.w-full.px-3.py-2.border.rounded(
+              name="entrega_id"
+              required
+            )
+              option(value="") Seleccione ubicación
+              each ubicacion in ubicaciones
+                option(value=ubicacion.id)= ubicacion.nombre_estacion
+        
+        .mt-6
+          .bg-gray-100.p-4.rounded.mb-4
+            h3.font-bold.mb-2 Resumen de Costos
+            p#costoBase.text-gray-700 Costo base: $10.00
+            p#costoTotal.font-bold Costo total: $0.00
+          
+          button.w-full.bg-blue-600.text-white.py-2.px-4.rounded(
+            type="submit"
+          ) Crear Alquiler
+
+block scripts
+  script.
+    document.getElementById('bicicleta_id').addEventListener('change', function() {
+      const option = this.options[this.selectedIndex];
+      const tipo = option.getAttribute('data-tipo');
+      const costoBase = 10;
+      let multiplicador = 1;
+      
+      switch(tipo) {
+        case 'electrica':
+          multiplicador = 1.5;
+          break;
+        case 'montana':
+          multiplicador = 1.2;
+          break;
+      }
+      
+      const costoTotal = (costoBase * multiplicador).toFixed(2);
+      document.getElementById('costoTotal').textContent = `Costo total: $${costoTotal}`;
+    });

@@ -8,22 +8,28 @@ html(lang="en")
         link(rel="stylesheet", href="/css/listabicicletas.css")
         link(rel="stylesheet", href="/css/bicicleta.css")
         link(rel="stylesheet", href="/css/pagos.css")
+        link(rel="stylesheet", href="/css/facturas.css")
+        link(rel="stylesheet", href="/css/disponibilidad.css")
+        block head
+        link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
     
     body
+        block scripts
+            script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
+
         nav.navbar
             ul
                 li
-                    a(href='#') 
+                    a(href='#')
                         span.icon-menu
                 li
-                    a(href='/bicicletas/lista') 
+                    a(href='/bicicletas/lista')
                         span.icon-bicicleta
                 li
-                    a(href='#') 
+                    a(href='#')
                         span.icon-ubicacion
                 li
-                    a(href='/login') 
+                    a(href='/login')
                         span.icon-login
-        
-       
+
         block content

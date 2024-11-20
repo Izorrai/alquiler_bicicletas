@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  .container.mx-auto.px-4.py-8
+    h1.text-3xl.font-bold.mb-6 Bicicletas por Ubicación
+
+    if ubicaciones && ubicaciones.length > 0
+      each ubicacion in ubicaciones
+        .bg-white.shadow-md.rounded-lg.mb-6.p-6
+          .flex.items-center.justify-between.mb-4
+            div
+              h2.text-2xl.font-semibold= ubicacion.nombre_estacion
+              p.text-gray-600= ubicacion.direccion
+          
+          if ubicacion.bicicletas && ubicacion.bicicletas.length > 0
+            .overflow-x-auto
+              table.min-w-full.table-auto
+                thead.bg-gray-50
+                  tr
+                    th.px-4.py-2.text-left ID
+                    th.px-4.py-2.text-left Tipo
+                    th.px-4.py-2.text-left Marca
+                    th.px-4.py-2.text-left Estado
+                    th.px-4.py-2.text-left Disponibilidad
+                    th.px-4.py-2.text-left Acciones
+                tbody
+                  each bici in ubicacion.bicicletas
+                    tr(class=bici.estado === 'en_uso' ? 'bg-yellow-50' : '')
+                      td.px-4.py-2= bici.id
+                      td.px-4.py-2= bici.tipo
+                      td.px-4.py-2= bici.marca
+                      td.px-4.py-2
+                        span(class=`px-2 py-1 rounded-full text-sm ${bici.estado === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`)
+                          = bici.estado
+                      td.px-4.py-2
+                        span(class=`px-2 py-1 rounded-full text-sm ${bici.estado_disponibilidad === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`)
+                          = bici.estado_disponibilidad
+                      td.px-4.py-2
+                        if bici.estado_disponibilidad === 'disponible' && bici.estado === 'disponible'
+                          button(
+                            onclick=`crearAlquiler(${bici.id}, ${ubicacion.ubicacion_id}, ${JSON.stringify(bici)})`)
+                            | Alquilar

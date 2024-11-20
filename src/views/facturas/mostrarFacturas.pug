@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+
+  body
+    .container
+      h1.page-title Facturas del Usuario
+
+      if facturas && facturas.length > 0
+        table.facturas-table
+          thead.facturas-table__header
+            tr.facturas-table__row
+              th.facturas-table__th ID de Alquiler
+              th.facturas-table__th.facturas-table__th--fecha Fecha de Inicio
+              th.facturas-table__th.facturas-table__th--fecha Fecha de Fin
+              th.facturas-table__th.facturas-table__th--costo Costo (€)
+              th.facturas-table__th Número de Factura
+              th.facturas-table__th Metodo de pago
+              th.facturas-table__th Deuda
+          tbody
+            each factura in facturas
+              tr.facturas-table__row
+                td.facturas-table__td= factura.alquiler_id
+                td.facturas-table__td= new Date(factura.fecha_inicio).toLocaleString()
+                td.facturas-table__td= new Date(factura.fecha_fin).toLocaleString()
+                td.facturas-table__td.facturas-table__td--costo= factura.costo ? `${factura.costo.toFixed(2)}€` : '-'
+                td.facturas-table__td= factura.factura
+                td.facturas-table__td= factura.metodo_pago
+                td.facturas-table__td= factura.deuda
+      else
+        .no-facturas
+          p.no-facturas__text No se encontraron facturas para este usuario.
