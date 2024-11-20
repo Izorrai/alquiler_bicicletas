@@ -68,7 +68,7 @@ async function actualizarBicicleta(req, res) {
       tipo,
       estado
     );
-    res.redirect(`/bicicletas/${id}/actualizar`);
+    res.redirect('/bicicletas/' + id + '/actualizar');
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
