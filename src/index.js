@@ -2,8 +2,8 @@ import express from "express";
 import router from "./routes/router.js";
 import session from "express-session";
 
-
 const app = express();
+
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

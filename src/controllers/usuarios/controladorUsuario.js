@@ -1,4 +1,4 @@
-import { hashContraseña } from "../../config/bcryct.js";
+import { hashContraseña } from "../../config/bcrypt.js";
 import Usuario from "../../models/usuarios.js";
 import errors from "../../helpers/errorUsuarios.js";
 
@@ -25,11 +25,11 @@ async function buscarPorEmail(email){
 }
 
 
-async function crearUsuario(email, contraseña, nombre, apellido, telefono, direccion, role = "CLIENT") {
+async function crearUsuario(nombre,apellido, email, telefono, direccion,contraseña, role = "CLIENT") {
     if (!email || !contraseña || !nombre || !apellido || !telefono || !direccion) {
         throw new errors.FALTAN_DATOS_USUARIO();
     }
-    const oldUser = await getByEmail(email);
+    const oldUser = await buscarPorEmail(email);
     if(oldUser){
         throw new errors.USER_ALREADY_EXISTS();
     }

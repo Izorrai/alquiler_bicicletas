@@ -20,8 +20,8 @@ async function login(req, res) {
     try {
         const { email, contraseña } = req.body;
         const usuario = await authController.login(email, contraseña);
-        // ¿Hay que poner esto? const token = jwt.sign({usuario_id:usuario.usuario_id,role:usuario.role});
-        res.json(usuario);
+        const token = jwt.sign({usuario_id:usuario.usuario_id,role:usuario.role});
+        res.json({token});
     } catch (error) {
         console.error(error);
         if (error.status) {

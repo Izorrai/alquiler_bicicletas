@@ -21,7 +21,7 @@ class Mysql {
                     host: DB_HOST,
                     port: DB_PORT,
                     user: DB_USER,
-                    password: DB_PASSWORD,
+                    contraseña: DB_PASSWORD,
                     database: DB_DATABASE,
                 });
                 console.log("Conexión exitosa con la base de datos");

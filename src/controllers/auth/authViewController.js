@@ -1,12 +1,12 @@
 import authController from "./authController.js"
 async function registro(req, res) {
     try {
-        const { nombre, apellido, email, telefono, contraseña, contraseñaConfirmada } = req.body;
-        const resultado = await authController.registro( nombre, apellido, email, telefono, contraseña, contraseñaConfirmada);
+        const { nombre, apellido, email, telefono, direccion, contrasena, contrasenaConfirmada } = req.body;
+        const resultado = await authController.registro( nombre, apellido, email, telefono, direccion, contrasena, contrasenaConfirmada);
         res.redirect("/login?message=usuario registrado correctamente&messageType=success");
     } catch (error) {
         console.error(error);
-        const url=`/formregistro?message=${error.message}&messageType=error`
+        const url=`/registro?message=${error.message}&messageType=error`
         res.redirect(url);
     }
 }
@@ -25,8 +25,8 @@ function formularioRegistro(req,res){
 
 async function login(req, res) {
     try {
-        const { email, contraseña } = req.body;
-        const usuario = await authController.login(email, contraseña);
+        const { email, contrasena } = req.body;
+        const usuario = await authController.login(email, contrasena);
         req.session.user={
             email:usuario.email,
             usuario_id:usuario.usuario_id,

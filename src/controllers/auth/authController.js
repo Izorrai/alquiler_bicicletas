@@ -6,16 +6,16 @@ async function registro (nombre,apellido,email,telefono,direccion,contraseña,co
     if(contraseña!= confirmacionContraseña){
         throw new errors.PASSWORDS_DONT_MATCH();
     }
-    const usuarioAntiguo = await controladorUsuario.getByEmail(email);
+    const usuarioAntiguo = await controladorUsuario.buscarPorEmail(email);
     if(usuarioAntiguo){
         throw new errors.USER_ALREADY_EXISTS();
     }
-    const nuevoUsuario = await controladorUsuario.create(nombre,apellido,email,telefono,direccion,contraseña);
+    const nuevoUsuario = await controladorUsuario.crearUsuario(nombre,apellido,email,telefono,direccion,contraseña);
     return nuevoUsuario;
 }
 
 async function login(email,contraseña){
-    const usuario= await controladorUsuario.getByEmail(email);
+    const usuario= await controladorUsuario.buscarPorEmail(email);
     if(!usuario){
         throw new errors.USER_NOT_FOUND(); 
     }
