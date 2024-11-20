@@ -39,7 +39,7 @@ async function crearAlquiler(
     duracion,
     costo,
   });
-  if (!nuevoAlquiler) throw new errors.ALQUILER_YA_EXISTE;
+  if (!nuevoAlquiler) throw new errors.ALQUILER_CREAR_ERROR;
 
   return nuevoAlquiler;
 }
@@ -78,7 +78,6 @@ async function eliminarAlquiler(id) {
   if (!alquiler) throw new errors.ALQUILER_NOT_FOUND;
 
   await alquiler.destroy();
-  return { message: "Alquiler eliminado correctamente" };
 }
 
 export const functions = {
