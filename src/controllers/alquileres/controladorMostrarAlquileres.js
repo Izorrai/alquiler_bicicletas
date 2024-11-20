@@ -105,7 +105,7 @@ async function actualizarAlquiler(req, res) {
       duracion,
       costo
     );
-    res.redirect('alquileres/lista');
+    res.redirect('/alquileres/lista');
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);
     res.json({ error: error.message });
