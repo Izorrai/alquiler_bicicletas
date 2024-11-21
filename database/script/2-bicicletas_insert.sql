@@ -87,40 +87,41 @@ VALUES
 INSERT INTO `alquiler_bicicletas`.`pagos` (`alquiler_id`, `factura`, `metodo_pago`, `deuda`)
 VALUES
 -- Alquileres del primer usuario (usuario_id = 1)
-(1, 1001, 'tarjeta', 'abonado'),
-(2, 1002, 'efectivo', 'abonado'),
-(3, 1003, 'transferencia', 'pendiente'),
-(4, 1004, 'tarjeta', 'abonado'),
-(5, 1005, 'efectivo', 'pendiente'),
-(6, 1006, 'transferencia', 'abonado'),
-(7, 1007, 'efectivo', 'pendiente'),
-(8, 1008, 'tarjeta', 'abonado'),
-(9, 1009, 'efectivo', 'pendiente'),
-(10, 1010, 'tarjeta', 'abonado'),
+(1, 'F1001', 'tarjeta', 'abonado'),
+(2, 'F1002', 'efectivo', 'abonado'),
+(3, 'F1003', 'transferencia', 'pendiente'),
+(4, 'F1004', 'tarjeta', 'abonado'),
+(5, 'F1005', 'efectivo', 'pendiente'),
+(6, 'F1006', 'transferencia', 'abonado'),
+(7, 'F1007', 'efectivo', 'pendiente'),
+(8, 'F1008', 'tarjeta', 'abonado'),
+(9, 'F1009', 'efectivo', 'pendiente'),
+(10, 'F1010', 'tarjeta', 'abonado'),
 
 -- Alquileres del segundo usuario (usuario_id = 2)
-(11, 1011, 'efectivo', 'abonado'),
-(12, 1012, 'transferencia', 'pendiente'),
-(13, 1013, 'tarjeta', 'abonado'),
-(14, 1014, 'efectivo', 'pendiente'),
-(15, 1015, 'tarjeta', 'abonado'),
-(16, 1016, 'transferencia', 'pendiente'),
-(17, 1017, 'efectivo', 'abonado'),
-(18, 1018, 'tarjeta', 'pendiente'),
-(19, 1019, 'efectivo', 'abonado'),
-(20, 1020, 'transferencia', 'pendiente'),
+(11, 'F1011', 'efectivo', 'abonado'),
+(12, 'F1012', 'transferencia', 'pendiente'),
+(13, 'F1013', 'tarjeta', 'abonado'),
+(14, 'F1014', 'efectivo', 'pendiente'),
+(15, 'F1015', 'tarjeta', 'abonado'),
+(16, 'F1016', 'transferencia', 'pendiente'),
+(17, 'F1017', 'efectivo', 'abonado'),
+(18, 'F1018', 'tarjeta', 'pendiente'),
+(19, 'F1019', 'efectivo', 'abonado'),
+(20, 'F1020', 'transferencia', 'pendiente'),
 
 -- Alquileres del tercer usuario (usuario_id = 3)
-(21, 1021, 'tarjeta', 'abonado'),
-(22, 1022, 'efectivo', 'pendiente'),
-(23, 1023, 'transferencia', 'abonado'),
-(24, 1024, 'tarjeta', 'pendiente'),
-(25, 1025, 'efectivo', 'abonado'),
-(26, 1026, 'transferencia', 'pendiente'),
-(27, 1027, 'efectivo', 'abonado'),
-(28, 1028, 'tarjeta', 'pendiente'),
-(29, 1029, 'efectivo', 'abonado'),
-(30, 1030, 'tarjeta', 'pendiente');
+(21, 'F1021', 'tarjeta', 'abonado'),
+(22, 'F1022', 'efectivo', 'pendiente'),
+(23, 'F1023', 'transferencia', 'abonado'),
+(24, 'F1024', 'tarjeta', 'pendiente'),
+(25, 'F1025', 'efectivo', 'abonado'),
+(26, 'F1026', 'transferencia', 'pendiente'),
+(27, 'F1027', 'efectivo', 'abonado'),
+(28, 'F1028', 'tarjeta', 'pendiente'),
+(29, 'F1029', 'efectivo', 'abonado'),
+(30, 'F1030', 'tarjeta', 'pendiente');
+
 
 -- Insertar 20 registros en la tabla disponibilidad_bicicletas
 INSERT INTO `alquiler_bicicletas`.`disponibilidad_bicicletas` (`estado`, `bicicleta_id`, `ubicacion_id`) VALUES

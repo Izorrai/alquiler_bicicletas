@@ -1,9 +1,15 @@
-function generarNumeroFactura() {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `FAC-${timestamp}-${random}`;
-  }
+export const calcularCosteAlquiler = (bicicleta) => {
+  const costoBase = {
+      'electrica': 10,
+      'montaña': 8,
+      'urbana': 5
+  };
 
+  return costoBase[bicicleta.tipo.toLowerCase()] || 5;
+};
 
-  export default generarNumeroFactura;
-  
+export const calcularDuracion = (fechaInicio, fechaFin) => {
+  const inicio = new Date(fechaInicio);
+  const fin = new Date(fechaFin);
+  return Math.floor((fin - inicio) / (1000 * 60)); // duración en minutos
+};

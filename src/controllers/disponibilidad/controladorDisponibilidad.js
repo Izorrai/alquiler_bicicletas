@@ -2,69 +2,62 @@ import Ubicacion from "../../models/ubicaciones.js";
 import Bicicleta from "../../models/bicicletas.js";
 import DisponibilidadBicicleta from "../../models/disponibilidad_bicicletas.js";
 
-
 async function buscarBicicletasPorUbicacion() {
     try {
-      console.log("Iniciando búsqueda de bicicletas por ubicación");
-  
-      const ubicaciones = await Ubicacion.findAll({
-        include: [{
-          model: DisponibilidadBicicleta,
-          required: true,
-          attributes: ['estado', 'ubicacion_id', 'bicicleta_id'],
-          include: [{
-            model: Bicicleta,
-            required: true,
-            attributes: ['bicicleta_id', 'tipo', 'marca', 'estado'] 
-          }]
-        }],
-        attributes: ['ubicacion_id', 'nombre_estacion', 'direccion', 'latitud', 'longitud']
-      });
-  
-      console.log(`Número de ubicaciones encontradas:`,ubicaciones);
-  
-      ubicaciones.forEach(ubicacion => {
-        console.log(`Ubicación: ${ubicacion.nombre_estacion}`);
+        const ubicaciones = await Ubicacion.findAll({
+            include: [{
+                model: DisponibilidadBicicleta,
+                as: 'disponibilidad_bicicleta',
+                where: { 
+                    estado: 'disponible' 
+                },
+                include: [{
+                    model: Bicicleta,
+                    where: { 
+                        estado: 'disponible' 
+                    }
+                }]
+            }],
+            attributes: ['ubicacion_id', 'nombre_estacion', 'direccion', 'latitud', 'longitud']
+        });
+
         
-        
-        if (ubicacion.disponibilidad_bicicleta && ubicacion.disponibilidad_bicicleta.length > 0) {
-          console.log(`Número de disponibilidades: ${ubicacion.disponibilidad_bicicleta.length}`);
-        } else {
-          console.log("No hay bicicletas disponibles en esta ubicación.");
-        }
-      });
-  
-      const ubicacionesFormateadas = ubicaciones.map(ubicacion => ({
-        nombre_estacion: ubicacion.nombre_estacion,
-        direccion: ubicacion.direccion,
-        latitud: ubicacion.latitud,
-        longitud: ubicacion.longitud,
-        bicicletas: ubicacion.disponibilidad_bicicleta.map(disponibilidad => {
-          if (disponibilidad.bicicleta) {
+        console.log('Datos de ubicaciones:', JSON.stringify(ubicaciones, null, 2));
+
+        const ubicacionesFormateadas = ubicaciones.map(ubicacion => {
+            
+            const disponibilidades = Array.isArray(ubicacion.disponibilidad_bicicleta) 
+                ? ubicacion.disponibilidad_bicicleta 
+                : [ubicacion.disponibilidad_bicicleta].filter(Boolean);
+
             return {
-              id: disponibilidad.bicicleta.bicicleta_id,
-              tipo: disponibilidad.bicicleta.tipo,
-              marca: disponibilidad.bicicleta.marca,
-              estado: disponibilidad.bicicleta.estado, 
-              estado_disponibilidad: disponibilidad.estado 
+                ubicacion_id: ubicacion.ubicacion_id,
+                nombre_estacion: ubicacion.nombre_estacion,
+                direccion: ubicacion.direccion,
+                latitud: ubicacion.latitud,
+                longitud: ubicacion.longitud,
+                bicicletas: disponibilidades.map(disponibilidad => ({
+                    bicicleta_id: disponibilidad.bicicleta.bicicleta_id,
+                    tipo: disponibilidad.bicicleta.tipo,
+                    marca: disponibilidad.bicicleta.marca,
+                    estado: disponibilidad.bicicleta.estado
+                }))
             };
-          } else {
-            console.log("No se encontró bicicleta en disponibilidad", disponibilidad);
-            return null; 
-          }
-        }).filter(bicicleta => bicicleta !== null) 
-      }));
-  
-      console.log('Ubicaciones formateadas:', JSON.stringify(ubicacionesFormateadas, null, 2));
-      return ubicacionesFormateadas;
-  
+        });
+
+        
+        console.log('Datos formateados:', JSON.stringify(ubicacionesFormateadas, null, 2));
+
+        return ubicacionesFormateadas;
+
     } catch (error) {
-      console.error('Error al obtener las ubicaciones y bicicletas:', error);
-      throw new Error('No se pudieron obtener las ubicaciones y bicicletas');
+        console.error('Error al obtener las ubicaciones y bicicletas:', error);
+        throw new Error('No se pudieron obtener las ubicaciones y bicicletas');
     }
-  }
+}
+
 export const functions = {
-  buscarBicicletasPorUbicacion
+    buscarBicicletasPorUbicacion
 };
 
 export default functions;

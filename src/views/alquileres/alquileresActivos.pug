@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  h1(class="titulo-alquileres") Alquileres Activos
+
+  if alquileres && alquileres.length > 0
+    each alquiler in alquileres
+      div(class="alquiler-card")
+        h2(class="alquiler-id") Alquiler ##{alquiler.alquiler_id}
+
+        div(class="alquiler-detalles")
+          p(class="fecha-inicio") Fecha de inicio: #{new Date(alquiler.fecha_inicio).toLocaleString()}
+
+          if alquiler.bicicleta
+            div(class="bicicleta-info")
+              h3 Bicicleta
+              p Tipo: #{alquiler.bicicleta.tipo}
+              p Marca: #{alquiler.bicicleta.marca}
+
+          if alquiler.recogida
+            div(class="recogida-info")
+              h3 Lugar de Recogida
+              p Estación: #{alquiler.recogida.nombre_estacion}
+              p Dirección: #{alquiler.recogida.direccion}
+
+        form(action="/alquileres/devolver" method="POST" class="form-devolver")
+          input(type="hidden" name="alquiler_id" value=alquiler.alquiler_id)
+          input(type="hidden" name="bicicleta_id" value=alquiler.bicicleta_id)
+
+          div(class="ubicacion-entrega")
+            label(for="entrega_id") Ubicación de entrega:
+            select(name="entrega_id" required class="select-entrega")
+              each ubicacion in ubicaciones
+                option(value=ubicacion.ubicacion_id) #{ubicacion.nombre_estacion}
+
+          button(type="submit" class="btn-devolver") Devolver Bicicleta
+
+  else
+    p(class="no-alquileres") No hay alquileres activos en este momento.

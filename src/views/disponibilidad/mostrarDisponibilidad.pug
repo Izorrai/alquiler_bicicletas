@@ -1,42 +1,104 @@
 extends ../layout
 
 block content
-  .container.mx-auto.px-4.py-8
-    h1.text-3xl.font-bold.mb-6 Bicicletas por Ubicación
+  h1 Disponibilidad de Bicicletas por Ubicación
 
-    if ubicaciones && ubicaciones.length > 0
-      each ubicacion in ubicaciones
-        .bg-white.shadow-md.rounded-lg.mb-6.p-6
-          .flex.items-center.justify-between.mb-4
-            div
-              h2.text-2xl.font-semibold= ubicacion.nombre_estacion
-              p.text-gray-600= ubicacion.direccion
-          
-          if ubicacion.bicicletas && ubicacion.bicicletas.length > 0
-            .overflow-x-auto
-              table.min-w-full.table-auto
-                thead.bg-gray-50
-                  tr
-                    th.px-4.py-2.text-left ID
-                    th.px-4.py-2.text-left Tipo
-                    th.px-4.py-2.text-left Marca
-                    th.px-4.py-2.text-left Estado
-                    th.px-4.py-2.text-left Disponibilidad
-                    th.px-4.py-2.text-left Acciones
-                tbody
-                  each bici in ubicacion.bicicletas
-                    tr(class=bici.estado === 'en_uso' ? 'bg-yellow-50' : '')
-                      td.px-4.py-2= bici.id
-                      td.px-4.py-2= bici.tipo
-                      td.px-4.py-2= bici.marca
-                      td.px-4.py-2
-                        span(class=`px-2 py-1 rounded-full text-sm ${bici.estado === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`)
-                          = bici.estado
-                      td.px-4.py-2
-                        span(class=`px-2 py-1 rounded-full text-sm ${bici.estado_disponibilidad === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`)
-                          = bici.estado_disponibilidad
-                      td.px-4.py-2
-                        if bici.estado_disponibilidad === 'disponible' && bici.estado === 'disponible'
-                          a(href="/alquileres/nuevo") 
-                            button
-                              | Alquilar
+  if ubicaciones && ubicaciones.length > 0
+    each ubicacion in ubicaciones
+      div.class-ubicacion
+        h2.class-titulo-ubicacion= ubicacion.nombre_estacion
+        p.class-direccion= ubicacion.direccion
+
+        if ubicacion.bicicletas && ubicacion.bicicletas.length > 0
+          each bicicleta in ubicacion.bicicletas
+            div.class-bicicleta
+              p.class-id-bicicleta Bicicleta #{bicicleta.bicicleta_id}
+              p.class-tipo-bicicleta Tipo: #{bicicleta.tipo}
+              p.class-marca-bicicleta Marca: #{bicicleta.marca}
+              
+              button(
+                class="btn-alquilar"
+                onclick=`mostrarFormulario('${JSON.stringify(bicicleta).replace(/'/g, "\\'")}', '${JSON.stringify(ubicacion).replace(/'/g, "\\'")}')`
+              ) Alquilar
+        else
+          p No hay bicicletas disponibles
+  else
+    p No hay ubicaciones con bicicletas disponibles
+
+  // Modal del formulario
+  div#modalAlquiler(class="modal" style="display: none;")
+    div(class="modal-content")
+      div(class="modal-header")
+        h2 Formulario de Alquiler
+        button(class="btn-cerrar" onclick="cerrarFormulario()") X
+
+      form#formAlquiler(action="/alquileres/crear" method="POST" class="form-alquiler")
+        // Campos ocultos
+        input#bicicleta_id(type="hidden" name="bicicleta_id")
+        input#recogida_id(type="hidden" name="recogida_id")
+        input(type="hidden" name="usuario_id" value="1")
+
+        // Información de la Bicicleta
+        div(class="form-section")
+          h3 Detalles de la Bicicleta
+          div#detalleBicicleta
+
+        // Información de la Ubicación
+        div(class="form-section")
+          h3 Ubicación de Recogida
+          div#detalleUbicacion
+
+        // Método de Pago
+        div(class="form-section")
+          label(for="metodo_pago") Método de Pago
+          select#metodo_pago(name="metodo_pago" required)
+            option(value="") Seleccione método de pago
+            option(value="efectivo") Efectivo
+            option(value="tarjeta") Tarjeta
+            option(value="transferencia") Transferencia
+
+        // Términos y Condiciones
+        div(class="form-section")
+          label
+            input(type="checkbox" required)
+            span Acepto los términos y condiciones
+
+        // Botones
+        div(class="form-actions")
+          button(type="button" class="btn-cancelar" onclick="cerrarFormulario()") Cancelar
+          button(type="submit" class="btn-confirmar") Confirmar Alquiler
+
+block scripts
+  script.
+    function mostrarFormulario(bicicleta, ubicacion) {
+      // Parse los objetos JSON
+      bicicleta = JSON.parse(bicicleta);
+      ubicacion = JSON.parse(ubicacion);
+      
+      document.getElementById('bicicleta_id').value = bicicleta.bicicleta_id;
+      document.getElementById('recogida_id').value = ubicacion.ubicacion_id;
+
+      document.getElementById('detalleBicicleta').innerHTML = `
+        <p>ID: ${bicicleta.bicicleta_id}</p>
+        <p>Tipo: ${bicicleta.tipo}</p>
+        <p>Marca: ${bicicleta.marca}</p>
+      `;
+
+      document.getElementById('detalleUbicacion').innerHTML = `
+        <p>Estación: ${ubicacion.nombre_estacion}</p>
+        <p>Dirección: ${ubicacion.direccion}</p>
+      `;
+
+      document.getElementById('modalAlquiler').style.display = 'block';
+    }
+
+    function cerrarFormulario() {
+      document.getElementById('formAlquiler').reset();
+      document.getElementById('modalAlquiler').style.display = 'none';
+    }
+
+    document.getElementById('modalAlquiler').addEventListener('click', function(e) {
+      if (e.target === this) {
+        cerrarFormulario();
+      }
+    });

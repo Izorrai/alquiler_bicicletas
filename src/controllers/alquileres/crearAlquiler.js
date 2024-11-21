@@ -1,6 +1,6 @@
 
 import generarNumeroFactura from '../../utils/generadores.js';
-import calcularCostoAlquiler from '../../utils/calculadores.js';
+import calcularCosteAlquiler from '../../utils/calculadores.js';
 import Alquiler from '../../models/alquileres.js';
 import Bicicleta from "../../models/bicicletas.js";
 import Ubicacion from "../../models/ubicaciones.js";
@@ -9,126 +9,93 @@ import DisponibilidadBicicleta from "../../models/disponibilidad_bicicletas.js";
 import Pago from "../../models/pagos.js";
 
 
-const mostrarFormularioCrear = async (req, res) => {
-  try {
-    const [usuarios, bicicletas, ubicaciones] = await Promise.all([
-      Usuario.findAll({ where: { estado: 'activo' } }),
-      Bicicleta.findAll({ where: { estado: 'disponible' } }),
-      Ubicacion.findAll()
-    ]);
-
-    res.render('alquileres', {
-      usuarios,
-      bicicletas,
-      ubicaciones
-    });
-  } catch (error) {
-    console.error("Error al cargar el formulario:", error);
-    res.status(500).send("Error al cargar el formulario");
-  }
-};
-
-
-
-  const crearAlquiler = async (req, res) => {
-  
+async function crearAlquiler(req, res){
+  const transaccion = await sequelize.transaction();
 
   try {
-    const { usuario_id, bicicleta_id, recogida_id, entrega_id } = req.body;
+    const { usuario_id, bicicleta_id, recogida_id } = req.body;
 
-    if (!usuario_id || !bicicleta_id || !recogida_id || !entrega_id) {
+    if (!usuario_id || !bicicleta_id || !recogida_id) {
+      await transaccion.rollback();
       return res.status(400).json({
-        error: "Todos los campos son requeridos"
+        error: "Faltan datos necesarios"
       });
     }
 
-    const [bicicleta, ubicacionRecogida, ubicacionEntrega] = await Promise.all([
+    const [usuario, bicicleta, ubicacionRecogida] = await Promise.all([
+      Usuario.findByPk(usuario_id),
       Bicicleta.findByPk(bicicleta_id),
-      Ubicacion.findByPk(recogida_id),
-      Ubicacion.findByPk(entrega_id)
+      Ubicacion.findByPk(recogida_id)
     ]);
 
-    if (!bicicleta || !ubicacionRecogida || !ubicacionEntrega) {
+    if (!usuario || !bicicleta || !ubicacionRecogida) {
+      await transaccion.rollback();
       return res.status(404).json({
-        error: "Recursos no encontrados",
-        detalles: {
-          bicicleta: !bicicleta ? "Bicicleta no encontrada" : null,
-          ubicacionRecogida: !ubicacionRecogida ? "Ubicación de recogida no encontrada" : null,
-          ubicacionEntrega: !ubicacionEntrega ? "Ubicación de entrega no encontrada" : null
-        }
+        error: "No se encontraron los recursos necesarios"
       });
     }
 
     const disponibilidad = await DisponibilidadBicicleta.findOne({
-      where: { 
-        bicicleta_id, 
-        ubicacion_id: recogida_id, 
-        estado: 'disponible' 
+      where: {
+        bicicleta_id,
+        ubicacion_id: recogida_id,
+        estado: 'disponible'
       },
-      lock: true,
-      transaction
+      transaction: transaccion
     });
 
     if (!disponibilidad) {
-      await transaction.rollback();
+      await transaccion.rollback();
       return res.status(400).json({
         error: "La bicicleta no está disponible en esta ubicación"
       });
     }
 
+    const costo = calcularCosteAlquiler(bicicleta);
+    const numeroFactura = generarNumeroFactura();
+
+    const alquiler = await Alquiler.create({
+      usuario_id,
+      bicicleta_id,
+      recogida_id,
+      entrega_id: null,
+      fecha_inicio: new Date(),
+      costo,
+      estado: 'activo'
+    }, { transaction: transaccion });
+
+    await Pago.create({
+      alquiler_id: alquiler.alquiler_id,
+      factura: numeroFactura,
+      metodo_pago: 'efectivo',
+      deuda: 'pendiente',
+      monto: costo
+    }, { transaction: transaccion });
+
     await Promise.all([
       Bicicleta.update(
-        { estado: 'en_uso' },
-        { 
-          where: { bicicleta_id },
-          transaction 
-        }
+        { estado: 'en uso' },
+        { where: { bicicleta_id }, transaction: transaccion }
       ),
       DisponibilidadBicicleta.update(
         { estado: 'noDisponible' },
         { 
           where: { bicicleta_id, ubicacion_id: recogida_id },
-          transaction 
+          transaction: transaccion 
         }
       )
     ]);
 
-    const numeroFactura = generarNumeroFactura();
-    const costo = calcularCostoAlquiler(bicicleta);
-
-    const [alquiler, factura] = await Promise.all([
-      Alquiler.create({
-        usuario_id,
-        bicicleta_id,
-        recogida_id,
-        entrega_id,
-        fecha_inicio: new Date(),
-        costo,
-        fecha_fin: null,
-        duracion: null,
-        estado: 'activo'
-      }, { transaction }),
-
-      Pago.create({
-        alquiler_id: alquiler.alquiler_id,
-        factura: numeroFactura,
-        metodo_pago: 'pendiente',
-        deuda: 'pendiente',
-        monto: costo
-      }, { transaction })
-    ]);
-
-    await transaction.commit();
+    await transaccion.commit();
 
     res.status(201).json({
-      success: true,
-      alquiler,
-      factura,
-      mensaje: "Alquiler creado exitosamente"
+      exito: true,
+      mensaje: "Alquiler creado exitosamente",
+      alquiler
     });
 
   } catch (error) {
-    await transaction.rollback();
+    await transaccion.rollback();
     console.error("Error al crear el alquiler:", error);
     res.status(500).json({
       error: "Error al crear el alquiler",
@@ -137,12 +104,9 @@ const mostrarFormularioCrear = async (req, res) => {
   }
 };
 
+export const functions = {
+  
+  crearAlquiler
+};
 
-export const functions ={
-
-mostrarFormularioCrear,
-crearAlquiler
-
-}
-
-export default functions
+export default functions;

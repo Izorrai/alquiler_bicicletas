@@ -1,0 +1,191 @@
+
+h1, h2, h3 {
+    color: #333;
+    text-align: center; 
+  }
+  
+  p {
+    color: #666;
+    text-align: center;
+  }
+  
+  
+  .class-ubicacion {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center; 
+  }
+  
+  .class-titulo-ubicacion {
+    font-size: 1.5rem;
+    color: #dc3545;
+    text-align: center; 
+  }
+  
+  .class-direccion {
+    font-size: 1rem;
+    color: #555;
+    text-align: center; 
+  }
+  
+  
+  .class-bicicleta {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center; 
+  }
+  
+  .class-id-bicicleta,
+  .class-tipo-bicicleta,
+  .class-marca-bicicleta {
+    margin: 5px 0;
+    color: #444;
+    text-align: center; 
+  }
+  
+ 
+  .btn-alquilar {
+    display: inline-block;
+    background-color: #dc3545;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .btn-alquilar:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para el modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center; 
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    text-align: center; 
+  }
+  
+  .btn-cerrar {
+    background: #f44336;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .btn-cerrar:hover {
+    background: #d32f2f;
+  }
+  
+  
+  .form-alquiler {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-section {
+    margin-bottom: 15px;
+    text-align: center; 
+  }
+  
+  .form-section h3 {
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center; 
+  }
+  
+  input[type="hidden"],
+  select,
+  button {
+    margin-top: 10px;
+    text-align: center; 
+  }
+  
+  select, input[type="checkbox"] {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-cancelar {
+    background-color: #f44336;
+  }
+  
+  .btn-cancelar:hover {
+    background-color: #d32f2f;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+  }
+  
+  .form-actions button {
+    width: 48%;
+  }
+  
+  .form-actions .btn-confirmar {
+    background-color: #4caf50;
+  }
+  
+  .form-actions .btn-confirmar:hover {
+    background-color: #388e3c;
+  }
+  
