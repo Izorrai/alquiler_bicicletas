@@ -132,11 +132,11 @@ CREATE TABLE IF NOT EXISTS `alquiler_bicicletas`.`disponibilidad_bicicletas` (
   CONSTRAINT `disponibilidad_bicicletas_ibfk_1`
     FOREIGN KEY (`bicicleta_id`)
     REFERENCES `alquiler_bicicletas`.`bicicletas` (`bicicleta_id`)
-    ON DELETE CASCADE,  -- Borrado en cascada para la bicicleta
+    ON DELETE CASCADE,  
   CONSTRAINT `disponibilidad_bicicletas_ibfk_2`
     FOREIGN KEY (`ubicacion_id`)
     REFERENCES `alquiler_bicicletas`.`ubicaciones` (`ubicacion_id`)
-    ON DELETE CASCADE  -- Borrado en cascada para la ubicación
+    ON DELETE CASCADE  
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `alquiler_bicicletas`.`pagos` (
   `pago_id` INT NOT NULL AUTO_INCREMENT,
   `alquiler_id` INT NOT NULL,
   `fecha_pago` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `factura` INT NOT NULL,
+  `factura` VARCHAR(50) NULL DEFAULT NULL,
   `metodo_pago` ENUM('tarjeta', 'efectivo', 'transferencia', 'otro') NULL DEFAULT 'efectivo',
   `deuda` ENUM('abonado', 'pendiente') NULL DEFAULT 'pendiente',
   PRIMARY KEY (`pago_id`),

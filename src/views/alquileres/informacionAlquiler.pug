@@ -1,0 +1,36 @@
+
+extends ../layout
+
+block content
+  div.max-w-2xl.mx-auto.p-4
+    h1.text-2xl.mb-6 Información de Alquiler
+    
+    div.border.rounded.p-6.bg-white.shadow-lg
+      h2.text-xl.mb-4.font-bold Detalles de la Bicicleta
+      
+      div.grid.grid-cols-2.gap-4.mb-6
+        div
+          p.font-semibold ID
+          p.text-gray-700= bicicleta.bicicleta_id
+        div
+          p.font-semibold Tipo
+          p.text-gray-700= bicicleta.tipo
+        div
+          p.font-semibold Marca
+          p.text-gray-700= bicicleta.marca
+        div
+          p.font-semibold Estado
+          p.text-gray-700= bicicleta.estado
+      
+      div.mb-6
+        h3.text-lg.font-bold.mb-2 Ubicación de Recogida
+        p.text-gray-700= ubicacion.nombre_estacion
+        p.text-gray-600= ubicacion.direccion
+          
+      form(action="/alquileres/crear" method="POST")
+        input(type="hidden" name="bicicleta_id" value=bicicleta.bicicleta_id)
+        input(type="hidden" name="usuario_id" value=usuario.usuario_id)
+        input(type="hidden" name="recogida_id" value=ubicacion.ubicacion_id)
+        
+        button.w-full.bg-blue-500.text-white.py-2.px-4.rounded(type="submit") 
+          | Confirmar Alquiler

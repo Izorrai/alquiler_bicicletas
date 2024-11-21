@@ -13,7 +13,7 @@ async function buscarFacturas(id) {
           include: [
             {
               model: Pago,
-              attributes: ['factura','metodo_pago','deuda']
+              attributes: ['factura','deuda','metodo_pago']
             }
           ]
         }
@@ -31,10 +31,11 @@ async function buscarFacturas(id) {
       fecha_fin: alquiler.fecha_fin,
       costo: alquiler.costo,
       factura: alquiler.pagos?.[0]?.factura || 'Sin factura',
-      metodo_pago: alquiler.pagos?.[0]?.metodo_pago,
-      deuda: alquiler.pagos?.[0]?.deuda
+      deuda: alquiler.pagos[0].deuda,
+      metodo_pago: alquiler.pagos?.[0]?.metodo_pago
+      
     }));
-
+    console.log(facturasFormateadas)
     return facturasFormateadas;
 
   } catch (error) {

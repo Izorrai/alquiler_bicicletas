@@ -3,10 +3,10 @@ import Bicicleta from "../../models/bicicletas.js";
 import Ubicacion from "../../models/ubicaciones.js";
 import Pago from "../../models/pagos.js";
 
-async function mostrarAlquileres(req, res){
+async function mostrarAlquileres(req, res) {
   try {
-    const { page = 1, limit = 10, estado } = req.query;
-    const offset = (page - 1) * limit;
+    const { pagina = 1, limite = 10, estado } = req.query;
+    const offset = (pagina - 1) * limite;
 
     const whereClause = estado ? { estado } : {};
 
@@ -32,7 +32,7 @@ async function mostrarAlquileres(req, res){
           attributes: ['factura', 'metodo_pago', 'deuda']
         }
       ],
-      limit: Number(limit),
+      limit: Number(limite),
       offset: Number(offset),
       order: [['fecha_inicio', 'DESC']]
     });
@@ -40,14 +40,14 @@ async function mostrarAlquileres(req, res){
     if (!alquileres || alquileres.length === 0) {
       return res.status(404).json({
         mensaje: "No se encontraron alquileres",
-        data: []
+        datos: []
       });
     }
 
     res.status(200).json({
       total: count,
-      pagina_actual: Number(page),
-      total_paginas: Math.ceil(count / limit),
+      pagina_actual: Number(pagina),
+      total_paginas: Math.ceil(count / limite),
       alquileres
     });
 
@@ -58,12 +58,10 @@ async function mostrarAlquileres(req, res){
       detalles: error.message
     });
   }
-};
-
-
-export const functions ={
-
-mostrarAlquileres  
 }
+
+export const functions = {
+  mostrarAlquileres  
+};
 
 export default functions;

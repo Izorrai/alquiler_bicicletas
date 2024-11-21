@@ -1,5 +1,6 @@
 import { Router } from "express";
-import controladorMostrarDisponibilidad from "../../controllers/disponibilidad/controladorMostrarDisponibilidad.js"
+import controladorMostrarDisponibilidad from "../../controllers/disponibilidad/controladorMostrarDisponibilidad.js";
+
 import  {isAuthenticated} from "../../middlewares/view/authMiddleware.js"
 const router = Router();
 
