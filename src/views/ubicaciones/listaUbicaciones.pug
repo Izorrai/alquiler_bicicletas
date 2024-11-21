@@ -1,10 +1,10 @@
 extends ../layout
 
 block content
-  
-  a.boton.boton-nuevo(href="/ubicaciones/nueva") 
-    i.fas.fa-plus
-    | Nueva Ubicación
+  if user && user.roles === 'ADMIN'
+    a.boton.boton-nuevo(href="/ubicaciones/nueva")
+      i.fas.fa-plus
+      | Nueva Ubicación
 
   .ubicaciones-container
     h1.ubicaciones-title Ubicaciones disponibles
@@ -24,9 +24,10 @@ block content
             p.ubicacion-detail
               span.detail-label Longitud:
               span.detail-value #{ubicacion.longitud}
-          form.delete-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/eliminar`, method="POST")
+
+          if user && user.roles === 'ADMIN'
+            form.delete-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/eliminar`, method="POST")
               button.delete-button(type="submit") Eliminar
-
-
-          form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="GET")
-            button.actualizar-button(type="submit") Actualizar
+         
+            form.actualizar-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="GET")
+              button.actualizar-button(type="submit") Actualizar

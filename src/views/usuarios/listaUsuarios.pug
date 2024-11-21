@@ -1,8 +1,9 @@
 extends ../layout 
 
-block content 
+block content
     .usuarios-container 
         h1.usuarios-title Lista de Usuarios: 
+    if user && user.roles === 'ADMIN'   
         a.boton.boton-nuevo(href="/usuarios/nuevo")
             i.fas.fa-plus 
             | Nuevo Usuario
@@ -31,7 +32,16 @@ block content
                         p.usuario-detail 
                             span.detail-label Fecha de registro: 
                             span.detail-value #{usuario.fecha_registro}
-                    form.delete-form(action=`/usuarios/${usuario.usuario_id}/eliminar`, method="POST")
-                        button.delete-button(type="submit") Eliminar
+                            
+                    if user && user.roles === 'ADMIN'      
+                        form.delete-form(action=`/usuarios/${usuario.usuario_id}/eliminar`, method="POST")
+                            button.delete-button(type="submit") Eliminar
+                    if user && user.roles === 'ADMIN'
+                        form.actualizar-form(action=`/usuarios/${usuario.usuario_id}/actualizar`, method="GET")
+                            button.actualizar-button(type="submit") Actualizar
+
+
+
+                   
 
                  
