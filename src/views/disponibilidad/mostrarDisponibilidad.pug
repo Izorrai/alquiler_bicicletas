@@ -22,7 +22,9 @@ block content
                     th.px-4.py-2.text-left Marca
                     th.px-4.py-2.text-left Estado
                     th.px-4.py-2.text-left Disponibilidad
-                    th.px-4.py-2.text-left Acciones
+                    if user && user.roles=="ADMIN"
+                      th.px-4.py-2.text-left Acciones
+
                 tbody
                   each bici in ubicacion.bicicletas
                     tr(class=bici.estado === 'en_uso' ? 'bg-yellow-50' : '')
@@ -36,7 +38,7 @@ block content
                         span(class=`px-2 py-1 rounded-full text-sm ${bici.estado_disponibilidad === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`)
                           = bici.estado_disponibilidad
                       td.px-4.py-2
-                        if bici.estado_disponibilidad === 'disponible' && bici.estado === 'disponible'
+                        if bici.estado_disponibilidad === 'disponible' && bici.estado === 'disponible' && user && user.roles=="ADMIN"
                           button(
                             onclick=`crearAlquiler(${bici.id}, ${ubicacion.ubicacion_id}, ${JSON.stringify(bici)})`)
                             | Alquilar

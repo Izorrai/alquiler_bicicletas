@@ -1,24 +1,28 @@
 extends ../layout
 
 block content
+  a.boton.boton-nuevo(href="/pagos/lista") 
+    i.fas.fa-plus
+    | Volver a lista de pagos
+
   h1 Editar Pago
 
   form(action=`/pagos/${pago.pago_id}/actualizar`, method='POST')
     div.form-group
       label(for='alquiler_id') Alquiler ID
-      input(type='number', name='alquiler_id', value=pago.alquiler_id, required=true, class='form-control')
+      input.form-control(type='number', name='alquiler_id', value=pago.alquiler_id, required=true)
     
     div.form-group
       label(for='factura') Factura
-      input(type='number', name='factura', value=pago.factura, required=true, class='form-control')
+      input.form-control(type='number', name='factura', value=pago.factura, required=true)
     
     div.form-group
       label(for='metodo_pago') Método de Pago
-      select(name='metodo_pago', class='form-control')
+      select.form-control(name='metodo_pago')
         option(value='efectivo', selected=pago.metodo_pago === 'efectivo') Efectivo
         option(value='tarjeta', selected=pago.metodo_pago === 'tarjeta') Tarjeta
         option(value='transferencia', selected=pago.metodo_pago === 'transferencia') Transferencia
         option(value='otro', selected=pago.metodo_pago === 'otro') Otro
     
     div.form-group
-      button(type='submit', class='btn btn-primary') Guardar Cambios
+      button.btn.btn-primary(type='submit') Guardar Cambios

@@ -30,7 +30,7 @@ async function login(req, res) {
         req.session.user={
             email:usuario.email,
             usuario_id:usuario.usuario_id,
-            role:usuario.role
+            roles:usuario.roles
         }
         const url=(`/?message=sesión iniciada correctamente&messageType=success`)
         res.redirect(url);

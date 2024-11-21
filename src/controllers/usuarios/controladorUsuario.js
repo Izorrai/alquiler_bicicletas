@@ -70,7 +70,7 @@ async function actualizarUsuario(email, contraseña, nombre, apellido, telefono,
 
 async function eliminarUsuario(id) {
   const borrarUsuario = await Usuario.findByPk(id);
-    if(!usuario){
+    if(!borrarUsuario){
         throw new errors.USER_NOT_FOUND();
     }
     await borrarUsuario.destroy();
@@ -83,6 +83,7 @@ export const functions = {
     buscarPorEmail,
     crearUsuario,
     actualizarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+
 }
 export default functions;
