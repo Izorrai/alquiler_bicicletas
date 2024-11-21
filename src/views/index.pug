@@ -5,26 +5,8 @@ block styles
 
 block content
        h1 Hola #{nombre} #{apellido},
-    p ¿Qué BilboBike escogemos hoy?
+        p ¿Qué BilboBike escogemos hoy?
 
 block content
 
-    if user 
-        .user-info  
-        p Bienvenido, #{user.name}
-        form(action='/logout' method='POST')
-            button(type='submit') Cerrar sesion 
-            
-    .login-container
-        h1 Login
-        if error
-            p.error= error
-        form(class= "login-form" action='/login' method='POST' )
-            label(for='usuario')
-            input#usuario(type='text' name='email' placeholder="e-mail" required)
-            label(for='contrasena')
-            input#contrasena(type='password' name='contrasena' placeholder="contraseña" required)
-            button(class="acceso" type='submit') Acceder
-
-            a(href="/registro")
-                button(class="registro" type= "button") Registrate
+    

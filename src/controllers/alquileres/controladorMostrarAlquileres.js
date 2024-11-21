@@ -38,11 +38,12 @@ async function crearFormularioAlquiler(req, res){
             bicicletas: bicicletas.length,
             ubicaciones: ubicaciones.length
         });
-
+        const user_id = res.session.user.usuario_id
         res.render('alquileres/formularioAlquiler', { 
             usuarios, 
             bicicletas, 
-            ubicaciones 
+            ubicaciones,
+            user_id
         });
     } catch (error) {
         console.error('Error al cargar formulario:', error);
@@ -57,6 +58,50 @@ async function mostrarAlquileresActivos(req, res) {
     try {
         console.log('Buscando alquileres activos...');
         const usuario_id = req.params.usuario_id || 1;
+
+        const alquileres = await Alquiler.findAll({
+            where: {
+                usuario_id,
+                fecha_fin: null
+            },
+            include: [
+                {
+                    model: Bicicleta,
+                    as: 'bicicleta',
+                    attributes: ['bicicleta_id', 'tipo', 'marca']
+                },
+                {
+                    model: Ubicacion,
+                    as: 'recogida',
+                    attributes: ['nombre_estacion', 'direccion']
+                }
+            ]
+        });
+
+        const ubicaciones = await Ubicacion.findAll({
+            attributes: ['ubicacion_id', 'nombre_estacion', 'direccion']
+        });
+
+        console.log('Alquileres encontrados:', alquileres.length);
+        console.log('Ubicaciones disponibles:', ubicaciones.length);
+
+        res.render('alquileres/alquileresActivos', {
+            alquileres,
+            ubicaciones
+        });
+
+    } catch (error) {
+        console.error('Error completo:', error);
+        res.status(500).send('Error al cargar los alquileres activos');
+    }
+}
+
+
+
+async function mostrarAlquileresActivosPerfil(req, res) {
+    try {
+        console.log('Buscando alquileres activos...');
+        const usuario_id = req.session.user.usuario_id || 1;
 
         const alquileres = await Alquiler.findAll({
             where: {
@@ -156,7 +201,8 @@ export const functions = {
     actualizarFormularioAlquiler,
     actualizarAlquiler,
     eliminarAlquiler,
-    mostrarAlquileresActivos
+    mostrarAlquileresActivos,
+    mostrarAlquileresActivosPerfil
 };
 
 export default functions;

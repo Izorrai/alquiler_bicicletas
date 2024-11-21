@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-
   body
     .container
       h1.page-title Facturas del Usuario
@@ -22,12 +21,15 @@ block content
               tr.facturas-table__row
                 td.facturas-table__td= factura.alquiler_id
                 td.facturas-table__td= new Date(factura.fecha_inicio).toLocaleString()
-                td.facturas-table__td= new Date(factura.fecha_fin).toLocaleString()
+                td.facturas-table__td
+                  if factura.fecha_fin == null
+                    | Pendiente de entrega
+                  else
+                    = new Date(factura.fecha_fin).toLocaleString()
                 td.facturas-table__td.facturas-table__td--costo= factura.costo ? `${factura.costo.toFixed(2)}€` : '-'
                 td.facturas-table__td= factura.factura
                 td.facturas-table__td= factura.deuda
                 td.facturas-table__td= factura.metodo_pago
-                
                 
       else
         .no-facturas

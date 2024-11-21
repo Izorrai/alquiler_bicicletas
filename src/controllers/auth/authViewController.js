@@ -14,7 +14,7 @@ async function registro(req, res) {
 
 function formularioLogin(req,res){
     const {message,messageType}=req.query;
-    res.render("index",{message,messageType})
+    res.render("login",{message,messageType})
 }
 
 function formularioRegistro(req,res){
