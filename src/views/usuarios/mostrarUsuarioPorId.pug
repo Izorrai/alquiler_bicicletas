@@ -28,5 +28,11 @@ block content
                     p.usuario-detail 
                         span.detail-label Fecha de registro: 
                         span.detail-value #{usuario.fecha_registro}
+
                     form.delete-form(action=`/usuarios/${usuario.usuario_id}/eliminar`, method="POST")
+                    if user && user.roles === 'ADMIN'
                         button.delete-button(type="submit") Eliminar
+                        
+                    form.actualizar-form(action=`/usuarios/${usuario.usuario_id}/actualizar`, method="GET")
+                    if user && user.roles === 'ADMIN'
+                        button.actualizar-button(type="submit") Actualizar

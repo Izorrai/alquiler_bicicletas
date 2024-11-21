@@ -1,6 +1,6 @@
 use alquiler_bicicletas;
 
-INSERT INTO `alquiler_bicicletas`.`usuarios` (`email`, `contraseña`, `nombre`, `apellido`, `telefono`, `direccion`) 
+INSERT INTO alquiler_bicicletas.usuarios (email, contraseña, nombre, apellido, telefono, direccion) 
 VALUES 
 ('usuario1@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Juan', 'Pérez', '123456789', 'Calle Falsa 123'),
 ('usuario2@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'María', 'Gómez', '987654321', 'Avenida Libertador 456'),
@@ -12,7 +12,6 @@ VALUES
 ('usuario8@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Marta', 'Díaz', '987321654', 'Avenida Central 505'),
 ('usuario9@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'David', 'Jiménez', '321987654', 'Calle de la Luna 606'),
 ('usuario10@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Laura', 'Martínez', '654321987', 'Calle 7 de Octubre 707');
-
 
 
 -- Primero, insertar 10 ubicaciones en la tabla `ubicaciones`

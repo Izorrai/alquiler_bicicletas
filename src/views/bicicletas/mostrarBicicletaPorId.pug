@@ -1,10 +1,6 @@
 extends ../layout
 
 block content
-  
-  a.boton.boton-nuevo(href="/bicicletas/nueva") 
-    i.fas.fa-plus
-    | Nueva Bicicleta
 
   a.boton.boton-nuevo(href="/bicicletas/lista") 
     i.fas.fa-plus
@@ -25,9 +21,11 @@ block content
             p.bicicleta-detail
               span.detail-label Estado:
               span.detail-value(class=`estado-${bicicleta.estado.replace(/\s+/g, '-')}`) #{bicicleta.estado}
+              
+        if user && user.roles === 'ADMIN'   
           form.delete-form(action=`/bicicletas/${bicicleta.bicicleta_id}/eliminar`, method="POST")
             button.delete-button(type="submit") Eliminar
           
-          
+        if user && user.roles === 'ADMIN'  
           form.actualizar-form(action=`/bicicletas/${bicicleta.bicicleta_id}/actualizar`, method="POST") 
             button.actualizar-button(type="submit") Actualizar

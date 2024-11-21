@@ -5,10 +5,9 @@ import rutaPago from "./rutaPago.js";
 import rutaUbicacion from "./rutaUbicacion.js";
 import rutaAlquileres from "./rutaAlquileres.js";
 import authRouter from "./authRouter.js";
-
-//import {isAuthenticated} from "../../middlewares/view/authMiddleware.js"
 import rutaFacturas from "./rutaFacturas.js";
 import rutaDisponibilidad from "./rutaDisponibilidad.js"
+import { adminOMismoId, isAdmin, isAuthenticated } from "../../middlewares/view/authMiddleware.js";
 
 const router = Router();
 router.get('/', (req, res) => {
@@ -17,12 +16,12 @@ router.get('/', (req, res) => {
     res.render('index',{message,messageType})
 });
 
-router.use("/bicicletas", rutaBicicleta);
-router.use("/pagos", rutaPago); // meter isAuthenticated
-router.use("/ubicaciones", rutaUbicacion);
+router.use("/bicicletas",isAuthenticated, rutaBicicleta);
+router.use("/pagos",adminOMismoId, rutaPago); //OK
+router.use("/ubicaciones", isAuthenticated, rutaUbicacion);
 router.use("/usuarios", rutaUsuario);
-router.use("/alquileres", rutaAlquileres);
-router.use("/", authRouter);
+router.use("/alquileres", isAdmin, rutaAlquileres); //OK
+router.use("/", authRouter); //OK
 router.use("/facturas", rutaFacturas);
 router.use("/disponibilidad", rutaDisponibilidad);
 

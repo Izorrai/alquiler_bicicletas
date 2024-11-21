@@ -1,20 +1,27 @@
 extends ../layout
 
 block content
+  a.boton.boton-nuevo(href="/bicicletas/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
   .edit-container
     h1.edit-title Editar Bicicleta
     form.edit-form(action=`/bicicletas/${bicicleta.bicicleta_id}/actualizar`, method="POST")
       .form-group
         label.form-label(for="tipo") Tipo:
         input.form-input(type="text", id="tipo", name="tipo", value=bicicleta.tipo, required)
+
       .form-group
         label.form-label(for="marca") Marca:
         input.form-input(type="text", id="marca", name="marca", value=bicicleta.marca, required)
+
       .form-group
         label.form-label(for="estado") Estado:
         select.form-select(id="estado", name="estado")
           option.form-option(value="disponible", selected=bicicleta.estado === 'disponible') Disponible
           option.form-option(value="en uso", selected=bicicleta.estado === 'en uso') En uso
           option.form-option(value="en reparación", selected=bicicleta.estado === 'en reparación') En reparación
+
       .form-group
         button.update-button(type="submit") Actualizar Bicicleta

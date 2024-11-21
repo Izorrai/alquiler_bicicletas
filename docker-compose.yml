@@ -1,7 +1,7 @@
 services:
-
   db:
     container_name: ${DB_HOST}
+    
     image: mysql:8.0
     restart: unless-stopped
     environment:
@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
     ports:
       - ${DB_PORT}:3306
+      
     volumes:
       - ./database/script:/docker-entrypoint-initdb.d:ro
       - ./database/conf/mycustom.cnf:/etc/mysql/conf.d/custom.cnf

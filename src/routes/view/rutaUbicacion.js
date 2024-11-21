@@ -1,8 +1,9 @@
 import { Router } from "express";
 import controladorMostrarUbicaciones from "../../controllers/ubicaciones/controladorMostrarUbicaciones.js";
+import {isAuthenticated} from "../../middlewares/view/authMiddleware.js";
 const router = Router();
 
-router.get("/lista",controladorMostrarUbicaciones.getAll);
+router.get("/lista",isAuthenticated, controladorMostrarUbicaciones.getAll);
 router.get("/nueva",controladorMostrarUbicaciones.crearFormulario);
 router.post("/nueva",controladorMostrarUbicaciones.crear)
 router.get("/:id",controladorMostrarUbicaciones.mostrarPorId);
