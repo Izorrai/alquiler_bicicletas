@@ -1,21 +1,22 @@
 import { Router } from "express";
 import controladorMostrarBicicletas from "../../controllers/bicicletas/controladorMostrarBicicletas.js";
+import { adminOMismoId, isAdmin, isAuthenticated } from "../../middlewares/view/authMiddleware.js";
 
 const router = Router();
 
-router.get("/lista",controladorMostrarBicicletas.getAll);
+router.get("/lista",isAuthenticated,controladorMostrarBicicletas.getAll);
 
-router.get("/nueva",controladorMostrarBicicletas.crearFormulario);
+router.get("/nueva",isAuthenticated, controladorMostrarBicicletas.crearFormulario);
 
-router.post("/nueva",controladorMostrarBicicletas.crear)
+router.post("/nueva",isAuthenticated,controladorMostrarBicicletas.crear)
 
-router.get("/:id",controladorMostrarBicicletas.mostrarPorId);
+router.get("/:id",isAuthenticated, controladorMostrarBicicletas.mostrarPorId);
 
-router.get("/:id/actualizar",controladorMostrarBicicletas.actualizarFormBicicleta)
+router.get("/:id/actualizar",isAuthenticated, controladorMostrarBicicletas.actualizarFormBicicleta)
 
-router.post("/:id/actualizar",controladorMostrarBicicletas.actualizarBicicleta)
+router.post("/:id/actualizar",isAuthenticated, controladorMostrarBicicletas.actualizarBicicleta)
 
-router.post("/:id/eliminar",controladorMostrarBicicletas.eliminar)
+router.post("/:id/eliminar",isAuthenticated, controladorMostrarBicicletas.eliminar)
 
 
 

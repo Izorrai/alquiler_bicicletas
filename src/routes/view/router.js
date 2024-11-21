@@ -10,10 +10,14 @@ import rutaDisponibilidad from "./rutaDisponibilidad.js"
 import { adminOMismoId, isAdmin, isAuthenticated } from "../../middlewares/view/authMiddleware.js";
 
 const router = Router();
-router.get('/', (req, res) => {
-    const {message,messageType}=req.query;
-    console.log("message",message,messageType)
-    res.render('index',{message,messageType})
+router.get('/',isAuthenticated ,(req, res) => {
+
+    const nombre = req.session.user.nombre
+    const apellido = req.session.user.apellido
+    const usuario_id = req.session.user.usuario_id
+    
+
+    res.render('index',{nombre,apellido,usuario_id})
 });
 
 router.use("/bicicletas",isAuthenticated, rutaBicicleta);

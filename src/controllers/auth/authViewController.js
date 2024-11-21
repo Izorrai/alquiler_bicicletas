@@ -1,3 +1,4 @@
+import session from "express-session";
 import authController from "./authController.js"
 async function registro(req, res) {
     try {
@@ -30,7 +31,11 @@ async function login(req, res) {
         req.session.user={
             email:usuario.email,
             usuario_id:usuario.usuario_id,
-            roles:usuario.roles
+            roles:usuario.roles,
+            nombre:usuario.nombre,
+            apellido: usuario.apellido,
+    
+
         }
         const url=(`/?message=sesión iniciada correctamente&messageType=success`)
         res.redirect(url);
@@ -43,7 +48,7 @@ async function login(req, res) {
 }
 function logout(req,res){
     req.session.user =null;
-    res.redirect("/");
+    res.redirect("/login");
 }
 export default {
     registro,

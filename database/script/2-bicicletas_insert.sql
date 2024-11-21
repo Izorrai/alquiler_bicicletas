@@ -1,17 +1,17 @@
 use alquiler_bicicletas;
 
-INSERT INTO alquiler_bicicletas.usuarios (email, contraseña, nombre, apellido, telefono, direccion) 
+INSERT INTO `alquiler_bicicletas`.`usuarios` (`email`, `contraseña`,`nombre`, `apellido`, `telefono`, `direccion`,`roles`) 
 VALUES 
-('usuario1@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Juan', 'Pérez', '123456789', 'Calle Falsa 123'),
-('usuario2@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'María', 'Gómez', '987654321', 'Avenida Libertador 456'),
-('usuario3@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Carlos', 'Rodríguez', '123987456', 'Calle del Sol 789'),
-('usuario4@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Ana', 'López', '456123789', 'Calle del Mar 101'),
-('usuario5@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Pedro', 'Sánchez', '789456123', 'Calle Real 202'),
-('usuario6@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Luisa', 'Morales', '321654987', 'Calle Larga 303'),
-('usuario7@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'José', 'Fernández', '654987321', 'Calle Nueva 404'),
-('usuario8@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Marta', 'Díaz', '987321654', 'Avenida Central 505'),
-('usuario9@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'David', 'Jiménez', '321987654', 'Calle de la Luna 606'),
-('usuario10@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Laura', 'Martínez', '654321987', 'Calle 7 de Octubre 707');
+('usuario1@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Juan', 'Pérez', '123456789', 'Calle Falsa 123', 'ADMIN'),
+('usuario2@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'María', 'Gómez', '987654321', 'Avenida Libertador 456','CLIENTE'),
+('usuario3@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Carlos', 'Rodríguez', '123987456', 'Calle del Sol 789','CLIENTE'),
+('usuario4@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Ana', 'López', '456123789', 'Calle del Mar 101','CLIENTE'),
+('usuario5@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Pedro', 'Sánchez', '789456123', 'Calle Real 202','CLIENTE'),
+('usuario6@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Luisa', 'Morales', '321654987', 'Calle Larga 303', 'ADMIN'),
+('usuario7@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'José', 'Fernández', '654987321', 'Calle Nueva 404','CLIENTE'),
+('usuario8@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Marta', 'Díaz', '987321654', 'Avenida Central 505','CLIENTE'),
+('usuario9@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'David', 'Jiménez', '321987654', 'Calle de la Luna 606','CLIENTE'),
+('usuario10@example.com', '$2b$10$OdGXneb4cCL4DrRkirihmeU6aBvwwYQ7iQMM1MAfQmdWaw19sI9mK', 'Laura', 'Martínez', '654321987', 'Calle 7 de Octubre 707','CLIENTE');
 
 
 -- Primero, insertar 10 ubicaciones en la tabla `ubicaciones`

@@ -22,6 +22,18 @@ async function mostrarUsuarioPorId(req, res) {
   }
 }
 
+async function mostrarPerfil(req, res) {
+  try {
+    const id = req.session.user.usuario_id
+    const usuario = await controladorUsuario.buscarUserPorId(id);
+
+    res.render("usuarios/mostrarUsuarioPorId", { usuario });
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
+}
+
 async function crearFormularioUsuario(req, res) {
   try {
     res.render("usuarios/nuevoUsuario");
@@ -87,6 +99,7 @@ async function elimimnarUsuario(req, res) {
 
 export const functions = {
   getAllUsers,
+  mostrarPerfil,
   mostrarUsuarioPorId,
   crearFormularioUsuario,
   crearUsuario,
