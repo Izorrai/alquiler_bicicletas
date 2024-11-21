@@ -1,0 +1,79 @@
+extends ../layout
+
+block content
+  div.max-w-4xl.mx-auto.p-4
+    h1.text-2xl.font-bold.mb-6 Formulario de Alquiler
+
+    div.bg-white.shadow-md.rounded.px-8.pt-6.pb-8.mb-4
+      // Información de la Bicicleta
+      div.mb-6
+        h2.text-xl.font-semibold.mb-4 Información de la Bicicleta
+        div.grid.grid-cols-1
+          if bicicletas && bicicletas.length > 0
+            select#bicicleta.w-full.border.rounded.px-3.py-2(name="bicicleta_id" required)
+              option(value="") Selecciona una bicicleta
+              each bicicleta in bicicletas
+                option(value=bicicleta.bicicleta_id) 
+                  | #{bicicleta.tipo} - #{bicicleta.marca} (ID: #{bicicleta.bicicleta_id})
+          else
+            p.text-red-500 No hay bicicletas disponibles
+
+      // Ubicaciones
+      div.mb-6
+        h2.text-xl.font-semibold.mb-4 Ubicación de Recogida
+        div.grid.grid-cols-1
+          if ubicaciones && ubicaciones.length > 0
+            select#ubicacion.w-full.border.rounded.px-3.py-2(name="recogida_id" required)
+              option(value="") Selecciona una ubicación
+              each ubicacion in ubicaciones
+                option(value=ubicacion.ubicacion_id) 
+                  | #{ubicacion.nombre_estacion} - #{ubicacion.direccion}
+          else
+            p.text-red-500 No hay ubicaciones disponibles
+
+      // Usuario (si está disponible)
+      div.mb-6
+        h2.text-xl.font-semibold.mb-4 Información del Usuario
+        if usuarios && usuarios.length > 0
+          select#usuario.w-full.border.rounded.px-3.py-2(name="usuario_id" required)
+            option(value="") Selecciona un usuario
+            each usuario in usuarios
+              option(value=usuario.usuario_id) #{usuario.nombre} #{usuario.apellido}
+        else
+          input(type="hidden" name="usuario_id" value="1")
+          p Usuario de prueba
+
+      // Método de Pago
+      div.mb-6
+        h2.text-xl.font-semibold.mb-4 Método de Pago
+        select#metodo_pago.w-full.border.rounded.px-3.py-2(name="metodo_pago" required)
+          option(value="") Selecciona método de pago
+          option(value="efectivo") Efectivo
+          option(value="tarjeta") Tarjeta
+          option(value="transferencia") Transferencia
+
+      // Términos y Condiciones
+      div.mb-6
+        label.flex.items-center
+          input(type="checkbox" required).mr-2
+          span Acepto los términos y condiciones
+
+      // Botones
+      div.flex.justify-end.gap-4
+        a.px-4.py-2.bg-gray-300.rounded(href="/alquileres/lista") Cancelar
+        button.px-4.py-2.bg-blue-500.text-white.rounded(type="submit") Confirmar Alquiler
+
+// src/views/layout.pug
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Sistema de Alquiler de Bicicletas
+    script(src="https://cdn.tailwindcss.com")
+  body.bg-gray-100
+    nav.bg-blue-600.text-white.p-4
+      div.container.mx-auto
+        a.text-xl.font-bold(href="/") Sistema de Alquiler de Bicicletas
+    main.container.mx-auto.py-8
+      block content

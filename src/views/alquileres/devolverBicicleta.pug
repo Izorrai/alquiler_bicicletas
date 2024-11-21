@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+  h1.text-2xl.mb-6 Devolver Bicicleta
+  
+  if alquiler
+    div.max-w-2xl.mx-auto.border.rounded.p-6
+      h2.text-xl.mb-4 Información del Alquiler Activo
+      
+      div.grid.grid-cols-2.gap-4.mb-6
+        div
+          p.font-bold ID Alquiler
+          p= alquiler.alquiler_id
+        div
+          p.font-bold Fecha Inicio
+          p= new Date(alquiler.fecha_inicio).toLocaleString()
+        div
+          p.font-bold Ubicación Recogida
+          p= alquiler.recogida.nombre_estacion
+          
+      form(action="/alquileres/devolver" method="POST")
+        input(type="hidden" name="alquiler_id" value=alquiler.alquiler_id)
+        input(type="hidden" name="bicicleta_id" value=alquiler.bicicleta_id)
+        
+        div.mb-4
+          label.block.mb-2(for="entrega_id") Ubicación de Entrega
+          select#entrega_id.w-full.border.rounded.p-2(name="entrega_id" required)
+            each ubicacion in ubicaciones
+              option(value=ubicacion.ubicacion_id)= ubicacion.nombre_estacion
+              
+        button.w-full.bg-blue-500.text-white.py-2.rounded(type="submit") 
+          | Confirmar Devolución
+  else
+    p.text-gray-500 No tiene ningún alquiler activo

@@ -25,6 +25,11 @@ const Pago = sequelize.define("pagos", {
     type: DataTypes.INTEGER,
     allowNull: false,  // La factura es obligatoria
   },
+  deuda:{
+    type: DataTypes.ENUM('abonado', 'pendiente'),
+    defaultValue: 'abonado',  
+    allowNull: true,  
+  },
   metodo_pago: {
     type: DataTypes.ENUM('tarjeta', 'efectivo', 'transferencia', 'otro'),
     defaultValue: 'efectivo',  // El valor por defecto es 'efectivo'

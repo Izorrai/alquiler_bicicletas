@@ -1,6 +1,11 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize.js';
 
+
+import Usuario from './usuarios.js';
+import Bicicleta from './bicicletas.js';
+import Ubicacion from './ubicaciones.js';
+
 const Alquiler = sequelize.define("alquileres", {
   alquiler_id: {
     type: DataTypes.INTEGER,
@@ -10,28 +15,28 @@ const Alquiler = sequelize.define("alquileres", {
   usuario_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'usuarios', // Referencia usando el nombre de la tabla (no el modelo)
+      model: 'usuarios',
       key: 'usuario_id'
     }
   },
   bicicleta_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'bicicletas', // Referencia usando el nombre de la tabla (no el modelo)
+      model: 'bicicletas',
       key: 'bicicleta_id'
     }
   },
   recogida_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'ubicaciones', // Referencia usando el nombre de la tabla (no el modelo)
+      model: 'ubicaciones',
       key: 'ubicacion_id'
     }
   },
   entrega_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'ubicaciones', // Referencia usando el nombre de la tabla (no el modelo)
+      model: 'ubicaciones',
       key: 'ubicacion_id'
     },
     allowNull: true
@@ -58,11 +63,12 @@ const Alquiler = sequelize.define("alquileres", {
   timestamps: false
 });
 
-Alquiler.associate = function(models) {
-  Alquiler.belongsTo(models.Usuario, { foreignKey: 'usuario_id' });
-  Alquiler.belongsTo(models.Bicicleta, { foreignKey: 'bicicleta_id' });
-  Alquiler.belongsTo(models.Ubicacion, { foreignKey: 'recogida_id', as: 'recogida' });
-  Alquiler.belongsTo(models.Ubicacion, { foreignKey: 'entrega_id', as: 'entrega' });
-};
+
+Alquiler.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+Alquiler.belongsTo(Bicicleta, { foreignKey: 'bicicleta_id' });
+Alquiler.belongsTo(Ubicacion, { foreignKey: 'recogida_id', as: 'recogida' });
+Alquiler.belongsTo(Ubicacion, { foreignKey: 'entrega_id', as: 'entrega' });
+
+Usuario.hasMany(Alquiler, { foreignKey: "usuario_id" });
 
 export default Alquiler;

@@ -1,6 +1,6 @@
-import controladorDisponibilidad from "../../controllers/disponibilidad/controladorDisponibilidad.js";
+import controladorDisponibilidad from "./controladorDisponibilidad.js";
 
-async function mostrarBicicletasPorUbicacion(req, res) {
+const mostrarDisponibilidad = async (req, res) => {
     try {
         const ubicaciones = await controladorDisponibilidad.buscarBicicletasPorUbicacion();
         
@@ -13,8 +13,10 @@ async function mostrarBicicletasPorUbicacion(req, res) {
         console.error("Error al obtener las ubicaciones:", error);
         res.status(500).send("Hubo un error al obtener las ubicaciones.");
     }
-}
-
-export default {
-    mostrarDisponibilidad: mostrarBicicletasPorUbicacion
 };
+
+export const functions = {
+    mostrarDisponibilidad
+};
+
+export default functions
