@@ -3,7 +3,7 @@ import controladorUbicacion from "../../controllers/ubicaciones/controladorUbica
 async function getAll(req, res) {
   try {
     const ubicaciones = await controladorUbicacion.getAll();
-    console.log(ubicaciones);
+    //console.log(ubicaciones);
     res.render("ubicaciones/listaUbicaciones", { ubicaciones });
   } catch (error) {
     error.status ? res.status(error.status) : res.status(500);

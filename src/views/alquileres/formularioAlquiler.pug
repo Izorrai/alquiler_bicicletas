@@ -38,9 +38,9 @@ block content
           select#usuario.w-full.border.rounded.px-3.py-2(name="usuario_id" required)
             option(value="") Selecciona un usuario
             each usuario in usuarios
-              option(value=usuario.usuario_id) #{usuario.nombre} #{usuario.apellido}
+              option(value=value= user_id) #{usuario.nombre} #{usuario.apellido}
         else
-          input(type="hidden" name="usuario_id" value="1")
+          input(type="hidden" name="usuario_id" value= user_id)
           p Usuario de prueba
 
       // Método de Pago

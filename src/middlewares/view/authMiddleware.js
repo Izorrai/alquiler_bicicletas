@@ -26,7 +26,7 @@ function isAdmin(req,res,next){
 }
 
 function adminOMismoId(req,res,next){
-    const id = req.params.id
+    const id = req.params.id;
     if(req.session.user && (req.session.user.roles==="ADMIN" || req.session.user.usuario_id==id)){
         next();
     }else{

@@ -11,7 +11,11 @@ router.get("/nuevo", controladorMostrarAlquileres.crearFormularioAlquiler);
 router.get("/informacion/:bicicleta_id/:ubicacion_id", controladorInformacionAlquiler.mostrarInformacionAlquiler);
 router.post("/crear", controladorAlquiler.crearAlquiler);
 router.get("/devolver/:id", devolucionBicicleta.devolverBicicleta);
+router.get("/activos/perfil", controladorMostrarAlquileres.mostrarAlquileresActivos);
 router.get("/activos/:usuario_id", controladorMostrarAlquileres.mostrarAlquileresActivos);
+
+
+
 router.get("/activos", controladorMostrarAlquileres.mostrarAlquileresActivos);
 router.post("/devolver", devolucionBicicleta.devolverBicicleta);
 

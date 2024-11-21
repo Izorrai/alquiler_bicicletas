@@ -20,21 +20,8 @@ html(lang="en")
     body
         block scripts
             script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
-            
-        nav.navbar
-            ul
-                li
-                    a(href="/facturas/#{usuario.usuario_id}")
-                        span.icon-menu
-                li
-                    a(href='/alquileres/activos/')
-                        span.icon-bicicleta
-                li
-                    a(href='/disponibilidad/lista') 
-                        span.icon-ubicacion
-                li
-                    a(href='/login')
-                        span.icon-login
+
+        include navegador
         block message
             if(message && messageType)
                 p(class=`message ${messageType}`)= message
