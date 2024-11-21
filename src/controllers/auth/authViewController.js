@@ -13,7 +13,7 @@ async function registro(req, res) {
 
 function formularioLogin(req,res){
     const {message,messageType}=req.query;
-    res.render("login",{message,messageType})
+    res.render("index",{message,messageType})
 }
 
 function formularioRegistro(req,res){
@@ -32,7 +32,7 @@ async function login(req, res) {
             usuario_id:usuario.usuario_id,
             role:usuario.role
         }
-        const url=(`/?message=sesión iniciada correctamente&messageType=success`)
+        const url=(`/disponibilidad/lista?message=sesión iniciada correctamente&messageType=success`)
         res.redirect(url);
     } catch (error) {
         console.error(error);

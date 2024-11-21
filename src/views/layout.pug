@@ -2,21 +2,27 @@
 html(lang="en")
     head
         meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
         title BilboBike
-        link(rel="stylesheet", href="/css/navegador.css")
-        link(rel="stylesheet", href="/css/listabicicletas.css")
-        link(rel="stylesheet", href="/css/bicicleta.css")
-        link(rel="stylesheet", href="/css/pagos.css")
+        link(rel="stylesheet" href="/css/navegador.css")
+        link(rel="stylesheet" href="/css/listabicicletas.css")
+        link(rel="stylesheet" href="/css/bicicleta.css")
+        link(rel="stylesheet" href="/css/pagos.css")
         block styles 
-        link(rel="stylesheet", href="/css/facturas.css")
-        link(rel="stylesheet", href="/css/disponibilidad.css")
+        link(rel="stylesheet" href="/css/facturas.css")
+        link(rel="stylesheet" href="/css/disponibilidad.css")
         block head
         link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
-    
+
     body
         block scripts
             script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
+
+        if user 
+        .user-info  
+        p Bienvenido, #{user.name}
+        form(action='/logout' method='GET')
+            button(type='submit') Cerrar sesion 
 
         nav.navbar
             ul
