@@ -7,12 +7,8 @@ BilboBike es una aplicación web diseñada para facilitar el alquiler de bicicle
 ---
 
 ## 🌟 **Características**
-- **Catálogo de bicicletas:** Explora una amplia variedad de bicicletas (montaña, carretera y eléctricas).  
-- **Búsqueda avanzada:** Filtra bicicletas por tipo, ubicación y disponibilidad.  autenticación
-- **Reservas en línea:** Realiza reservas y pagos de forma segura a través de la plataforma.  
+- **Catálogo de bicicletas:** Explora una amplia variedad de bicicletas (montaña, carretera y eléctricas).   
 - **Historial de alquileres:** Revisa todas tus reservas anteriores.  
-- **Mapa de ubicaciones:** Encuentra las estaciones de bicicletas más cercanas utilizando Google Maps.  
-
 ---
 
 ## 🛠️ **Tecnologías Utilizadas**
