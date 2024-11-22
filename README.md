@@ -35,7 +35,6 @@ BilboBike es una aplicación web diseñada para facilitar el alquiler de bicicle
 ### **Paso 1: Clonar el repositorio**
 ```bash
 git clone https://github.com/Izorrai/alquiler_bicicletas.git
-cd alquiler_bicicletas
 ```
 
 ### **Paso 2: Instalar dependencias**
