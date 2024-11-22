@@ -44,7 +44,7 @@ Crea un archivo `.env` en la raíz del proyecto y añade las siguientes configur
 # Configuración de la base de datos
 DB_HOST=alquiler_bicicletas_db          # Dirección del servidor de la base de datos
 DB_PORT=3308                            # Puerto del servidor de la base de datos
-DB_USER=usuario                         # Usuario estándar con acceso a la base de datos
+DB_USER=user                            # Usuario estándar con acceso a la base de datos
 DB_PASSWORD=1234                        # Contraseña del usuario
 DB_DATABASE=alquiler_bicicletas         # Nombre de la base de datos
 DB_DIALECT: mysql             
