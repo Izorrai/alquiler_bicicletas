@@ -1,12 +1,17 @@
 extends ../layout 
-
+block styles
+    link(rel='stylesheet', href='/css/usuarios.css')
+    link(rel='stylesheet', href='/css/botones.css')
 block content
-    .usuarios-container 
-        h1.usuarios-title Lista de Usuarios: 
     if user && user.roles === 'ADMIN'   
         a.boton.boton-nuevo(href="/usuarios/nuevo")
             i.fas.fa-plus 
             | Nuevo Usuario
+        a.boton.boton-nuevo(href="/bicicletas/lista")
+            i.fas.fa-plus 
+            | Volver a la lista
+    .usuarios-container 
+        h1.usuarios-title Lista de Usuarios
         ul.usuarios.grid 
             each usuario in usuarios 
                 li.usuario-card 
@@ -14,9 +19,6 @@ block content
                         p.usuario-detail 
                             span.detail-label Email: 
                             span.detail-value #{usuario.email} 
-                        p.usuario-detail 
-                            span.detail-label Contraseña:
-                            span.detail-value #{usuario.contraseña}
                         p.usuario-detail 
                             span.detail-label Nombre: 
                             span.detail-value #{usuario.nombre}

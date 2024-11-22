@@ -15,7 +15,7 @@
     font-weight: 700;    /* Bold */
     margin-bottom: 1.5rem; /* 6 */
   }
-  
+
   /* Flex container for each location */
   .flex {
     display: flex;
@@ -213,4 +213,7 @@
     text-align: left;
   }
   
+  .class-direccion{
+    font-weight: bold;
+  }
   

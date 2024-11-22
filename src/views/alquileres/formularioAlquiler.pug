@@ -36,7 +36,7 @@ block content
         h2.text-xl.font-semibold.mb-4 Información del Usuario
         if usuarios && usuarios.length > 0
           select#usuario.w-full.border.rounded.px-3.py-2(name="usuario_id" required)
-            option(value="") Selecciona un usuario
+            option(value=user_id) Selecciona un usuario
             each usuario in usuarios
               option(value=value= user_id) #{usuario.nombre} #{usuario.apellido}
         else
