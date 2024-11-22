@@ -77,7 +77,7 @@ const crearAlquiler = async (req, res) => {
         );
 
         console.log('Alquiler creado exitosamente');
-        res.redirect(`/facturas/${usuario_id}`);
+        res.redirect(`/facturas/perfil`);
 
     } catch (error) {
         console.error("Error al crear el alquiler:", error);

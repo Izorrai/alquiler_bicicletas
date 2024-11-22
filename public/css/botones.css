@@ -1,0 +1,42 @@
+.delete-button {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #dc3545;
+        border-radius: 8px;
+        text-align: center;
+}
+.actualizar-button {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #000000;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.boton.boton-nuevo{
+    margin-bottom: 20px;
+    padding: 15px;
+    color:black;
+    background-color: #ffffff;
+    border-radius: 8px;
+    text-align: center;
+
+}
+
+.actualizar-button:hover {
+    background-color: #2563EB;
+  }
+
+.boton.boton-nuevo:hover {
+    color: #2563EB;
+  }
+
+.boton-crear{
+    background-color: #000000;
+}
+
+.ubicaciones-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

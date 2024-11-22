@@ -1,11 +1,15 @@
 nav.navbar
   ul
     li
-      a(href='/facturas/perfil') 
-        span.icon-facturas
+      a(href='/bicicletas/lista')
+       if user && user.roles === 'ADMIN'
+        span.icon-admin
     li
       a(href='/usuarios/perfil') 
-        span.icon-menu
+        span.icon-perfil
+    li
+      a(href='/facturas/perfil') 
+        span.icon-facturas
     li
       a(href='/alquileres/activos/perfil') 
         span.icon-bicicleta
@@ -13,5 +17,5 @@ nav.navbar
       a(href='/disponibilidad/lista') 
         span.icon-ubicacion
     li
-      a(href='/logout') 
+      a(href='/logout')
         span.icon-login 

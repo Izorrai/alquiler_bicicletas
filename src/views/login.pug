@@ -1,21 +1,20 @@
 extends layout
 
-
 block styles
     link(rel='stylesheet', href='/css/login.css')
     link(rel="stylesheet", href="/css/navegador.css")
+
 block content
-  
+    h1.pagina-titulo BilboBike
     .login-container
-      h1 Login
+      h2 Login
       if error
         p.error= error
-      form(class= "login-form" action='/login' method='POST' )
-        label(for='usuario')
-        input#usuario(type='text' name='email' placeholder="e-mail" required)
-        label(for='contrasena')
-        input#contrasena(type='password' name='contrasena' placeholder="contraseña" required value=1234)
-        button(class="acceso" type='submit') Acceder
-        
+      form(class="login-form" action='/login' method='POST')
+        .input
+          input#usuario(type='text' name='email' placeholder="e-mail" required)
+        .input
+          input#contrasena(type='password' name='contrasena' placeholder="contraseña" required )
+        button.acceso(type='submit') Acceder
         a(href="/registro")
-          button(class="registro" type= "button") Registrate
+          button.registro(type='button') Registrate

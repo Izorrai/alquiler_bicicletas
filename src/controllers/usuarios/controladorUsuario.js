@@ -68,6 +68,7 @@ async function actualizarUsuario(email, contraseña, nombre, apellido, telefono,
 }
 
 
+
 async function eliminarUsuario(id) {
   const borrarUsuario = await Usuario.findByPk(id);
     if(!borrarUsuario){

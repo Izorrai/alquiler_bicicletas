@@ -1,7 +1,13 @@
 extends ../layout 
+block styles
+    link(rel='stylesheet', href='/css/botones.css')
 
-block content 
-    h3 Crear nuevo usuario 
+block content
+  a.boton.boton-nuevo(href="/bicicletas/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
+  h3 Crear nuevo usuario 
 
     form(action="/usuarios/nuevo", method="POST")
         .form-group 
@@ -30,4 +36,4 @@ block content
 
         .form-group 
             button(type="button") Cancelar 
-            button(type="Submit") Crear Usuario.            
+            button.boton-crear(type="Submit") Crear Usuario      

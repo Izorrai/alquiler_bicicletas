@@ -10,21 +10,21 @@ import rutaDisponibilidad from "./rutaDisponibilidad.js"
 import { adminOMismoId, isAdmin, isAuthenticated } from "../../middlewares/view/authMiddleware.js";
 
 const router = Router();
-router.get('/',isAuthenticated ,(req, res) => {
+router.get('/index',isAuthenticated ,(req, res) => {
 
     const nombre = req.session.user.nombre
     const apellido = req.session.user.apellido
     const usuario_id = req.session.user.usuario_id
     
 
-    res.render('index',{nombre,apellido,usuario_id})
+    res.render('/index',{nombre,apellido,usuario_id})
 });
 
 router.use("/bicicletas",isAuthenticated, rutaBicicleta);
 router.use("/pagos",adminOMismoId, rutaPago); //OK
 router.use("/ubicaciones", isAuthenticated, rutaUbicacion);
 router.use("/usuarios", rutaUsuario);
-router.use("/alquileres", isAdmin, rutaAlquileres); //OK
+router.use("/alquileres", isAuthenticated, rutaAlquileres); //OK
 router.use("/", authRouter); //OK
 router.use("/facturas", rutaFacturas);
 router.use("/disponibilidad", rutaDisponibilidad);

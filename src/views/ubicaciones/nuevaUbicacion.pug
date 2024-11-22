@@ -1,7 +1,8 @@
 extends ../layout
-
+block styles
+    link(rel='stylesheet', href='/css/botones.css')
 block content
-  a.boton.boton-nueva(href="/ubicaciones/lista") 
+  a.boton.boton-nuevo(href="/ubicaciones/lista") 
     i.fas.fa-plus
     | Volver a la lista
 
@@ -25,4 +26,4 @@ block content
 
     .form-group
       button(type="button") Cancelar
-      button(type="submit") Crear Ubicación
+      button.boton-crear(type="submit") Crear Ubicación

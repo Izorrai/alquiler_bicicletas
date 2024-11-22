@@ -63,17 +63,6 @@ async function crearUsuario(req, res) {
   }
 }
 
-async function actualizarUsuario(req, res) {
-  try {
-    const { id } = req.params;
-    const usuario = await controladorUsuario.buscarUserPorId(id);
-
-    res.render("usuarios/actualizarUsuario", { usuario });
-  } catch (error) {
-    error.status ? res.status(error.status) : res.status(500);
-    res.json({ error: error.message });
-  }
-}
 
 async function actualizarFormUsuario(req, res) {
   try {
@@ -82,9 +71,32 @@ async function actualizarFormUsuario(req, res) {
 
     res.render("usuarios/actualizarUsuario", { usuario });
   } catch (error) {
-    
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
   }
 }
+async function actualizarUsuario(req, res) {
+  try {
+    const {email, contraseña, nombre, apellido, telefono, direccion  } = req.body;
+    const id = parseInt(req.params.id);
+
+    await controladorUsuario.actualizarUsuario(
+      id,
+      email,
+      contraseña,
+      nombre,
+      apellido,
+      telefono,
+      direccion
+    );
+
+    res.redirect(`/usuarios/lista`);
+  } catch (error) {
+    error.status ? res.status(error.status) : res.status(500);
+    res.json({ error: error.message });
+  }
+}
+
 
 async function elimimnarUsuario(req, res) {
   try {
