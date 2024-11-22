@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  a.boton.boton-nuevo(href="/pagos/lista") 
+    i.fas.fa-plus
+    | Volver a lista de pagos
+
+  h1 Crear Pago
+
+  form(action='/pagos/nuevo', method='POST')
+    div
+      label(for='alquiler_id') Alquiler ID
+      input(type='number', name='alquiler_id', required=false)
+
+    div
+      label(for='factura') Factura
+      input(type='number', name='factura', required=true)
+
+    div
+      label(for='metodo_pago') Método de Pago
+      select(name='metodo_pago')
+        option(value='efectivo') Efectivo
+        option(value='tarjeta') Tarjeta
+        option(value='transferencia') Transferencia
+        option(value='otro') Otro
+
+    div
+      button(type='submit') Crear Pago

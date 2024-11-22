@@ -6,18 +6,23 @@
 
 - **Catálogo de bicicletas**: Explora una amplia variedad de bicicletas (montaña, carretera y eléctricas).
 - **Búsqueda avanzada**: Filtra bicicletas por tipo, ubicación y disponibilidad.
-- **Reservas en línea**: Permite a los usuarios reservar y pagar el alquiler de forma segura.
-- **Historial de alquileres**: Los usuarios pueden ver sus reservas anteriores.
-- **Mapa de ubicaciones**: Muestra las estaciones de bicicletas más cercanas utilizando Google Maps.
+- **Historial de pagos/facturas**: Los usuarios pueden ver sus pagos y facturas.
+
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **Frontend**:
   - HTML, CSS, JavaScript
+
 - **Backend**:
   - Node.js
   - Express.js
   - MySQL (Base de datos)
+  - MYSQL 2
+  - Sequalize
+  - Pug
+ 
+  
 
 ## ⚙️ Instalación
 

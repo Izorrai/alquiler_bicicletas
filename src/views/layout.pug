@@ -1,14 +1,28 @@
-doctype html
 html(lang="en")
     head
         meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Bicicletas 
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title BilboBike
+
         link(rel="stylesheet", href="/css/navegador.css")
-
-
-    body 
+        link(rel="stylesheet", href="/css/listabicicletas.css")
+        link(rel="stylesheet", href="/css/bicicleta.css")
+        link(rel="stylesheet", href="/css/pagos.css")
+        block styles 
+        link(rel="stylesheet", href="/css/facturas.css")
+        link(rel="stylesheet", href="/css/disponibilidad.css")
+        link(rel="stylesheet", href="/css/alquileresActivos.css")
+        link(rel="stylesheet", href="/css/devolucionCorrecta.css")
+        link(rel="stylesheet", href="/css/mostrarDisponibilidad.css")
+        block head
+        link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
         
-        block content
+    body
+        block scripts
+            script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
 
         include navegador
+        block message
+            if(message && messageType)
+                p(class=`message ${messageType}`)= message
+        block content

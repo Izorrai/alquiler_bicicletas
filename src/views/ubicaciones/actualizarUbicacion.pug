@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  a.boton.boton-nueva(href="/ubicaciones/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
+  .edit-container
+    h1.edit-title Editar Ubicación
+    form.edit-form(action=`/ubicaciones/${ubicacion.ubicacion_id}/actualizar`, method="POST")
+      .form-group
+        label.form-label(for="estacion") Nombre Estación:
+        input.form-input(type="text" name="nombre_estacion" id="nombreEstacion" value=ubicacion.nombre_estacion required)
+
+      .form-group
+        label.form-label(for="direccion") Dirección:
+        input.form-input(type="text" name="direccion" id="nombreDireccion" value=ubicacion.direccion required)
+
+      .form-group
+        label.form-label(for="latitud") Latitud:
+        input.form-input(type="text" name="latitud" id="numeroLatitud" value=ubicacion.latitud required)
+
+      .form-group
+        label.form-label(for="longitud") Longitud:
+        input.form-input(type="text" name="longitud" id="numeroLongitud" value=ubicacion.longitud required)
+
+      .form-group
+        button.update-button(type="submit") Actualizar Ubicación
+

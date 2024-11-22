@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+ a.boton.boton-nuevo(href="/usuarios/lista")    
+   i.fas.fa-plus
+   | Volver a la lista   
+
+ .edit-container      
+   h1.edit-title Editar Usuario      
+   form.edit-form(action=`/usuarios/${usuario.usuario_id}/actualizar`, method="POST")        
+     .form-group              
+       label.form-label(for="email") Email:              
+       input.form-input(type="text" name="email" id="email" value=usuario.email required)
+                   
+     .form-group              
+       label.form-label(for="contraseña") Contraseña:              
+       input.form-input(type="text" name="contraseña" id="contraseña" )
+         
+     .form-group              
+       label.form-label(for="nombre") Nombre:              
+       input.form-input(type="text" name="nombre" id="nombre" value=usuario.nombre required)
+                   
+     .form-group              
+       label.form-label(for="apellido") Apellido:              
+       input.form-input(type="text" name="apellido" id="apellido" value=usuario.apellido required)
+                   
+     .form-group              
+       label.form-label(for="telefono") Telefono:              
+       input.form-input(type="tel" name="telefono" id="telefono" value=usuario.telefono required)
+                   
+     .form-group              
+       label.form-label(for="direccion") Direccion:              
+       input.form-input(type="text" name="direccion" id="direccion" value=usuario.direccion required)
+                   
+     .form-group          
+       button.update-button(type="submit") Actualizar usuario

@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  a.boton.boton-nueva(href="/ubicaciones/lista") 
+    i.fas.fa-plus
+    | Volver a la lista
+
+  h3 Crear Nueva Ubicación
+  form(action="/ubicaciones/nueva", method="POST")
+    .form-group
+      label(for="estacion") Nombre Estación
+      input(type="text" name="nombre_estacion" id="nombreEstacion" required)
+
+    .form-group
+      label(for="direccion") Dirección
+      input(type="text" name="direccion" id="nombreDireccion" required)
+    
+    .form-group
+      label(for="latitud") Latitud
+      input(type="text" name="latitud" id="numeroLatitud" required)
+    
+    .form-group
+      label(for="longitud") Longitud
+      input(type="text" name="longitud" id="numeroLongitud" required)
+
+    .form-group
+      button(type="button") Cancelar
+      button(type="submit") Crear Ubicación

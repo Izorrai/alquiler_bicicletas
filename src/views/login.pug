@@ -1,22 +1,21 @@
-doctype html
-html
-  head
-    title= title
+extends layout
+
+
+block styles
     link(rel='stylesheet', href='/css/login.css')
     link(rel="stylesheet", href="/css/navegador.css")
-  body
+block content
+  
     .login-container
-      h1= title
+      h1 Login
       if error
         p.error= error
-      form(method='POST' action='/login')
+      form(class= "login-form" action='/login' method='POST' )
         label(for='usuario')
-        input#usuario(type='text' name='usuario' placeholder="e-mail" required)
+        input#usuario(type='text' name='email' placeholder="e-mail" required)
         label(for='contrasena')
-        input#contrasena(type='password' name='contraseña' placeholder="contraseña" required)
+        input#contrasena(type='password' name='contrasena' placeholder="contraseña" required value=1234)
         button(class="acceso" type='submit') Acceder
         
         a(href="/registro")
           button(class="registro" type= "button") Registrate
-
-  include navegador

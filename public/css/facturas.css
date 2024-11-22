@@ -1,0 +1,94 @@
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.page-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Tabla de facturas */
+.facturas-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.facturas-table__header {
+    background-color: #f8f9fa;
+}
+
+.facturas-table__th {
+    padding: 12px 15px;
+    font-weight: bold;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    text-align: center; /* Centrar títulos */
+}
+
+.facturas-table__td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: center; /* Centrar datos */
+}
+
+/* Columnas específicas */
+.facturas-table__th--fecha {
+    min-width: 180px;
+}
+
+.facturas-table__th--costo {
+    min-width: 120px;
+}
+
+.facturas-table__td--costo {
+    font-family: monospace;
+    font-size: 1.1em;
+}
+
+/* Filas hover */
+.facturas-table__row:hover {
+    background-color: #f8f9fa;
+}
+
+/* Mensaje sin facturas */
+.no-facturas {
+    text-align: center;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.no-facturas__text {
+    color: #6c757d;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .facturas-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .facturas-table__th,
+    .facturas-table__td {
+        padding: 8px 12px;
+    }
+    
+    .page-title {
+        font-size: 1.5em;
+    }
+}

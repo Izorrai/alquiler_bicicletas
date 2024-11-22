@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  div(class="devolucion-container")
+    h1(class="titulo-devolucion") Devolución Completada
+    
+    div(class="devolucion-detalles")
+      p(class="mensaje-exito") La bicicleta ha sido devuelta correctamente
+      
+      p Detalles de la devolución:
+      ul(class="detalles-lista")
+        li Fecha de devolución: #{new Date(alquiler.fecha_fin).toLocaleString()} 
+        li Duración del alquiler: #{alquiler.duracion} minutos
+        li Estación de entrega: #{ubicacion.nombre_estacion}
+        li Estado del pago: Abonado
+
+    a(href="/" class="btn-volver") Volver a página principal
