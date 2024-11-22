@@ -1,7 +1,9 @@
 extends ../layout
+block styles
+    link(rel='stylesheet', href='/css/edicion.css')
 
 block content
-  a.boton.boton-nueva(href="/ubicaciones/lista") 
+  a.boton.boton-nuevo(href="")(href="/ubicaciones/lista") 
     i.fas.fa-plus
     | Volver a la lista
 

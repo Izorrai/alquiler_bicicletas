@@ -1,0 +1,13 @@
+.update-button{
+    background-color:  #2563EB;
+}
+
+
+.update-button:hover {
+    background-color: #2051b9;
+  }
+
+a.boton.boton-nuevo{
+    color: black;
+}
+

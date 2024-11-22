@@ -27,8 +27,7 @@ app.use(express.json());// configurar body parser para recibir datos en formato 
 
 app.use("/", router)
 
-app.use('/public/resources', express.static(process.cwd() + '/public/resources'));
-
+app.use(express.static('public'));
 
 
 app.listen(3000, () => console.log("Estamos conectados a la 3000"));

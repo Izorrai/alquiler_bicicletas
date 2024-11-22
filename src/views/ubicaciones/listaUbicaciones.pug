@@ -1,10 +1,14 @@
 extends ../layout
-
+block styles
+    link(rel='stylesheet', href='/css/botones.css')
 block content
   if user && user.roles === 'ADMIN'
     a.boton.boton-nuevo(href="/ubicaciones/nueva")
       i.fas.fa-plus
       | Nueva Ubicación
+    a.boton.boton-nuevo(href="/bicicletas/lista")
+            i.fas.fa-plus 
+            | Volver a la lista
 
   .ubicaciones-container
     h1.ubicaciones-title Ubicaciones disponibles

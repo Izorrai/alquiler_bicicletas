@@ -1,5 +1,6 @@
 extends ../layout
-
+block styles
+    link(rel='stylesheet', href='/css/botones.css')
 block content
   a.boton.boton-nuevo(href="/bicicletas/lista") 
     i.fas.fa-plus
@@ -29,6 +30,6 @@ block content
 
     .form-group
       button(type="button") Cancelar
-      button(type="submit") Crear Bicicleta
+      button.boton-crear(type="submit") Crear Bicicleta
 
 
